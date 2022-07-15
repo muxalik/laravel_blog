@@ -11,9 +11,9 @@ class MainController extends Controller
 {
     public function index() 
     {
-        $tag = new Tag();
-        $tag->title = 'Привет мир';
-        $tag->save();
+        // $tag = new Tag();
+        // $tag->title = 'Привет мир';
+        // $tag->save();
         
         return view('admin.index');
     }
