@@ -39,64 +39,57 @@
       <div class="card-body">
         <div class="card-body">
             <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Добавить категорию</a>
+
+            @if (count($categories))
+
             
-            <table class="table table-bordered">
-            <thead>
-            <tr>
-            <th style="width: 10px">#</th>
-            <th>Task</th>
-            <th>Progress</th>
-            <th style="width: 40px">Label</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>1.</td>
-            <td>Update software</td>
-            <td>
-            <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">#</th>
+                            <th>Наименование</th>
+                            <th>Slug</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($categories as $category)
+                        <tr>
+                            <td>{{ $category->id }}</td>
+                            <td>{{ $category->title }}</td>
+                            <td>{{ $category->slug }}</td>
+                            <td>
+                                <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
+                                <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="POST" class="float-left">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
-            </td>
-            <td><span class="badge bg-danger">55%</span></td>
-            </tr>
-            <tr>
-            <td>2.</td>
-            <td>Clean database</td>
-            <td>
-            <div class="progress progress-xs">
-            <div class="progress-bar bg-warning" style="width: 70%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-warning">70%</span></td>
-            </tr>
-            <tr>
-            <td>3.</td>
-            <td>Cron job running</td>
-            <td>
-            <div class="progress progress-xs progress-striped active">
-            <div class="progress-bar bg-primary" style="width: 30%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-primary">30%</span></td>
-            </tr>
-            <tr>
-            <td>4.</td>
-            <td>Fix and squish bugs</td>
-            <td>
-            <div class="progress progress-xs progress-striped active">
-            <div class="progress-bar bg-success" style="width: 90%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-success">90%</span></td>
-            </tr>
-            </tbody>
-            </table>
-            </div>
+            @else 
+                <p>Категорий пока нет</p>
+            @endif
+
+        </div>
       </div>
       <!-- /.card-body -->
-      <div class="card-footer">
-        Footer
+      <div class="card-footer clearfix">
+        {{ $categories->links() }}
+        {{-- <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a href="#" class="page-link">«</a></li>
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link">3</a></li>
+            <li class="page-item"><a href="#" class="page-link">»</a></li>
+        </ul> --}}
       </div>
       <!-- /.card-footer-->
     </div>
