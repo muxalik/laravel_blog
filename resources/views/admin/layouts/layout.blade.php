@@ -67,6 +67,7 @@
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
