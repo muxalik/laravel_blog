@@ -28,27 +28,27 @@
                         <h3 class="card-title">Новая статья</h3>
                     </div>
 
-                    <form role="form" method="POST" action="{{ route('posts.store') }}">
+                    <form role="form" method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Название">
+                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" id="title" placeholder="Название">
                             </div>
 
                             <div class="form-froup">
-                              <label for="desc">Цитата</label>
-                              <textarea name="desc" class="form-control" id="desc" rows="5" placeholder="Цитата ..."></textarea>
+                              <label for="description">Цитата</label>
+                              <textarea name="description" class="form-control @error('description') is-invalid @enderror" value="{{ old('description') }}" id="description" rows="5" placeholder="Цитата ..."></textarea>
                             </div>
 
                             <div class="form-froup">
                               <label for="content">Контент</label>
-                              <textarea name="content" class="form-control" id="content" rows="5" placeholder="Контент ..."></textarea>
+                              <textarea name="content" class="form-control @error('content') is-invalid @enderror" value="{{ old('content') }}" id="content" rows="5" placeholder="Контент ..."></textarea>
                             </div>
 
                             <div class="form-group">
                               <label for="category_id">Категория</label>
-                              <select class="form-control" id="category_id" name="category_id">
+                              <select class="form-control @error('category_id') is-invalid @enderror" value="{{ old('category_id') }}" id="category_id" name="category_id">
                                 @foreach ($categories as $k => $v)
                                   <option value="{{ $k }}">{{ $v }}</option>
                                 @endforeach
