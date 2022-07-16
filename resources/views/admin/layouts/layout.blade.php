@@ -10,9 +10,12 @@
 
   @vite([
     'resources/assets/admin/plugins/fontawesome-free/css/all.min.css',
+    'resources/assets/admin/plugins/select2/css/select2.css',
+    'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css',
     'resources/assets/admin/css/adminlte.css',
     'resources/assets/admin/plugins/jquery/jquery.min.js',
     'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
+    'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/js/adminlte.min.js',
     'resources/assets/admin/js/demo.js',
   ])
@@ -246,6 +249,30 @@
                 <a href="{{ route('tags.create') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Новая тег</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Статьи
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('posts.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Список статей</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('posts.create') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Новая статья</p>
                 </a>
               </li>
             </ul>
