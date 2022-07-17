@@ -68,7 +68,7 @@
                               <label for="thumbnail">Изображение</label>
                               <div class="input-group">
                                 <div class="custom-file">
-                                <input type="file" name="thubmail" class="custom-file-input" id="thumbnail">
+                                <input type="file" name="thumbnail" class="custom-file-input" id="thumbnail">
                                 <label class="custom-file-label" for="thumbnail">Choose file</label>
                                 </div>
                               </div>
