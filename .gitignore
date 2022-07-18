@@ -2,6 +2,8 @@
 /public/build
 /public/hot
 /public/storage
+/public/ckeditor
+/public/ckfinder
 /storage/*.key
 /vendor
 .env
