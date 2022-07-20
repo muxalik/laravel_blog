@@ -10,13 +10,13 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet"> 
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
-    <link href="css/colors.css" rel="stylesheet">
-    <link href="css/version/marketing.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/colors.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/version/marketing.css') }}" rel="stylesheet">
 </head>
 <body>
 
@@ -27,17 +27,17 @@
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ route('home') }}"><img src="images/version/market-logo.png" alt=""></a>
+                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('images/version/market-logo.png') }}" alt=""></a>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="marketing-index.html">Home</a>
+                                <a class="nav-link" href="{{ route('home') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="marketing-category.html">Marketing</a>
+                                <a class="nav-link" href="{{ route('categories.single', ['slug' => 'marketing']) }}">Marketing</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="marketing-category.html">Make Money</a>
+                                <a class="nav-link" href="{{ route('categories.single', ['slug' => 'make-money']) }}">Make Money</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="marketing-blog.html">Blog</a>
@@ -81,7 +81,7 @@
                                 <div class="list-group">
                                     <a href="marketing-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="w-100 justify-content-between">
-                                            <img src="upload/small_04.jpg" alt="" class="img-fluid float-left">
+                                            <img src="{{ asset('images/version/market-logo.png') }}" alt="" class="img-fluid float-left">
                                             <h5 class="mb-1">5 Beautiful buildings you need to before dying</h5>
                                             <small>12 Jan, 2016</small>
                                         </div>
@@ -89,7 +89,7 @@
 
                                     <a href="marketing-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="w-100 justify-content-between">
-                                            <img src="upload/small_05.jpg" alt="" class="img-fluid float-left">
+                                            <img src="{{ asset('upload/small_05.jpg') }}" alt="" class="img-fluid float-left">
                                             <h5 class="mb-1">Let's make an introduction for creative life</h5>
                                             <small>11 Jan, 2016</small>
                                         </div>
@@ -97,7 +97,7 @@
 
                                     <a href="marketing-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="w-100 last-item justify-content-between">
-                                            <img src="upload/small_06.jpg" alt="" class="img-fluid float-left">
+                                            <img src="{{ asset('upload/small_06.jpg') }}" alt="" class="img-fluid float-left">
                                             <h5 class="mb-1">Did you see the most beautiful sea in the world?</h5>
                                             <small>07 Jan, 2016</small>
                                         </div>
@@ -114,7 +114,7 @@
                                 <div class="list-group">
                                     <a href="marketing-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="w-100 justify-content-between">
-                                            <img src="upload/small_01.jpg" alt="" class="img-fluid float-left">
+                                            <img src="{{ asset('upload/small_01.jpg') }}" alt="" class="img-fluid float-left">
                                             <h5 class="mb-1">Banana-chip chocolate cake recipe with customs</h5>
                                             <span class="rating">
                                                 <i class="fa fa-star"></i>
@@ -128,7 +128,7 @@
 
                                     <a href="marketing-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="w-100 justify-content-between">
-                                            <img src="upload/small_02.jpg" alt="" class="img-fluid float-left">
+                                            <img src="{{ asset('upload/small_02.jpg') }}" alt="" class="img-fluid float-left">
                                             <h5 class="mb-1">10 practical ways to choose organic vegetables</h5>
                                             <span class="rating">
                                                 <i class="fa fa-star"></i>
@@ -142,7 +142,7 @@
 
                                     <a href="marketing-single.html" class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="w-100 last-item justify-content-between">
-                                            <img src="upload/small_03.jpg" alt="" class="img-fluid float-left">
+                                            <img src="{{ asset('upload/small_03.jpg') }}" alt="" class="img-fluid float-left">
                                             <h5 class="mb-1">We are making homemade ravioli, nice and good</h5>
                                             <span class="rating">
                                                 <i class="fa fa-star"></i>
