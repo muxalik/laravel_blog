@@ -1640,7 +1640,7 @@ hr.invis3 {
 .loader {
     display: block;
     margin: 20px auto 0;
-    vertical-align: middle;
+    /* vertical-align: middle; */
 }
 
 #preloader {

@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
                 $cats = Category::withCount('posts')->orderBy('posts_count', 'desc')->get();
                 Cache::put('cats', $cats, 30);
             }
+            
             $view->with('recent_posts', Post::orderBy('id', 'desc')->limit(3)->get());
             $view->with('popular_posts', Post::orderBy('views', 'desc')->limit(3)->get());
             $view->with('cats', $cats);
