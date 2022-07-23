@@ -8,7 +8,7 @@
                         <div class="list-group">
                             @foreach ($recent_posts as $post)
                                 <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="w-100 justify-content-between">
+                                    <div class="w-100">
                                         <img src="{{ $post->getImage() }}" alt="" class="img-fluid float-left">
                                         <div>
                                             <h5 class="mb-1">{{ $post->title }}</h5>
@@ -18,9 +18,9 @@
                                 </a>
                             @endforeach
                         </div>
-                    </div><!-- end blog-list -->
-                </div><!-- end widget -->
-            </div><!-- end col -->
+                    </div>
+                </div>
+            </div>
 
             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                 <div class="widget">
@@ -29,7 +29,7 @@
                         <div class="list-group">
                             @foreach ($popular_posts as $post)
                             <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                                <div class="w-100 justify-content-between">
+                                <div class="w-100">
                                     <img src="{{ $post->getImage() }}" alt="" class="img-fluid float-left">
                                     <div>
                                         <h5 class="mb-1">{{ $post->title }}</h5>
@@ -45,9 +45,9 @@
                             </a>
                             @endforeach
                         </div>
-                    </div><!-- end blog-list -->
-                </div><!-- end widget -->
-            </div><!-- end col -->
+                    </div>
+                </div>
+            </div>
 
             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                 <div class="widget">
@@ -58,9 +58,9 @@
                                 <li><a href="{{ route('categories.single', ['slug' => $cat->slug]) }}">{{ $cat->title }} <span>({{ $cat->posts_count }})</span></a></li>
                             @endforeach
                         </ul>
-                    </div><!-- end link-widget -->
-                </div><!-- end widget -->
-            </div><!-- end col -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</footer><!-- end footer -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

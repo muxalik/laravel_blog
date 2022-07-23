@@ -65,4 +65,18 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('login.create');
     }
+
+    public function contactForm()
+    {
+        return view('user.contact');
+    }
+
+    public function contactStore(Request $request) 
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|regex:/(01)[0-9]{9}/'
+        ]);
+    }
 }

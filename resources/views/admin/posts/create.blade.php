@@ -64,6 +64,14 @@
                               </select>
                             </div>
 
+                            <script defer>
+
+                              $(document).ready(function() {
+                                $('.select2').select2();
+                              });
+
+                            </script>
+
                             <div class="form-group">
                               <label for="thumbnail">Изображение</label>
                               <div class="input-group">
@@ -73,6 +81,14 @@
                                 </div>
                               </div>
                             </div>
+
+                            <script>
+
+                              $(function () {
+                                  bsCustomFileInput.init();
+                                });
+
+                            </script>
 
                         </div>
                         <div class="card-footer">

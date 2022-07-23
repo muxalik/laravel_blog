@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Blank Page</title>
-
-  <!-- Google Font: Source Sans Pro -->
+  <title>AdminLTE 3 | Admin Page</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  
   @vite([
     'resources/assets/admin/plugins/fontawesome-free/css/all.min.css',
     'resources/assets/admin/plugins/select2/css/select2.css',
@@ -17,9 +19,15 @@
     'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js',
-    'resources/assets/admin/js/adminlte.min.js',
+    'resources/assets/admin/js/adminlte.js',
     'resources/assets/admin/js/demo.js',
   ])
+
+  {{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
   <style>
     .ck-editor__editable_inline {
@@ -331,12 +339,7 @@
     </div>
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+  
 </div>
 <!-- ./wrapper -->
 
@@ -351,91 +354,6 @@
     }
   });
 
-  // $('.nav-sidebar a').each(function() {
-  //   let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
-  //   let link = this.href;
-  //   if (link == location) {
-  //     $(this).addClass('active');
-  //     $(this).closest('.has-treeview').addClass('menu-open');
-  //   }
-  // });
-</script>
-
-<script src="{{ asset('ckeditor/build/ckeditor.js') }}"></script>
-<script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
-
-<script>
-
-  ClassicEditor
-      .create( document.querySelector( '#content' ), {
-          ckfinder: {
-              uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
-          },
-          image: {
-            toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
-            styles: [
-              'full',
-              'alignLeft',
-              'alignRight'
-            ] 
-          },
-          toolbar: {
-              items: [
-                'heading',
-                '|',
-                'bold',
-                'italic',
-                'link',
-                'bulletedList',
-                'numberedList',
-                '|',
-                'outdent',
-                'indent',
-                'alignment',
-                '|',
-                'blockQuote',
-                'insertTable',
-                'undo',
-                'redo',
-                'CKFinder',
-                'mediaEmbed'
-              ]
-            },
-            language: 'ru',
-            image: {
-              toolbar: [
-                'imageTextAlternative',
-                'imageStyle:inline',
-                'imageStyle:block',
-                'imageStyle:side'
-              ]
-            },
-            table: {
-              contentToolbar: [
-                'tableColumn',
-                'tableRow',
-                'mergeTableCells'
-              ]
-            }
-      } )
-      .catch( function( error ) {
-          console.error( error );
-      } );
-
-  ClassicEditor
-      .create( document.querySelector( '#description' ), {
-          toolbar: [ 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo' ]
-      } )
-      .catch( function( error ) {
-          console.error( error );
-      } );
-
-      document.addEventListener('DOMContentLoaded', function () {
-        bsCustomFileInput.init();
-      });
-
-      
-    
 </script>
 
 </body>

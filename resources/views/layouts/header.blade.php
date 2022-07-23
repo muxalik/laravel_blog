@@ -20,7 +20,7 @@
                         <a class="nav-link" href="{{ route('categories.single', ['slug' => 'programming']) }}">Programming</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="marketing-contact.html">Contact Us</a>
+                        <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                     </li>
                     @if (Auth::check())
                         <li class="nav-item">

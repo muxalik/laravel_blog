@@ -18,6 +18,8 @@ Route::get('/article/{slug}', 'PostController@show')->name('posts.single');
 Route::get('/category/{slug}', 'CategoryController@show')->name('categories.single');
 Route::get('/tag/{slug}', 'TagController@show')->name('tags.single');
 Route::get('/search', 'SearchController@index')->name('search');
+Route::get('/contact', 'UserController@contactForm')->name('contact');
+Route::post('/contact/store', 'UserController@contactStore')->name('contact.store');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
     Route::get('/', 'MainController@index')->name('admin.index');
