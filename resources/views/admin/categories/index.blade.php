@@ -82,13 +82,6 @@
       <!-- /.card-body -->
       <div class="card-footer clearfix">
         {{ $categories->links() }}
-        {{-- <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a href="#" class="page-link">«</a></li>
-            <li class="page-item"><a href="#" class="page-link">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item"><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">»</a></li>
-        </ul> --}}
       </div>
       <!-- /.card-footer-->
     </div>

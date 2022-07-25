@@ -7,8 +7,6 @@
 
 @vite([
     'resources/assets/admin/plugins/fontawesome-free/css/all.min.css',
-    'resources/assets/admin/plugins/select2/css/select2.css',
-    'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css',
     'resources/assets/admin/css/adminlte.css',
 ])  
 
@@ -21,14 +19,13 @@
                 <h1>Login</h1>
             </div>
             <div class="card-body">
+
                 @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="list-unstyled">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <ul class="alert alert-danger list-unstyled">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 @endif
 
                 @if (session()->has('error'))
@@ -41,7 +38,7 @@
                     @csrf
 
                     <div class="input-group mb-3">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" class="form-control @if(session()->has('error')) is-invalid @endif" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -49,7 +46,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <input type="password" name="password" class="form-control @if(session()->has('error')) is-invalid @endif" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -57,7 +54,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 offset-8">
+                        <a href="{{ route('register.create') }}" class="col-8" style="line-height: 38px">I don't have an account</a>
+                        <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                     </div>

@@ -5,35 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Admin Page</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="../../mainstyle.css">
   <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
+  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+
   @vite([
     'resources/assets/admin/plugins/fontawesome-free/css/all.min.css',
     'resources/assets/admin/plugins/select2/css/select2.css',
     'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css',
     'resources/assets/admin/css/adminlte.css',
-    'resources/assets/admin/plugins/jquery/jquery.min.js',
-    'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js',
-    'resources/assets/admin/js/adminlte.js',
     'resources/assets/admin/js/demo.js',
   ])
 
-  {{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
-
-  <style>
-    .ck-editor__editable_inline {
-      min-height: 300px;
-    }
-  </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -46,10 +35,25 @@
         <a class="nav-link" data-widget="pushmenu" data-enable-remember="true" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="{{ asset('/') }}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="{{ route('categories.single', ['slug' => 'marketing']) }}" class="nav-link">Contact</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ route('categories.single', ['slug' => 'make-money']) }}" class="nav-link">Make Money</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ route('categories.single', ['slug' => 'blog']) }}" class="nav-link">Blog</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ route('categories.single', ['slug' => 'programming']) }}" class="nav-link">Programming</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ route('contact') }}" class="nav-link">Contact</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ route('logout') }}" class="nav-link">Logout</a>
       </li>
     </ul>
 
@@ -180,10 +184,10 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ url('/') }}" target="_blank" class="brand-link">
+    <div class="brand-link" style="cursor: default">
       <img src="/images/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">На сайт</span>
-    </a>
+      <span class="brand-text font-weight-light">Admin Panel</span>
+    </div>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -198,7 +202,7 @@
       </div>
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline">
+      {{-- <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
           <div class="input-group-append">
@@ -207,7 +211,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> --}}
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -300,10 +304,11 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper pt-2">
+  <div class="content-wrapper pt-2 position-relative">
     <div class="fluid-container mt-2">
       <div class="row" style="margin: 0">
         <div class="col-12">
+
           @if ($errors->any())
           <div class="alert alert-danger">
               <ul class="list-unstyled">
@@ -314,23 +319,47 @@
           </div>
           @endif
 
-          @if (session()->has('error'))
-          <div class="alert alert-danger">
-              {{ session('error') }}
-          </div>
-          @endif
-
-          @if (session()->has('success'))
-          <div class="alert alert-success">
-              {{ session('success') }}
-          </div>
-          @endif
         </div>
       </div>
     </div>
 
     @yield('content')
+
+    @if (session()->has('error') || session()->has('success'))
+      @if (session()->has('error'))
+        <div class="alerts" style="display: none">
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+            {{ session('error') }}.
+          </div>
+        </div>
+      @endif
+        
+      @if (session()->has('success'))
+        <div class="alerts" style="display: none">
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-check"></i> Alert!</h5>
+            {{ session('success') }}.
+          </div>
+        </div>
+      @endif
+
+      <script>
+
+        $(".alerts").fadeIn(700);
+          
+        setTimeout(() => {
+          $(".alerts").fadeOut(500).hide(500);
+        }, 1000 * 5);
+
+      </script>
+
+    @endif
+
   </div>
+  
   <!-- /.content-wrapper -->
 
   <footer class="main-footer">
@@ -345,13 +374,14 @@
 
 
 <script>
-  [...document.querySelectorAll('.nav-sidebar a')].forEach(element => {
-    let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    let link = this.href;
-    if (link == location) {
-      element.addClass('active');
-      element.closest('.has-treeview').addClass('menu-open');
-    }
+
+  $('.nav-sidebar a').each(index => {
+    // let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
+    // let link = this.href;
+    // if (link == location) {
+      $( this ).addClass('active');
+      $( this ).closest('.has-treeview').addClass('menu-is-opening');
+    // }
   });
 
 </script>
