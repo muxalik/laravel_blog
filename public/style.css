@@ -1676,3 +1676,12 @@ hr.invis3 {
 .market-header .form-inline .form-control.is-invalid {
     border: 2px solid red;
 }
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    padding-right: 2.25rem !important;
+    background-image: url('images/error.svg');
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}

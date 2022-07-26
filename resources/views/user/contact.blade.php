@@ -8,7 +8,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet"> 
@@ -88,11 +88,11 @@
                                     <form class="form-wrapper" method="POST" action="{{ route('contact.store') }}">
                                         @csrf
                                         <h4>Contact form</h4>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Your name" name="name" id="name">
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email" id="email">
-                                        <input type="tel" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone" name="phone" id="phone">
-                                        <input type="text" class="form-control @error('subject') is-invalid @enderror" placeholder="Subject" name="subject" id="subject">
-                                        <textarea class="form-control @error('message') is-invalid @enderror" placeholder="Your message" name="message" id="message"></textarea>
+                                        <input type="text" class="form-control @error('name')is-invalid @enderror" placeholder="Your name" name="name" id="name" value="{{ old('name') }}">
+                                        <input type="text" class="form-control @error('email')is-invalid @enderror" placeholder="Email" name="email" id="email" value="{{ old('email') }}">
+                                        <input type="tel" class="form-control @error('phone')is-invalid @enderror" placeholder="Phone" name="phone" id="phone" value="{{ old('phone') }}">
+                                        <input type="text" class="form-control @error('subject')is-invalid @enderror" placeholder="Subject" name="subject" id="subject" value="{{ old('subject') }}">
+                                        <textarea class="form-control @error('message')is-invalid @enderror" placeholder="Your message" name="message" id="message">{{ old('message') }}</textarea>
                                         <button type="submit" class="btn btn-primary">Send <i class="fa fa-envelope-open-o"></i></button>
                                     </form>
 

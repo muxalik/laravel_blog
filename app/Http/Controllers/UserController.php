@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,8 +76,14 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|regex:/(01)[0-9]{9}/'
+            'email' => 'required|email',
+            'phone' => 'required|regex:/[0-9\s]{13}/',
+            'subject' => 'required|max:50',
+            'message' => 'required|max:299'
         ]);
+
+        Message::create($request->all());
+        
+        return redirect()->route('home')->with('success', 'Message has been sent successfully');
     }
 }
