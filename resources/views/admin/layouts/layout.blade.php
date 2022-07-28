@@ -6,12 +6,11 @@
   <title>AdminLTE 3 | Admin Page</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="../../mainstyle.css">
-  <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
-  {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+
+  {{-- Icons --}}
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
   @vite([
     'resources/assets/admin/plugins/fontawesome-free/css/all.min.css',
@@ -38,7 +37,7 @@
         <a href="{{ asset('/') }}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('categories.single', ['slug' => 'marketing']) }}" class="nav-link">Contact</a>
+        <a href="{{ route('categories.single', ['slug' => 'marketing']) }}" class="nav-link">Marketing</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('categories.single', ['slug' => 'make-money']) }}" class="nav-link">Make Money</a>
@@ -266,7 +265,7 @@
               <li class="nav-item">
                 <a href="{{ route('tags.create') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Новая тег</p>
+                  <p>Новый тег</p>
                 </a>
               </li>
             </ul>
@@ -375,13 +374,19 @@
 
 <script>
 
-  $('.nav-sidebar a').each(index => {
-    // let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    // let link = this.href;
-    // if (link == location) {
-      $( this ).addClass('active');
-      $( this ).closest('.has-treeview').addClass('menu-is-opening');
-    // }
+  [...document.querySelectorAll('.nav-sidebar a')].forEach(element => {
+    let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
+    let link = element.href;
+
+    if (link == location) {
+      element.classList.add('active');
+
+      if (element.closest('.has-treeview')) {
+        element.closest('.has-treeview').classList.add('menu-open');
+        element.closest('.has-treeview').childNodes[1].classList.add('active');
+        element.childNodes[1].classList.add('fa-dot-circle');
+      }
+    }
   });
 
 </script>

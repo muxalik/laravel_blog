@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +53,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with('recent_posts', Post::orderBy('id', 'desc')->limit(3)->get());
             $view->with('popular_posts', Post::orderBy('views', 'desc')->limit(3)->get());
             $view->with('cats', $cats);
+        });
+
+        view()->composer('admin.index', function($view) {
+            $view->with('users_count', User::count('id'));
+            $view->with('posts_count', Post::count('id'));
         });
     }
 }

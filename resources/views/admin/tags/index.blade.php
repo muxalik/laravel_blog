@@ -40,7 +40,6 @@
             <a href="{{ route('tags.create') }}" class="btn btn-primary mb-3">Добавить тег</a>
 
             @if (count($tags))
-
             
             <div class="table-responsive">
                 <table class="table table-bordered table-hover text-nowrap">
