@@ -33,17 +33,16 @@
           </button>
         </div>
       </div>
-      {{-- <div class="card-body table-responsive p-0" style="max-height: min(832px, 100vh - 465px)"> --}}
       
-        <div class="card-body table-responsive p-0" style="display: block;">
+        <div class="card-body table-responsive p-0" style="max-height: calc(100vh - 355px)">
           @if (count($tags))
             <table class="table table-head-fixed table-bordered table-hover text-nowrap">
               <thead>
                 <tr>
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
-                  <th>Name</th>
+                  <th>Название</th>
                   <th>Slug</th>
-                  <th>Actions</th>
+                  <th>Действия</th>
                 </tr>
               </thead>
               <tbody>
@@ -78,7 +77,7 @@
           Добавить тег
         </a>
         @if (count($tags))
-          <a href="{{ route('tags.create') }}" class="btn btn-danger mb-2 mr-2">
+          <a href="" class="btn btn-danger mb-2 mr-2">
             <i class="ion ion-nuclear" style="margin-right: 0.35rem"></i> 
             Удалить все теги
           </a>

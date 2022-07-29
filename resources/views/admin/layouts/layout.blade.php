@@ -19,8 +19,9 @@
     'resources/assets/admin/css/adminlte.css',
     'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js',
-    'resources/assets/admin/js/demo.js',
+    'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/js/adminlte.js',
+    'resources/assets/admin/js/demo.js',
   ])
 
 </head>
@@ -304,7 +305,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper pt-2 position-relative">
+  <div class="content-wrapper pt-2 position-relative px-3">
     @if ($errors->any())
       <div class="fluid-container mt-2">
         <div class="row" style="margin: 0">
