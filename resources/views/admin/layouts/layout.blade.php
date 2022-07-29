@@ -20,6 +20,7 @@
     'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js',
     'resources/assets/admin/js/demo.js',
+    'resources/assets/admin/js/adminlte.js',
   ])
 
 </head>
@@ -304,23 +305,23 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper pt-2 position-relative">
-    <div class="fluid-container mt-2">
-      <div class="row" style="margin: 0">
-        <div class="col-12">
+    @if ($errors->any())
+      <div class="fluid-container mt-2">
+        <div class="row" style="margin: 0">
+          <div class="col-12">
 
-          @if ($errors->any())
-          <div class="alert alert-danger">
-              <ul class="list-unstyled">
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                  @endforeach
-              </ul>
+            <div class="alert alert-danger">
+                <ul class="list-unstyled">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+          
           </div>
-          @endif
-
         </div>
       </div>
-    </div>
+    @endif
 
     @yield('content')
 
