@@ -26,3 +26,37 @@ aside {
     left: 0;
     transform: translateY(-50%);
 }
+
+.nav-icon-container {
+    padding-top: 0; 
+    padding-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 0.4rem !important;
+    padding-left: 0.4rem !important;
+}
+
+.nav-icon {
+    width: 50px;
+}
+
+.navbar-badge {
+    right: 5px;
+    top: 0px;
+    font-size: .9rem;
+}
+
+.alert {
+    position: relative;
+    padding-left: 90px;
+}
+
+.alerts-icon {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    width: 75px;
+    transform: translateY(-50%);
+}
+

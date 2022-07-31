@@ -141,7 +141,7 @@
                     <td style="width: 30px; text-align: center; padding-left: 0.75rem">{{ $category->id }}</td>
                     <td>{{ $category->title }}</td>
                     <td>{{ $category->slug }}</td>
-                    <td>
+                    <td class="table_actions">
                       <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
                       <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="POST" class="float-left">
                         @csrf

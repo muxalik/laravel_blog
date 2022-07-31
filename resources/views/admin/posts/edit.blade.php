@@ -37,12 +37,12 @@
                                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ $post->title }}" id="title">
                             </div>
 
-                            <div class="form-froup">
+                            <div class="form-group">
                               <label for="description">Цитата</label>
                               <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="5">{{ $post->description }}</textarea>
                             </div>
 
-                            <div class="form-froup">
+                            <div class="form-group">
                               <label for="content">Контент</label>
                               <textarea name="content" class="form-control @error('content') is-invalid @enderror" id="content" rows="5">{{ $post->content }}</textarea>
                             </div>
@@ -73,7 +73,9 @@
                                 <label class="custom-file-label" for="thumbnail">Choose file</label>
                                 </div>
                               </div>
-                              <div><img src="{{ $post->getImage() }}" alt="" class="img-thumbnail mt-2" width="200px"></div>
+                              <div>
+                                <img src="{{ $post->getImage() }}" alt="" class="img-thumbnail mt-2" width="200px">
+                              </div>
                             </div>
 
                         </div>

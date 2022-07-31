@@ -23,7 +23,7 @@
     'resources/assets/admin/js/demo.js',
   ])
 
-  <link rel="stylesheet" href="../../mainstyle.css">
+  <link rel="stylesheet" href="{{ asset('mainstyle.css') }}">
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -34,7 +34,12 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" data-enable-remember="true" href="#" role="button"><i class="fas fa-bars"></i></a>
+        {{-- <a class="nav-link" data-widget="pushmenu" data-enable-remember="true" href="#" role="button">
+          <i class="fas fa-bars"></i>
+        </a> --}}
+        <a class="nav-link nav-icon-container" data-widget="pushmenu" data-enable-remember="true" href="#" role="button">
+          <img src="{{ asset('images/icons/menu_1.png') }}" alt="menu" class="nav-icon">
+        </a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ asset('/') }}" class="nav-link">Home</a>
@@ -63,8 +68,9 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
+        <a class="nav-link nav-icon-container" data-widget="navbar-search" href="#" role="button">
+          {{-- <i class="fas fa-search"></i> --}}
+          <img src="{{ asset('images/icons/search_1.png') }}" alt="search" class="nav-icon">
         </a>
         <div class="navbar-search-block">
           <form class="form-inline">
@@ -85,8 +91,9 @@
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
+        <a class="nav-link nav-icon-container" data-toggle="dropdown" href="#">
+          {{-- <i class="far fa-comments"></i> --}}
+          <img src="{{ asset('images/icons/messages_1.png') }}" alt="messages" class="nav-icon">
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -144,8 +151,9 @@
       </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
+        <a class="nav-link nav-icon-container" data-toggle="dropdown" href="#">
+          {{-- <i class="far fa-bell"></i> --}}
+          <img src="{{ asset('images/icons/notifications_1.png') }}" alt="notifications" class="nav-icon">
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -169,16 +177,11 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+      </li> --}}
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -197,6 +200,7 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="/images/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          {{-- <img src="{{ asset('images/icons/anonym_1.png') }}" alt="avatar"> --}}
         </div>
         <div class="info">
           <a href="#" class="d-block">Alexander Pierce</a>
@@ -332,7 +336,11 @@
         <div class="alerts" style="display: none">
           <div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+            <img src="{{ asset('images/icons/errors_1.png') }}" alt="error" class="alerts-icon">
+            <h5>
+              {{-- <i class="icon fas fa-ban"></i>  --}}
+              Alert!
+            </h5>
             {{ session('error') }}.
           </div>
         </div>
@@ -342,7 +350,11 @@
         <div class="alerts" style="display: none">
           <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-check"></i> Alert!</h5>
+            <img src="{{ asset('images/icons/success_1.png') }}" alt="success" class="alerts-icon">
+            <h5>
+              {{-- <i class="icon fas fa-check"></i>  --}}
+              Alert!
+            </h5>
             {{ session('success') }}.
           </div>
         </div>
@@ -391,6 +403,13 @@
       }
     }
   });
+
+
+  [...document.querySelectorAll('.table_actions')].forEach(elem => {
+    elem.addEventListener('click', (event) => {
+      event.stopPropagation();
+    })
+  })
 
 </script>
 
