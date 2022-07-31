@@ -50,7 +50,7 @@ class Post extends Model
 
     public function getImage()
     {        
-        return $this->thumbnail ? asset("uploads/" . $this->thumbnail) : asset("no.jpg");
+        return $this->thumbnail ? asset("uploads/" . $this->thumbnail) : asset("images/icons/no-image_1.png");
     }
 
     public function getPostDate()

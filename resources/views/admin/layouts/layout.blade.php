@@ -177,11 +177,16 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+      <li class="nav-item">
+        <a class="nav-link nav-icon-container" href="#" role="button">
+          <img src="{{ asset('images/icons/langs_1.png') }}" alt="languages" class="nav-icon">
         </a>
-      </li> --}}
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-icon-container" href="#" role="button">
+          <img src="{{ asset('images/icons/exit_2.png') }}" alt="exit" class="nav-icon">
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->
