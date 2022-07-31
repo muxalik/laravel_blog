@@ -10,8 +10,8 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank Page</li>
+            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Теги</a></li>
+            <li class="breadcrumb-item active">Создание</li>
           </ol>
         </div>
       </div>
@@ -37,7 +37,10 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                          <button type="submit" class="btn btn-primary my-icon-container">
+                            <img src="../../images/icons/save_1.png" class="my-icon"> 
+                            Сохранить
+                          </button>
                         </div>
                     </form>
                 </div>

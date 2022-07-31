@@ -10,12 +10,12 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank Page</li>
+            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Статьи</a></li>
+            <li class="breadcrumb-item active">Главная</li>
           </ol>
         </div>
       </div>
-    </div><!-- /.container-fluid -->
+    </div>
   </section>
 
   <!-- Main content -->
@@ -82,13 +82,13 @@
         </div>
         
         <div class="card-footer clearfix" style="">
-          <a href="{{ route('posts.create') }}" class="btn btn-primary mb-2 mr-2">
-            <i class="ion ion-plus-round" style="margin-right: 0.35rem"></i> 
+          <a href="{{ route('posts.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
+            <img src="../../images/icons/add_1.png" class="my-icon"> 
             Добавить статью
           </a>
           @if (count($posts))
-            <a href="" class="btn btn-danger mb-2 mr-2" onclick="return confirm('Подтвердите удаление')">
-              <i class="ion ion-nuclear" style="margin-right: 0.35rem"></i> 
+            <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
+              <img src="../../images/icons/delete_1.png" class="my-icon"> 
               Удалить все статьи
             </a>
           @endif

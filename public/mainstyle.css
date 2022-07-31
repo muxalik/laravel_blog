@@ -1,3 +1,7 @@
+aside {
+    position: fixed !important;
+}
+
 .ck-editor__editable_inline {
     min-height: 300px;
 }
@@ -8,4 +12,17 @@
     bottom: 5px;
     right: 5px;
     padding-right: 1rem;
+}
+
+.my-icon-container {
+    position: relative;
+    padding: 10px 10px 10px 58px;
+}
+
+.my-icon {
+    width: 50px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
 }

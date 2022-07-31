@@ -10,8 +10,8 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank Page</li>
+            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Теги</a></li>
+            <li class="breadcrumb-item active">Главная</li>
           </ol>
         </div>
       </div>
@@ -68,17 +68,16 @@
             @else 
           <p style="padding: 0.75rem 1.25rem 0">Тегов пока нет...</p>
         @endif
-          </div>
+      </div>
         
-      
       <div class="card-footer clearfix" style="">
-        <a href="{{ route('tags.create') }}" class="btn btn-primary mb-2 mr-2">
-          <i class="ion ion-plus-round" style="margin-right: 0.35rem"></i> 
+        <a href="{{ route('tags.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
+          <img src="../../images/icons/add_1.png" class="my-icon"> 
           Добавить тег
         </a>
         @if (count($tags))
-          <a href="" class="btn btn-danger mb-2 mr-2">
-            <i class="ion ion-nuclear" style="margin-right: 0.35rem"></i> 
+          <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
+            <img src="../../images/icons/delete_1.png" class="my-icon"> 
             Удалить все теги
           </a>
         @endif
@@ -87,5 +86,5 @@
     </div>
 
   </section>
-  <!-- /.content -->
+
 @endsection

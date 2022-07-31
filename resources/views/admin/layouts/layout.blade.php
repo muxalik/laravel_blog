@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Admin Page</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <link rel="stylesheet" href="../../mainstyle.css">
+  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js" defer></script>
 
-  {{-- Icons --}}
+  <!-- Icons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
   @vite([
@@ -23,6 +22,8 @@
     'resources/assets/admin/js/adminlte.js',
     'resources/assets/admin/js/demo.js',
   ])
+
+  <link rel="stylesheet" href="../../mainstyle.css">
 
 </head>
 <body class="hold-transition sidebar-mini">
