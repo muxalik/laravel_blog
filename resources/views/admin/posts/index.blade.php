@@ -43,6 +43,7 @@
                   <th>Название</th>
                   <th>Категория</th>
                   <th>Теги</th>
+                  <th>Просмотры</th>
                   <th>Дата</th>
                   <th>Действия</th>
                 </tr>
@@ -54,6 +55,7 @@
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->category->title }}</td>
                     <td>{{ $post->tags->pluck('title')->join(', ') }}</td>
+                    <td>{{ $post->views }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td class="table_actions">
                       <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-info btn-sm float-left mr-1">
@@ -85,12 +87,16 @@
         
         <div class="card-footer clearfix" style="">
           <a href="{{ route('posts.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-            <img src="../../images/icons/add_1.png" class="my-icon"> 
+            <img src="{{ asset('images/icons/add_1.png') }}" class="my-icon" alt="add"> 
             Добавить статью
           </a>
+          <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
+            <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
+            Обновить
+          </button>
           @if (count($posts))
             <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
-              <img src="../../images/icons/delete_1.png" class="my-icon"> 
+              <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete"> 
               Удалить все статьи
             </a>
           @endif

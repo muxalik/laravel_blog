@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,5 +90,12 @@ class UserController extends Controller
         Message::create($request->all());
         
         return redirect()->route('home')->with('success', 'Сообщение было успешно отправлено');
+    }
+
+    public function refresh()
+    {
+        $data = Post::all();
+        return $data;
+
     }
 }

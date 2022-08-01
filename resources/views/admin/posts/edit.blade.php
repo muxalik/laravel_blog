@@ -80,7 +80,14 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                          <button type="submit" class="btn btn-primary mb-2 mr-2 my-icon-container">
+                            <img src="{{ asset('images/icons/save_1.png') }}" class="my-icon" alt="save"> 
+                            Сохранить
+                          </button>
+                          <a href="{{ asset('admin/posts') }}" class="btn btn-danger mb-2 mr-2 my-icon-container">
+                            <img src="{{ asset('images/icons/cancel_1.png') }}" class="my-icon" alt="cancel"> 
+                            Отменить
+                          </a>
                         </div>
                     </form>
                 </div>

@@ -414,7 +414,37 @@
     elem.addEventListener('click', (event) => {
       event.stopPropagation();
     })
+  });
+
+
+  $(function() {
+
+    $('#refresh').on('click', function() {
+
+      $.ajax({
+
+        url: "/refresh",
+        type: "GET",
+        headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+
+          console.log(data)
+
+        },
+        error: function (msg) {
+          alert('Ошибка');
+        }
+
+      });
+
+    });
+
+    return false;
+
   })
+
 
 </script>
 

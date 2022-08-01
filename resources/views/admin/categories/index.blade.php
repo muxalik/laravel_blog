@@ -132,15 +132,17 @@
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
                   <th>Наименование</th>
                   <th>Slug</th>
+                  <th>Кол-во статей</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($categories as $category)
-                  <tr data-widget="expandable-table" aria-expanded="false">
+                  <tr>
                     <td style="width: 30px; text-align: center; padding-left: 0.75rem">{{ $category->id }}</td>
                     <td>{{ $category->title }}</td>
                     <td>{{ $category->slug }}</td>
+                    <td>{{ $category->posts()->count('id') }}</td>
                     <td class="table_actions">
                       <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1">
                         <i class="fas fa-pencil-alt"></i>
@@ -152,13 +154,6 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                       </form>
-                    </td>
-                  </tr>
-                  <tr class="expandable-body">
-                    <td colspan="4">
-                      <p>
-                      {{ $category->id }}
-                      </p>
                     </td>
                   </tr>
                 @endforeach
@@ -174,6 +169,10 @@
             <img src="../../images/icons/add_1.png" class="my-icon"> 
             Добавить категорию
           </a>
+          <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
+            <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
+            Обновить
+          </button>
           @if (count($categories))
             <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
               <img src="../../images/icons/delete_1.png" class="my-icon"> 

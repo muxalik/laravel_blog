@@ -38,10 +38,14 @@
                           </div>
                       </div>
                       <div class="card-footer">
-                        <button type="submit" class="btn btn-primary my-icon-container">
+                        <button type="submit" class="btn btn-primary mb-2 mr-2 my-icon-container">
                           <img src="../../images/icons/save_1.png" class="my-icon"> 
                           Сохранить
                         </button>
+                        <a href="{{ asset('admin/categories') }}" class="btn btn-danger mb-2 mr-2 my-icon-container">
+                          <img src="{{ asset('images/icons/cancel_1.png') }}" class="my-icon" alt="cancel"> 
+                          Отменить
+                        </a>
                       </div>
                   </form>
 

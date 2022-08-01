@@ -42,6 +42,7 @@
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
                   <th>Название</th>
                   <th>Slug</th>
+                  <th>Кол-во статей</th>
                   <th>Действия</th>
                 </tr>
               </thead>
@@ -51,6 +52,7 @@
                     <td style="width: 30px; text-align: center; padding-left: 0.75rem">{{ $tag->id }}</td>
                     <td>{{ $tag->title }}</td>
                     <td>{{ $tag->slug }}</td>
+                    <td>{{ $tag->posts->count('id') }}</td>
                     <td class="table_actions">
                       <a href="{{ route('tags.edit', ['tag' => $tag->id]) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
                       <form action="{{ route('tags.destroy', ['tag' => $tag->id]) }}" method="POST" class="float-left">
@@ -72,12 +74,16 @@
         
       <div class="card-footer clearfix" style="">
         <a href="{{ route('tags.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-          <img src="../../images/icons/add_1.png" class="my-icon"> 
+          <img src="{{ asset('images/icons/add_1.png') }}" class="my-icon" alt="add"> 
           Добавить тег
         </a>
+        <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
+          <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
+          Обновить
+        </button>
         @if (count($tags))
           <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
-            <img src="../../images/icons/delete_1.png" class="my-icon"> 
+            <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete"> 
             Удалить все теги
           </a>
         @endif

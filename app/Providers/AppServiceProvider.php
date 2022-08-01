@@ -58,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('admin.index', function($view) {
             $view->with('users_count', User::count('id'));
             $view->with('posts_count', Post::count('id'));
+            $view->with('avg_views', Post::pluck('views')->all());
         });
     }
 }
