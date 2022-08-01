@@ -183,7 +183,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-icon-container" href="#" role="button">
+        <a class="nav-link nav-icon-container" href="{{ asset('/') }}" role="button">
           <img src="{{ asset('images/icons/exit_2.png') }}" alt="exit" class="nav-icon">
         </a>
       </li>
@@ -344,7 +344,7 @@
             <img src="{{ asset('images/icons/errors_1.png') }}" alt="error" class="alerts-icon">
             <h5>
               {{-- <i class="icon fas fa-ban"></i>  --}}
-              Alert!
+              Ошибка!
             </h5>
             {{ session('error') }}.
           </div>
@@ -358,7 +358,7 @@
             <img src="{{ asset('images/icons/success_1.png') }}" alt="success" class="alerts-icon">
             <h5>
               {{-- <i class="icon fas fa-check"></i>  --}}
-              Alert!
+              Уведомление!
             </h5>
             {{ session('success') }}.
           </div>

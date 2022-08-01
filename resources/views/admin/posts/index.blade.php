@@ -10,7 +10,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Статьи</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Статьи</a></li>
             <li class="breadcrumb-item active">Главная</li>
           </ol>
         </div>
@@ -36,7 +36,7 @@
       
         <div class="card-body table-responsive p-0" style="max-height: calc(100vh - 355px)">
           @if (count($posts))
-            <table class="table table-head-fixed table-bordered table-hover text-nowrap">
+            <table class="table table-head-fixed table-bordered table-hover">
               <thead>
                 <tr>
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
@@ -56,7 +56,9 @@
                     <td>{{ $post->tags->pluck('title')->join(', ') }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td class="table_actions">
-                      <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
+                      <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                        <i class="fas fa-pencil-alt"></i>
+                      </a>
                       <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST" class="float-left">
                         @csrf
                         @method('DELETE')

@@ -126,7 +126,7 @@
       
         <div class="card-body table-responsive p-0" style="max-height: calc(100vh - 355px)">
           @if (count($categories))
-            <table class="table table-head-fixed table-bordered table-hover text-nowrap">
+            <table class="table table-head-fixed table-bordered table-hover">
               <thead>
                 <tr>
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
@@ -142,7 +142,9 @@
                     <td>{{ $category->title }}</td>
                     <td>{{ $category->slug }}</td>
                     <td class="table_actions">
-                      <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
+                      <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                        <i class="fas fa-pencil-alt"></i>
+                      </a>
                       <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="POST" class="float-left">
                         @csrf
                         @method('DELETE')
@@ -153,7 +155,7 @@
                     </td>
                   </tr>
                   <tr class="expandable-body">
-                    <td colspan="6">
+                    <td colspan="4">
                       <p>
                       {{ $category->id }}
                       </p>

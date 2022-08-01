@@ -28,7 +28,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        session()->flash('success', 'You\'ve registered successfully');
+        session()->flash('success', 'Вы успешно зарегистрировались');
         Auth::login($user);
         return redirect()->route('home');
     }
@@ -49,7 +49,11 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ])) {
-            session()->flash('success', 'You\'ve logged in');
+            session()->flash('success', 'Вы успешно вошли в систему');
+            
+            $id = Auth::user()->id;
+            User::find($id)->update(['last_visit' => NOW()]);
+ 
 
             if (Auth::user()->is_admin) {
                 return redirect()->route('admin.index');
@@ -58,7 +62,7 @@ class UserController extends Controller
             return redirect()->route('home');
         }
 
-        return redirect()->back()->with('error', 'Incorrect login or password');
+        return redirect()->back()->with('error', 'Неправильный логин или пароль');
     }
 
     public function logout()
@@ -84,6 +88,6 @@ class UserController extends Controller
 
         Message::create($request->all());
         
-        return redirect()->route('home')->with('success', 'Message has been sent successfully');
+        return redirect()->route('home')->with('success', 'Сообщение было успешно отправлено');
     }
 }

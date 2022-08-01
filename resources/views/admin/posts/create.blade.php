@@ -85,8 +85,8 @@
                             <script>
 
                               $(function () {
-                                  bsCustomFileInput.init();
-                                });
+                                bsCustomFileInput.init();
+                              });
 
                             </script>
 

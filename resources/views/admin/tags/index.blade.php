@@ -10,7 +10,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Теги</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('tags.index') }}">Теги</a></li>
             <li class="breadcrumb-item active">Главная</li>
           </ol>
         </div>
@@ -36,7 +36,7 @@
       
         <div class="card-body table-responsive p-0" style="max-height: calc(100vh - 355px)">
           @if (count($tags))
-            <table class="table table-head-fixed table-bordered table-hover text-nowrap">
+            <table class="table table-head-fixed table-bordered table-hover">
               <thead>
                 <tr>
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
