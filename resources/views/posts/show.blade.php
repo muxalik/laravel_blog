@@ -51,11 +51,11 @@
             <ul class="list-inline">
                 <li class="mr-2">
                     <img src="{{ asset('images/icons/like_1.png') }}" alt="like" class="rating-img" id="like">
-                    <span>56 Likes</span>
+                    <span>{{ $post->likes }} Likes</span>
                 </li>
                 <li class="mr-2">
                     <img src="{{ asset('images/icons/like_1.png') }}" alt="dislike" class="rating-img" id="dislike">
-                    <span>14 Dislikes</span>
+                    <span>{{ $post->dislikes }} Dislikes</span>
                 </li>
             </ul>
             <ul class="list-inline">

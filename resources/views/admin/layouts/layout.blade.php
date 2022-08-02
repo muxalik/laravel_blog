@@ -218,7 +218,7 @@
       </div>
 
       <!-- SidebarSearch Form -->
-      {{-- <div class="form-inline">
+      <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
           <div class="input-group-append">
@@ -227,7 +227,7 @@
             </button>
           </div>
         </div>
-      </div> --}}
+      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -423,7 +423,6 @@
 
 
   $(function() {
-
     $('#refresh').on('click', function() {
 
       $.ajax({
@@ -434,20 +433,16 @@
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
-
           console.log(data)
-
         },
         error: function (msg) {
           alert('Ошибка');
         }
 
       });
-
     });
 
     return false;
-
   })
 
 

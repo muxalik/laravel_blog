@@ -61,23 +61,18 @@ aside {
 }
 
 .rating-img {
-    width: 48px; 
+    width: 40px; 
     cursor: pointer;
     opacity: .5;
 }
 
 .rateOut {
-    animation: out .7s ease-in-out forwards;
+    animation: out .5s ease-in-out forwards;
 }
 
 @keyframes out {
-    50% {
-        transform: scale3d(1.3, 1.3, 1.3);
-    }
-
-    100% {
-        opacity: 1;
-    }
+    50% { transform: scale3d(1.3, 1.3, 1.3) }
+    100% { opacity: 1 }
 }
 
 .rateIn {
@@ -85,11 +80,6 @@ aside {
 }
 
 @keyframes in {
-    50% {
-        transform: scale3d(1.3, 1.3, 1.3);
-    }
-
-    100% {
-        opacity: .5;
-    }
+    50% { transform: scale3d(1.3, 1.3, 1.3) }
+    100% { opacity: .5 }
 }
