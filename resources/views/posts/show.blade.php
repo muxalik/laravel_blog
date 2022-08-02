@@ -49,6 +49,16 @@
 
         <div class="post-sharing">
             <ul class="list-inline">
+                <li class="mr-2">
+                    <img src="{{ asset('images/icons/like_1.png') }}" alt="like" class="rating-img" id="like">
+                    <span>56 Likes</span>
+                </li>
+                <li class="mr-2">
+                    <img src="{{ asset('images/icons/like_1.png') }}" alt="dislike" class="rating-img" id="dislike">
+                    <span>14 Dislikes</span>
+                </li>
+            </ul>
+            <ul class="list-inline">
                 <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
                 <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
                 <li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
