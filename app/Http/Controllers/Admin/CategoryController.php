@@ -90,4 +90,9 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Категория удалена');
     }
+
+    public function refresh()
+    {
+        return 3;
+    }
 }

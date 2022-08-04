@@ -83,3 +83,23 @@ aside {
     50% { transform: scale3d(1.3, 1.3, 1.3) }
     100% { opacity: .5 }
 }
+
+.share-icon-container {
+    padding: .3rem .6rem !important;
+}
+
+.share-icon-container .btn {
+    padding: 0.1rem 0.3rem;
+}
+
+.share-icon-container img {
+    width: 50px;
+}
+
+.go-button {
+    background-color: #DA5333 !important;
+}
+
+.blog-meta small {
+    font-size: 14px;
+}

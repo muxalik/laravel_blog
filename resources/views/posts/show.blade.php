@@ -3,6 +3,7 @@
 @section('title', 'Markedia - ' . $post->title)
 
 @section('content')
+
 <div class="page-wrapper">
     <div class="blog-title-area">
         <ol class="breadcrumb hidden-xs-down">
@@ -17,7 +18,7 @@
 
         <div class="blog-meta big-meta">
             <small>{{ $post->getPostDate() }}</small>
-            <small><i class="fa fa-eye"></i> {{ $post->views }}</small>
+            <small><i class="fa fa-eye"></i> <span id="views_count" class="d-inline"></span></small>
         </div><!-- end meta -->
 
         <div class="post-sharing">
@@ -38,12 +39,15 @@
     </div><!-- end content -->
 
     <div class="blog-title-area">
+        
         @if ($post->tags->count())
             <div class="tag-cloud-single">
                 <span>Tags</span>
+
                 @foreach ($post->tags as $tag)
                     <small><a href="{{ route('tags.single', ['slug' => $tag->slug]) }}" title="">{{ $tag->title }}</a></small>
                 @endforeach
+
             </div><!-- end meta -->
         @endif
 
@@ -51,17 +55,21 @@
             <ul class="list-inline">
                 <li class="mr-2">
                     <img src="{{ asset('images/icons/like_1.png') }}" alt="like" class="rating-img" id="like">
-                    <span>{{ $post->likes }} Likes</span>
+                    <span id="likes_count">{{ $post->likes }} </span>
+                    <span>Likes</span>
                 </li>
                 <li class="mr-2">
                     <img src="{{ asset('images/icons/like_1.png') }}" alt="dislike" class="rating-img" id="dislike">
-                    <span>{{ $post->dislikes }} Dislikes</span>
+                    <span id="dislikes_count">{{ $post->dislikes }} </span>
+                    <span>Dislikes</span>
                 </li>
             </ul>
-            <ul class="list-inline">
-                <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
-                <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
-                <li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
+            <ul class="list-inline share-icon-container">
+                <li><a href="#" class="fb-button btn btn-primary"><img src="{{ asset('images/icons/facebook_1.png') }}" alt="facebook"> <span class="down-mobile">Share on Facebook</span></a></li>
+                <li><a href="#" class="tw-button btn btn-primary"><img src="{{ asset('images/icons/twitter_1.png') }}" alt="twitter"> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                <li><a href="#" class="go-button btn btn-primary"><img src="{{ asset('images/icons/google_1.png') }}" alt="google+"></a></li>
+                {{-- <li><a href="#" class="in-button btn btn-primary"><img src="{{ asset('images/icons/inst_1.png') }}" alt="inst"></a></li>
+                <li><a href="#" class="re-button btn btn-primary"><img src="{{ asset('images/icons/reddit_1.png') }}" alt="reddit"></a></li> --}}
             </ul>
         </div><!-- end post-sharing -->
     </div><!-- end title -->
@@ -131,11 +139,8 @@
                             <img src="{{ asset('upload/author_01.jpg') }}" alt="" class="rounded-circle">
                         </a>
                         <div class="media-body">
-
                             <h4 class="media-heading user_name">Baltej Singh <small>5 days ago</small></h4>
-
                             <p>Drinking vinegar stumptown yr pop-up artisan sunt. Deep v cliche lomo biodiesel Neutra selfies. Shorts fixie consequat flexitarian four loko tempor duis single-origin coffee. Banksy, elit small.</p>
-
                             <a href="#" class="btn btn-primary btn-sm">Reply</a>
                         </div>
                     </div>
@@ -144,10 +149,8 @@
                             <img src="{{ asset('upload/author_02.jpg') }}" alt="" class="rounded-circle">
                         </a>
                         <div class="media-body">
-
                             <h4 class="media-heading user_name">Marie Johnson <small>5 days ago</small></h4>
                             <p>Kickstarter seitan retro. Drinking vinegar stumptown yr pop-up artisan sunt. Deep v cliche lomo biodiesel Neutra selfies. Shorts fixie consequat flexitarian four loko tempor duis single-origin coffee. Banksy, elit small.</p>
-
                             <a href="#" class="btn btn-primary btn-sm">Reply</a>
                         </div>
                     </div>
@@ -173,4 +176,96 @@
         </div>
     </div>
 </div><!-- end page-wrapper -->
+
+<script type="module">
+
+    import { CountUp } from '/js/countUp.min.js';
+
+    window.onload = function() {
+        let viewsCountUp = new CountUp('views_count', {{ $post->views }}, { enableScrollSpy: true });
+        viewsCountUp.handleScroll();
+
+        let likeCountUp = new CountUp('likes_count', {{ $post->likes }}, { enableScrollSpy: true });
+        likeCountUp.handleScroll();
+
+        let dislikeCountUp = new CountUp('dislikes_count', {{ $post->dislikes }}, { enableScrollSpy: true });
+        dislikeCountUp.handleScroll();
+    }
+
+    let like = document.getElementById('like');
+    let dislike = document.getElementById('dislike');
+    let likeCount = document.getElementById('likes_count');
+    let dislikeCount = document.getElementById('dislikes_count');
+    let liked, disliked;
+
+    like.addEventListener('click', () => {
+        if (liked) {
+            likeCount.textContent = +likeCount.textContent - 1;
+            like.classList.add('rateIn');
+            liked = false;
+            return;
+        }
+
+        if (disliked) { 
+            dislikeCount.textContent = +dislikeCount.textContent - 1; 
+            disliked = false;
+        }
+
+        if (dislike.classList.contains('rateOut')) {
+            dislike.classList.remove('rateOut');
+            dislike.classList.add('rateIn');
+        }
+
+        if (like.classList.contains('rateIn')) 
+            like.classList.remove('rateIn');
+            
+        like.classList.add('rateOut');
+        setTimeout(() => {
+            like.src = 'http://localhost/images/icons/like_3.png';
+        }, 200);
+
+        setTimeout(() => {
+            dislike.classList.remove('rateIn');
+        }, 500);
+
+        likeCount.textContent = +likeCount.textContent + 1; 
+        liked = true
+    });
+
+    dislike.addEventListener('click', () => {
+        if (disliked) {
+            dislikeCount.textContent = +dislikeCount.textContent - 1;
+            dislike.classList.add('rateIn');
+            disliked = false;
+            return;
+        }
+
+        if (liked) { 
+            likeCount.textContent = +likeCount.textContent - 1; 
+            liked = false;
+        }
+
+        if (like.classList.contains('rateOut')) {
+            like.classList.remove('rateOut');
+            like.classList.add('rateIn');
+        }
+
+        if (dislike.classList.contains('rateIn')) 
+            dislike.classList.remove('rateIn');
+            
+        dislike.classList.add('rateOut');
+        setTimeout(() => {
+            dislike.src = 'http://localhost/images/icons/like_2.png';
+        }, 200);
+
+        setTimeout(() => {
+            like.classList.remove('rateIn');
+        }, 500);
+
+        dislikeCount.textContent = +dislikeCount.textContent + 1; 
+        disliked = true
+    })
+
+</script>
+
 @endsection

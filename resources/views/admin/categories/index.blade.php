@@ -111,7 +111,7 @@
   <!-- Main content -->
   <section class="content">
     
-    <div class="card">
+    <div class="card" data-card-widget="card-refresh" data-source="{{ route('categories.refresh') }}">
       <div class="card-header border-transparent" style="border-bottom: none">
         <h3 class="card-title">Список категорий</h3>
         <div class="card-tools">

@@ -46,45 +46,6 @@
         <div class="dmtop">Scroll to Top</div>
         
     </div><!-- end wrapper -->
-
-    <script>
-
-        like = document.getElementById('like');
-        dislike = document.getElementById('dislike');
-
-        like.addEventListener('click', () => {
-            if (dislike.classList.contains('rateOut')) {
-                dislike.classList.remove('rateOut');
-                dislike.classList.add('rateIn');
-            }
-
-            like.classList.add('rateOut');
-            setTimeout(() => {
-                like.src = 'http://localhost/images/icons/like_3.png';
-            }, 200);
-
-            setTimeout(() => {
-                dislike.classList.remove('rateIn');
-            }, 500);
-        });
-
-        dislike.addEventListener('click', () => {
-            if (like.classList.contains('rateOut')) {
-                like.classList.remove('rateOut');
-                like.classList.add('rateIn');
-            }
-
-            dislike.classList.add('rateOut');
-            setTimeout(() => {
-                dislike.src = 'http://localhost/images/icons/like_2.png';
-            }, 200);
-
-            setTimeout(() => {
-                like.classList.remove('rateIn');
-            }, 500);
-        })
-
-    </script>
     
 </body>
 </html>

@@ -21,13 +21,17 @@ Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/contact', 'UserController@contactForm')->name('contact');
 Route::post('/contact/store', 'UserController@contactStore')->name('contact.store');
 
-Route::get('/refresh', 'UserController@refresh')->name('refresh');
+
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
     Route::get('/', 'MainController@index')->name('admin.index');
     Route::resource('/categories', 'CategoryController');
     Route::resource('/tags', 'TagController');
     Route::resource('/posts', 'PostController');
+
+    Route::get('/categories/refresh', function() {
+        return 3;
+    })->name('categories.refresh');
 });
 
 Route::group(['middleware' => 'guest'], function() {
