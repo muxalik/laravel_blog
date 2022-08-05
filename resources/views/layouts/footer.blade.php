@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                <div class="widget">
+                <div class="widget" data-aos="zoom-in-right">
                     <h2 class="widget-title">Recent Posts</h2>
                     <div class="blog-list-widget">
                         <div class="list-group">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                <div class="widget">
+                <div class="widget" data-aos="zoom-in">
                     <h2 class="widget-title">Popular Posts</h2>
                     <div class="blog-list-widget">
                         <div class="list-group">
@@ -54,7 +54,7 @@
             </div>
 
             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                <div class="widget">
+                <div class="widget" data-aos="zoom-in-left">
                     <h2 class="widget-title">Categories</h2>
                     <div class="link-widget">
                         <ul>
@@ -70,3 +70,9 @@
         </div>
     </div>
 </footer>
+
+<script>
+    AOS.init({
+        duration: 600,
+    });
+</script>

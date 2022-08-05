@@ -103,3 +103,7 @@ aside {
 .blog-meta small {
     font-size: 14px;
 }
+
+.card-body:not(.maximized-card) {
+    max-height: calc(100vh - 355px)
+}

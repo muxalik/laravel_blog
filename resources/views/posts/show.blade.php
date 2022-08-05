@@ -2,10 +2,14 @@
 
 @section('title', 'Markedia - ' . $post->title)
 
+@section('posts-aos', 'fade-left')
+
+@section('categories-aos', 'fade-left')
+
 @section('content')
 
 <div class="page-wrapper">
-    <div class="blog-title-area">
+    <div class="blog-title-area" data-aos="zoom-in">
         <ol class="breadcrumb hidden-xs-down">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('categories.single', ['slug' => $post->category->slug]) }}">{{ $post->category->title }}</a></li>
@@ -30,15 +34,15 @@
         </div><!-- end post-sharing -->
     </div><!-- end title -->
 
-    <div class="single-post-media">
+    <div class="single-post-media" data-aos="zoom-in">
         <img src="{{ $post->getImage() }}" alt="" class="img-fluid">
     </div><!-- end media -->
 
-    <div class="blog-content">  
+    <div class="blog-content" data-aos="zoom-in">  
         {!! $post->content !!}
     </div><!-- end content -->
 
-    <div class="blog-title-area">
+    <div class="blog-title-area" data-aos="fade-left">
         
         @if ($post->tags->count())
             <div class="tag-cloud-single">
@@ -76,7 +80,7 @@
 
     <hr class="invis1">
 
-    <div class="custombox clearfix">
+    <div class="custombox clearfix" data-aos="zoom-in">
         <h4 class="small-title">You may also like</h4>
         <div class="row">
             <div class="col-lg-6">
@@ -119,7 +123,7 @@
 
     <hr class="invis1">
 
-    <div class="custombox clearfix">
+    <div class="custombox clearfix" data-aos="zoom-in">
         <h4 class="small-title">3 Comments</h4>
         <div class="row">
             <div class="col-lg-12">
@@ -161,7 +165,7 @@
 
     <hr class="invis1">
 
-    <div class="custombox clearfix">
+    <div class="custombox clearfix" data-aos="zoom-in">
         <h4 class="small-title">Leave a Reply</h4>
         <div class="row">
             <div class="col-lg-12">

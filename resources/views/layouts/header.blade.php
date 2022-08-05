@@ -4,8 +4,8 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('images/version/market-logo.png') }}" alt=""></a>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('images/version/market-logo.png') }}" alt="home" data-aos="zoom-in"></a>
+            <div class="collapse navbar-collapse" id="navbarCollapse" data-aos="zoom-in">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('categories.single', ['slug' => 'marketing']) }}">Marketing</a>
@@ -32,6 +32,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register.create') }}">Register</a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->is_admin)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
                         </li>
                     @endif
                 </ul>

@@ -1,5 +1,5 @@
 <div class="sidebar">
-    <div class="widget">
+    <div class="widget" data-aos="@yield("posts-aos")">
         <h2 class="widget-title">Popular Posts</h2>
         <div class="blog-list-widget">
             <div class="list-group">
@@ -21,7 +21,7 @@
         </div><!-- end blog-list -->
     </div><!-- end widget -->
 
-    <div class="widget">
+    <div class="widget" data-aos="@yield("categories-aos")">
         <h2 class="widget-title">Categories</h2>
         <div class="link-widget">
             <ul>

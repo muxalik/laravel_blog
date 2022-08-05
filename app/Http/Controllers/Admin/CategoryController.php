@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(20);
+        $categories = Category::all();
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -93,6 +93,7 @@ class CategoryController extends Controller
 
     public function refresh()
     {
-        return 3;
+        $categories = Category::all();
+        return view('admin.categories.card_body', compact('categories'));
     }
 }

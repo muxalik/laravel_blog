@@ -23,6 +23,10 @@
 
 @endsection
 
+@section('posts-aos', 'fade-right')
+
+@section('categories-aos', 'fade-right')
+
 @section('content')
 
 @if ($posts->count())
@@ -30,7 +34,7 @@
         <div class="blog-custom-build">
 
             @foreach($posts as $post)
-                <div class="blog-box wow fadeIn">
+                <div class="blog-box wow fadeIn" data-aos="zoom-in">
                     <div class="post-media">
                         <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" title="">
                             <img src="{{ $post->getImage() }}" alt="" class="img-fluid">

@@ -18,6 +18,8 @@
     <link href="css/responsive.css" rel="stylesheet">
     <link href="css/colors.css" rel="stylesheet">
     <link href="css/version/marketing.css" rel="stylesheet">
+    <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/aos.js') }}"></script>
 
 </head>
 <body>
@@ -44,7 +46,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                        <div class="sidebar">
+                        <div class="sidebar" data-aos="fade-right">
                             <div class="widget-no-style">
                                 <div class="newsletter-widget text-center align-self-center">
                                     <h3>Subscribe Today!</h3>
@@ -58,7 +60,7 @@
                         </div><!-- end sidebar -->
                     </div><!-- end col -->
                     
-                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" data-aos="fade-left">
                         <div class="page-wrapper">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -110,11 +112,11 @@
 
     <!-- Core JavaScript
     ================================================== -->
-    <script src="js/jquery.min.js"></script>
+    {{-- <script src="js/jquery.min.js"></script>
     <script src="js/tether.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/animate.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="js/custom.js"></script> --}}
 
 </body>
 </html>
