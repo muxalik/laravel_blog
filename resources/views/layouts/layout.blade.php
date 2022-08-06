@@ -23,6 +23,8 @@
     <script src="{{ asset('js/aos.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('mainstyle.css') }}">
 
+    @yield('links')
+
 </head>
 <body>
 

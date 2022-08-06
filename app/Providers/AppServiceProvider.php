@@ -59,6 +59,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with('users_count', User::count('id'));
             $view->with('posts_count', Post::count('id'));
             $view->with('avg_views', Post::pluck('views')->all());
+
+            $rate = Post::pluck('likes', 'dislikes')->all();
+            $likes = array_sum(array_values($rate));
+            $dislikes = array_sum(array_keys($rate));
+            $view->with('avg_rating', ceil($likes / $dislikes));
         });
     }
 }

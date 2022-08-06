@@ -31,7 +31,7 @@
                     <form role="form" method="POST" action="{{ route('posts.update', ['post' => $post->id]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="card-body">
+                        <div class="card-body card-full">
                             <div class="form-group">
                                 <label for="title">Название</label>
                                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ $post->title }}" id="title">

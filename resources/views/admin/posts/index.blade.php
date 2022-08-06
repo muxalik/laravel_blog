@@ -34,7 +34,7 @@
         </div>
       </div>
       
-        <div class="card-body table-responsive p-0" style="max-height: calc(100vh - 355px)">
+        <div class="card-body table-responsive p-0">
           @if (count($posts))
             <table class="table table-head-fixed table-bordered table-hover">
               <thead>
@@ -44,6 +44,8 @@
                   <th>Категория</th>
                   <th>Теги</th>
                   <th>Просмотры</th>
+                  <th>Нравится</th>
+                  <th>Не нравится</th>
                   <th>Дата</th>
                   <th>Действия</th>
                 </tr>
@@ -56,6 +58,8 @@
                     <td>{{ $post->category->title }}</td>
                     <td>{{ $post->tags->pluck('title')->join(', ') }}</td>
                     <td>{{ $post->views }}</td>
+                    <td>{{ $post->likes }}</td>
+                    <td>{{ $post->dislikes }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td class="table_actions">
                       <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-info btn-sm float-left mr-1">

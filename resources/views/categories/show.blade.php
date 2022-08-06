@@ -7,7 +7,7 @@
 
 <div class="page-title db">
     <div class="container">
-        <div class="row">
+        <div class="row" data-aos="zoom-in">
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 <h2>{{ $category->title }} <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
             </div><!-- end col -->

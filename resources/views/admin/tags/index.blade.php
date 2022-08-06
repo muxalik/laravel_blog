@@ -34,7 +34,7 @@
         </div>
       </div>
       
-        <div class="card-body table-responsive p-0" style="max-height: calc(100vh - 355px)">
+        <div class="card-body table-responsive p-0">
           @if (count($tags))
             <table class="table table-head-fixed table-bordered table-hover">
               <thead>

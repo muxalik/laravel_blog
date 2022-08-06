@@ -34,7 +34,7 @@
                             <a class="nav-link" href="{{ route('register.create') }}">Register</a>
                         </li>
                     @endif
-                    @if (Auth::user()->is_admin)
+                    @if (Auth::check() && Auth::user()->is_admin)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
                         </li>

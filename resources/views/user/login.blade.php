@@ -11,9 +11,12 @@
 ])  
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link href="{{ asset('css/aos.css') }}" rel="stylesheet">
+<script src="{{ asset('js/aos.js') }}"></script>
 
+</head>
 <body class="hold-transition register-page">
-    <div class="register-box">
+    <div class="register-box" data-aos="zoom-in">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <h1>Login</h1>
@@ -64,5 +67,10 @@
 
         </div>
     </div>
+    <script>
+        AOS.init({
+            duration: 600,
+        });
+    </script>
 </body>
 </html>

@@ -58,8 +58,8 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>65</h3>
-              <p>Unique Visitors</p>
+              <h3>{{ $avg_rating }}</h3>
+              <p>Average Rating</p>
             </div>
             <div class="icon">
               <i class="fas fa-chart-pie"></i>

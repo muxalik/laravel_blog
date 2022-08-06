@@ -30,7 +30,7 @@
 
                     <form role="form" method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="card-body">
+                        <div class="card-body card-full">
                             <div class="form-group">
                                 <label for="title">Название</label>
                                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" id="title" placeholder="Название">

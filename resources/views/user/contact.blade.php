@@ -8,6 +8,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -28,7 +29,7 @@
         @include('layouts.header')
         <div class="page-title db">
             <div class="container">
-                <div class="row">
+                <div class="row" data-aos="zoom-in">
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <h2>Contact <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
                     </div><!-- end col -->
@@ -117,6 +118,5 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/animate.js"></script>
     <script src="js/custom.js"></script> --}}
-
 </body>
 </html>

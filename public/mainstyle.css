@@ -107,3 +107,7 @@ aside {
 .card-body:not(.maximized-card) {
     max-height: calc(100vh - 355px)
 }
+
+.card-full {
+    max-height: none !important;
+}
