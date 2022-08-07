@@ -170,21 +170,23 @@
 @endsection
 
 @section('countUp')
-<script type="module">
-  import { CountUp } from '/js/countUp.min.js';
 
-  window.onload = function() {
-    new CountUp('posts_count', {{ $posts_count }}, { enableScrollSpy: true })
-    .handleScroll();
+  <script type="module">
+    import { CountUp } from '/js/countUp.min.js';
 
-    new CountUp('views_count', {{ ceil(collect($avg_views)->avg()) }}, { enableScrollSpy: true })
-    .handleScroll();
+    window.onload = function() {
+      new CountUp('posts_count', {{ $posts_count }}, { enableScrollSpy: true })
+      .handleScroll();
 
-    new CountUp('users_count', {{ $users_count }}, { enableScrollSpy: true })
-    .handleScroll();
+      new CountUp('views_count', {{ ceil(collect($avg_views)->avg()) }}, { enableScrollSpy: true })
+      .handleScroll();
 
-    new CountUp('rating_count', {{ $avg_rating }}, { enableScrollSpy: true })
-    .handleScroll();
-  }
-</script>
+      new CountUp('users_count', {{ $users_count }}, { enableScrollSpy: true })
+      .handleScroll();
+
+      new CountUp('rating_count', {{ $avg_rating }}, { enableScrollSpy: true })
+      .handleScroll();
+    }
+  </script>
+
 @endsection
