@@ -415,7 +415,7 @@
 <!-- ./wrapper -->
 
 
-<script>
+<script type="module">
 
   [...document.querySelectorAll('.nav-sidebar a')].forEach(element => {
     let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
@@ -464,6 +464,8 @@
   });
 
 </script>
+
+@yield('countUp')
 
 </body>
 </html>

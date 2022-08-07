@@ -19,7 +19,7 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>{{ $posts_count }}</h3>
+              <h3 id="posts_count">0</h3>
               <p>Total Posts</p>
             </div>
             <div class="icon">
@@ -32,7 +32,7 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>{{ ceil(collect($avg_views)->avg()) }}</h3>
+              <h3 id="views_count">0</h3>
               <p>Average Views</p>
             </div>
             <div class="icon">
@@ -45,7 +45,7 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>{{ $users_count }}</h3>
+              <h3 id="users_count">0</h3>
               <p>User Registrations</p>
             </div>
             <div class="icon">
@@ -58,7 +58,7 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>{{ $avg_rating }}</h3>
+              <h3 id="rating_count">0</h3>
               <p>Average Rating</p>
             </div>
             <div class="icon">
@@ -167,4 +167,24 @@
 
   </section>
 
+@endsection
+
+@section('countUp')
+<script type="module">
+  import { CountUp } from '/js/countUp.min.js';
+
+  window.onload = function() {
+    new CountUp('posts_count', {{ $posts_count }}, { enableScrollSpy: true })
+    .handleScroll();
+
+    new CountUp('views_count', {{ ceil(collect($avg_views)->avg()) }}, { enableScrollSpy: true })
+    .handleScroll();
+
+    new CountUp('users_count', {{ $users_count }}, { enableScrollSpy: true })
+    .handleScroll();
+
+    new CountUp('rating_count', {{ $avg_rating }}, { enableScrollSpy: true })
+    .handleScroll();
+  }
+</script>
 @endsection

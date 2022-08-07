@@ -10,7 +10,7 @@
                             @foreach ($recent_posts as $post)
                                 <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="w-100">
-                                        <img src="{{ $post->getImage() }}" alt="" class="img-fluid float-left">
+                                        <img src="{{ $post->getImage() }}" alt="recent_post" class="img-fluid float-left">
                                         <div>
                                             <h5 class="mb-1">{{ $post->title }}</h5>
                                             <small>{{ $post->getPostDate() }}</small>
@@ -33,7 +33,7 @@
                             @foreach ($popular_posts as $post)
                             <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" class="list-group-item list-group-item-action flex-column align-items-start">
                                 <div class="w-100">
-                                    <img src="{{ $post->getImage() }}" alt="" class="img-fluid float-left">
+                                    <img src="{{ $post->getImage() }}" alt="popular_post" class="img-fluid float-left">
                                     <div>
                                         <h5 class="mb-1">{{ $post->title }}</h5>
                                         <span class="rating position-absolute">
