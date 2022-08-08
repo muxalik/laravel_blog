@@ -51,10 +51,6 @@ class UserController extends Controller
             'password' => $request->password
         ])) {
             session()->flash('success', 'Вы успешно вошли в систему');
-            
-            $id = Auth::user()->id;
-            User::find($id)->update(['last_visit' => NOW()]);
- 
 
             if (Auth::user()->is_admin) {
                 return redirect()->route('admin.index');

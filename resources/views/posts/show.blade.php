@@ -22,9 +22,9 @@
 
         <div class="blog-meta big-meta">
             <small>{{ $post->getPostDate() }}</small>
-            <small><i class="fa fa-eye"></i> <span id="views_count" class="d-inline"></span></small>
+            <small><i class="fa fa-eye"></i> <span id="views_count" class="d-inline">{{ $post->views }}</span></small>
         </div><!-- end meta -->
-
+        {{-- {{ dd($post) }} --}}
         <div class="post-sharing">
             <ul class="list-inline">
                 <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
@@ -83,21 +83,21 @@
     <div class="custombox clearfix" data-aos="zoom-in">
         <h4 class="small-title">You may also like</h4>
         <div class="row">
-            @foreach($similar as $post)
+            @foreach($similar as $sim_post)
                 <div class="col-lg-6">
                     <div class="blog-box">
                         <div class="post-media">
                             <a href="marketing-single.html" title="">
-                                <img src="{{ $post->getImage() }}" alt="post_image" class="img-fluid">
+                                <img src="{{ $sim_post->getImage() }}" alt="post_image" class="img-fluid">
                                 <div class="hovereffect">
                                     <span class=""></span>
                                 </div><!-- end hover -->
                             </a>
                         </div><!-- end media -->
                         <div class="blog-meta">
-                            <h4><a href="marketing-single.html" title="{{ $post->title }}">{{ $post->title }}</a></h4>
-                            <small><a href="blog-category-01.html" title="{{ $post->category->title }}">{{ $post->category->title }}</a></small>
-                            <small>{{ $post->getPostDate() }}</small>
+                            <h4><a href="marketing-single.html" title="{{ $sim_post->title }}">{{ $sim_post->title }}</a></h4>
+                            <small><a href="blog-category-01.html" title="{{ $sim_post->category->title }}">{{ $sim_post->category->title }}</a></small>
+                            <small>{{ $sim_post->getPostDate() }}</small>
                         </div><!-- end meta -->
                     </div><!-- end blog-box -->
                 </div><!-- end col -->
@@ -170,14 +170,14 @@
     import { CountUp } from '/js/countUp.min.js';
 
     window.onload = function() {
-        let viewsCountUp = new CountUp('views_count', {{ $post->views }}, { enableScrollSpy: true });
-        viewsCountUp.handleScroll();
+        new CountUp('views_count', {{ $post->views }}, { enableScrollSpy: true })
+            .handleScroll();
 
-        let likeCountUp = new CountUp('likes_count', {{ $post->likes }}, { enableScrollSpy: true });
-        likeCountUp.handleScroll();
+        new CountUp('likes_count', {{ $post->likes }}, { enableScrollSpy: true })
+            .handleScroll();
 
-        let dislikeCountUp = new CountUp('dislikes_count', {{ $post->dislikes }}, { enableScrollSpy: true });
-        dislikeCountUp.handleScroll();
+        new CountUp('dislikes_count', {{ $post->dislikes }}, { enableScrollSpy: true })
+            .handleScroll();
     }
 
     let like = document.getElementById('like');
@@ -218,6 +218,8 @@
 
         likeCount.textContent = +likeCount.textContent + 1; 
         liked = true
+
+        console.log('Likes' + {{ $post->likes }})
     });
 
     dislike.addEventListener('click', () => {
@@ -252,6 +254,7 @@
 
         dislikeCount.textContent = +dislikeCount.textContent + 1; 
         disliked = true
+        console.log('Dislikes' + {{ $post->dislikes }})
     })
 
 </script>
