@@ -85,7 +85,7 @@ aside {
 }
 
 .share-icon-container {
-    padding: .3rem .6rem !important;
+    padding: 0 !important;
 }
 
 .share-icon-container .btn {

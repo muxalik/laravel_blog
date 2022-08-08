@@ -83,41 +83,25 @@
     <div class="custombox clearfix" data-aos="zoom-in">
         <h4 class="small-title">You may also like</h4>
         <div class="row">
-            <div class="col-lg-6">
-                <div class="blog-box">
-                    <div class="post-media">
-                        <a href="marketing-single.html" title="">
-                            <img src="{{ asset('upload/market_blog_02.jpg') }}" alt="" class="img-fluid">
-                            <div class="hovereffect">
-                                <span class=""></span>
-                            </div><!-- end hover -->
-                        </a>
-                    </div><!-- end media -->
-                    <div class="blog-meta">
-                        <h4><a href="marketing-single.html" title="">We are guests of ABC Design Studio</a></h4>
-                        <small><a href="blog-category-01.html" title="">Trends</a></small>
-                        <small><a href="blog-category-01.html" title="">21 July, 2017</a></small>
-                    </div><!-- end meta -->
-                </div><!-- end blog-box -->
-            </div><!-- end col -->
-
-            <div class="col-lg-6">
-                <div class="blog-box">
-                    <div class="post-media">
-                        <a href="marketing-single.html" title="">
-                            <img src="{{ asset('upload/market_blog_03.jpg') }}" alt="" class="img-fluid">
-                            <div class="hovereffect">
-                                <span class=""></span>
-                            </div><!-- end hover -->
-                        </a>
-                    </div><!-- end media -->
-                    <div class="blog-meta">
-                        <h4><a href="marketing-single.html" title="">Nostalgia at work with family</a></h4>
-                        <small><a href="blog-category-01.html" title="">News</a></small>
-                        <small><a href="blog-category-01.html" title="">20 July, 2017</a></small>
-                    </div><!-- end meta -->
-                </div><!-- end blog-box -->
-            </div><!-- end col -->
+            @foreach($similar as $post)
+                <div class="col-lg-6">
+                    <div class="blog-box">
+                        <div class="post-media">
+                            <a href="marketing-single.html" title="">
+                                <img src="{{ $post->getImage() }}" alt="post_image" class="img-fluid">
+                                <div class="hovereffect">
+                                    <span class=""></span>
+                                </div><!-- end hover -->
+                            </a>
+                        </div><!-- end media -->
+                        <div class="blog-meta">
+                            <h4><a href="marketing-single.html" title="{{ $post->title }}">{{ $post->title }}</a></h4>
+                            <small><a href="blog-category-01.html" title="{{ $post->category->title }}">{{ $post->category->title }}</a></small>
+                            <small>{{ $post->getPostDate() }}</small>
+                        </div><!-- end meta -->
+                    </div><!-- end blog-box -->
+                </div><!-- end col -->
+            @endforeach
         </div><!-- end row -->
     </div><!-- end custom-box -->
 

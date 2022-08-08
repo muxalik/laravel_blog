@@ -63,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
             $rate = Post::pluck('likes', 'dislikes')->all();
             $likes = array_sum(array_values($rate));
             $dislikes = array_sum(array_keys($rate));
-            $view->with('avg_rating', ceil($likes / $dislikes));
+            $view->with('avg_rating', ceil($likes / $dislikes ? $dislikes : 1));
         });
     }
 }

@@ -20,14 +20,14 @@ class PostController extends Controller
         $post->views += 1;
         $post->update();
 
+        // Get similar posts
+        $array = $post->tags->random(2);
+        $first = $array[0]->posts->random(1)[0];
+        $key = $first->id;
+        $second = $array[1]->posts->except($key)->random(1)[0];
 
-        // $tags = [];
-        // foreach ($post->tags as $tag) {
-        //     $tags[] = $tag->id;
-        // }
+        $similar = [$first, $second];
 
-        // $similar_posts = Post::where('id', 'in', $tags)->limit(2)->get();
-        // dd($similar_posts);
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'similar'));
     }
 }
