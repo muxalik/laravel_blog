@@ -12,6 +12,7 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
+<link href="{{ asset('mainstyle.css') }}" rel="stylesheet">
 <script src="{{ asset('js/aos.js') }}"></script>
 
 </head>

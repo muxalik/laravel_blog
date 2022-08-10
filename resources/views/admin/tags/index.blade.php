@@ -21,7 +21,7 @@
   <!-- Main content -->
   <section class="content">
     
-    <div class="card">
+    <div class="card card-primary">
       <div class="card-header border-transparent" style="border-bottom: none">
         <h3 class="card-title">Список тегов</h3>
         <div class="card-tools">

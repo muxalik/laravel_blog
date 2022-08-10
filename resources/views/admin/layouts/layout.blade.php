@@ -386,9 +386,9 @@
     @if (session()->has('error') || session()->has('success'))
       @if (session()->has('error'))
         <div class="alerts" style="display: none">
-          <div class="alert alert-danger alert-dismissible">
+          <div class="alert my-alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <img src="{{ asset('images/icons/errors_1.png') }}" alt="error" class="alerts-icon">
+            <img src="{{ asset('images/icons/error_2.png') }}" alt="error" class="my-alerts-icon">
             <h5>
               {{-- <i class="icon fas fa-ban"></i>  --}}
               Ошибка!
@@ -400,9 +400,9 @@
         
       @if (session()->has('success'))
         <div class="alerts" style="display: none">
-          <div class="alert alert-success alert-dismissible">
+          <div class="alert my-alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <img src="{{ asset('images/icons/success_1.png') }}" alt="success" class="alerts-icon">
+            <img src="{{ asset('images/icons/success_1.png') }}" alt="success" class="my-alerts-icon">
             <h5>
               {{-- <i class="icon fas fa-check"></i>  --}}
               Уведомление!

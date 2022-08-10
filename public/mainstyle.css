@@ -2,6 +2,10 @@ aside {
     position: fixed !important;
 }
 
+label {
+    margin-top: .5rem;
+}
+
 .ck-editor__editable_inline {
     min-height: 300px;
 }
@@ -47,12 +51,12 @@ aside {
     font-size: .9rem;
 }
 
-.alert {
+.my-alert {
     position: relative;
     padding-left: 90px;
 }
 
-.alerts-icon {
+.my-alerts-icon {
     position: absolute;
     top: 50%;
     left: 5px;
@@ -110,4 +114,10 @@ aside {
 
 .card-full {
     max-height: none !important;
+}
+
+.input-group-text {
+    width: 40px !important;
+    padding: 0 !important;
+    justify-content: center !important;
 }

@@ -111,7 +111,7 @@
   <!-- Main content -->
   <section class="content">
     
-    <div class="card">
+    <div class="card card-primary">
       <div class="card-header border-transparent" style="border-bottom: none">
         <h3 class="card-title">Список категорий</h3>
         <div class="card-tools">
@@ -131,7 +131,7 @@
         
       <div class="card-footer clearfix" style="">
         <a href="{{ route('categories.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-          <img src="../../images/icons/add_1.png" class="my-icon"> 
+          <img src="{{ asset('images/icons/add_1.png') }}" class="my-icon"> 
           Добавить категорию
         </a>
         <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh" data-source="{{ route('categories.refresh') }}" data-card-widget="card-refresh">
@@ -140,7 +140,7 @@
         </button>
         @if (count($categories))
           <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
-            <img src="../../images/icons/delete_1.png" class="my-icon"> 
+            <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon"> 
             Удалить все категории
           </a>
         @endif

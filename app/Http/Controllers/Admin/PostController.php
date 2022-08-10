@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'tags');
+        $posts = Post::with('category', 'tags')->get();
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -57,7 +57,7 @@ class PostController extends Controller
         $post = Post::create($data);
         $post->tags()->sync($request->tags);
         
-        return redirect()->route('posts.index')->with('success', 'Статья добавлена');
+        return redirect()->route('posts.index')->with('success', 'Статья успешно добавлена');
     }
 
     /**
@@ -99,7 +99,7 @@ class PostController extends Controller
         $post->update($data);
         $post->tags()->sync($request->tags);
         
-        return redirect()->route('posts.index')->with('success', 'Изменения сохранены');
+        return redirect()->route('posts.index')->with('success', 'Изменения успешно сохранены');
     }
 
     /**
@@ -117,6 +117,6 @@ class PostController extends Controller
             Storage::delete($post->thumbnail);
             
         $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Статья удалена');
+        return redirect()->route('posts.index')->with('success', 'Статья успешно удалена');
     }
 }

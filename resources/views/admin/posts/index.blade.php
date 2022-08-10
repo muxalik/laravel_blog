@@ -21,7 +21,7 @@
   <!-- Main content -->
   <section class="content">
     
-    <div class="card">
+    <div class="card card-primary">
       <div class="card-header border-transparent" style="border-bottom: none">
         <h3 class="card-title">Список статей</h3>
         <div class="card-tools">
@@ -75,7 +75,7 @@
                     </td>
                   </tr>
                   <tr class="expandable-body">
-                    <td colspan="6">
+                    <td colspan="9">
                       <p>
                       {{ $post->description }}
                       </p>

@@ -42,7 +42,7 @@ class CategoryController extends Controller
         ]);
 
         Category::create($request->all());
-        return redirect()->route('categories.index')->with('success', 'Категория добавлена');
+        return redirect()->route('categories.index')->with('success', 'Категория успешно добавлена');
     }
 
     /**
@@ -72,7 +72,7 @@ class CategoryController extends Controller
         
         $category = Category::find($id);
         $category->update($request->all());
-        return redirect()->route('categories.index')->with('success', 'Изменения сохранены');
+        return redirect()->route('categories.index')->with('success', 'Изменения успешно сохранены');
     }
 
     /**
@@ -85,10 +85,10 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         if ($category->posts->count()) {
-            return redirect()->route('categories.index')->with('error', 'Ошибка! У категории есть записи');
+            return redirect()->route('categories.index')->with('error', 'У категории есть записи');
         }
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Категория удалена');
+        return redirect()->route('categories.index')->with('success', 'Категория успешно удалена');
     }
 
     public function refresh()

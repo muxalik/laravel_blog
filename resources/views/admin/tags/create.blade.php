@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Добавление тега</h3>
                     </div>
@@ -38,10 +38,10 @@
                         </div>
                         <div class="card-footer">
                           <button type="submit" class="btn btn-primary mb-2 mr-2 my-icon-container">
-                            <img src="../../images/icons/save_1.png" class="my-icon"> 
+                            <img src="{{ asset('images/icons/save_1.png') }}" class="my-icon"> 
                             Сохранить
                           </button>
-                          <a href="{{ asset('admin/tags') }}" class="btn btn-danger mb-2 mr-2 my-icon-container">
+                          <a href="{{ route('tags.index') }}" class="btn btn-danger mb-2 mr-2 my-icon-container">
                             <img src="{{ asset('images/icons/cancel_1.png') }}" class="my-icon" alt="cancel"> 
                             Отменить
                           </a>
