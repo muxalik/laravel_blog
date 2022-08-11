@@ -16,13 +16,16 @@
     'resources/assets/admin/plugins/select2/css/select2.css',
     'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css',
     'resources/assets/admin/css/adminlte.css',
-    'resources/assets/admin/js/pace.js',
     'resources/assets/admin/css/pace.css',
+    'resources/assets/admin/css/sweetalert.css',
+
+    'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js',
-    'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/js/adminlte.js',
     'resources/assets/admin/js/demo.js',
+    'resources/assets/admin/js/pace.js',
+    'resources/assets/admin/js/sweetalert.js',
     
   ])
 
@@ -33,9 +36,9 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 
-  <div class="preloader flex-column justify-content-center align-items-center" style="height: 0px;">
-    <img class="animation__shake" src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60" style="display: none;">
-    </div>
+  {{-- <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+  </div> --}}
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">

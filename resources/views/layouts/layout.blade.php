@@ -23,6 +23,11 @@
     <script src="{{ asset('js/aos.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('mainstyle.css') }}">
 
+    @vite([
+        'resources/assets/admin/css/sweetalert.css',
+        'resources/assets/admin/js/sweetalert.js',
+    ])
+
     @yield('links')
 
 </head>

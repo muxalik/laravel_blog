@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ class PostController extends Controller
 
     public function show($slug)
     {
+        // Get necessary post
         $post = Post::where('slug', $slug)->firstOrFail();
         $post->views += 1;
         $post->update();
@@ -25,9 +27,11 @@ class PostController extends Controller
         $first = $array[0]->posts->random(1)[0];
         $key = $first->id;
         $second = $array[1]->posts->except($key)->random(1)[0];
-
         $similar = [$first, $second];
 
-        return view('posts.show', compact('post', 'similar'));
+        // Get comments
+        $comments = $post->comments;
+
+        return view('posts.show', compact('post', 'similar', 'comments'));
     }
 }

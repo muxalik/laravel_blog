@@ -88,6 +88,13 @@ class UserController extends Controller
         return redirect()->route('home')->with('success', 'Сообщение было успешно отправлено');
     }
 
+    public function commentStore(Request $request)
+    {
+        $request->validate([
+            'content' => 'required'
+        ]);
+    }
+
     public function refresh()
     {
         $data = Post::all();
