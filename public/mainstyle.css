@@ -112,6 +112,10 @@ label {
     max-height: calc(100vh - 355px)
 }
 
+.table-maximized {
+    max-height: initial !important;
+}
+
 .card-full {
     max-height: none !important;
 }

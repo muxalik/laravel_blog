@@ -1,5 +1,5 @@
 
-<div class="card-body table-responsive p-0">
+<div class="card-body table-responsive p-0" id="table">
   @if (count($categories))
     <table class="table table-head-fixed table-bordered table-hover">
       <thead>

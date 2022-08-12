@@ -493,6 +493,16 @@
     return false;
   });
 
+
+  $('#card').on('maximized.lte.cardwidget', () => {
+    $('#table').addClass('table-maximized');
+  });
+
+  $('#card').on('minimized.lte.cardwidget', () => {
+    $('#table').removeClass('table-maximized');
+  });
+
+
 </script>
 
 @yield('countUp')

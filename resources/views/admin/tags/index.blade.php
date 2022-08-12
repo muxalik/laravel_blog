@@ -21,17 +21,17 @@
   <!-- Main content -->
   <section class="content">
     
-    <div class="card card-primary">
+    <div class="card card-primary" id="card">
       <div class="card-header border-transparent" style="border-bottom: none">
         <h3 class="card-title">Список тегов</h3>
         <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+          <button type="button" class="btn btn-tool" id="maximize" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
           <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
         </div>
       </div>
       
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive p-0" id="table">
           @if (count($tags))
             <table class="table table-head-fixed table-bordered table-hover">
               <thead>

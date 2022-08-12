@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Message;
 use App\Models\Post;
 use App\Models\User;
@@ -88,11 +89,19 @@ class UserController extends Controller
         return redirect()->route('home')->with('success', 'Сообщение было успешно отправлено');
     }
 
-    public function commentStore(Request $request)
+    public function commentStore(Request $request, $id)
     {
         $request->validate([
             'content' => 'required'
         ]);
+
+        Comment::create([
+            'user_id' => Auth::user()->id,
+            'post_id' => $id,
+            'content' => $request->content
+        ]);
+
+        return redirect()->back();
     }
 
     public function refresh()

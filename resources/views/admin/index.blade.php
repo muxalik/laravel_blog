@@ -73,7 +73,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header" id="card">
               <h3 class="card-title">Fixed Header Table</h3>
               <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
@@ -87,7 +87,7 @@
               </div>
             </div>
             
-            <div class="card-body table-responsive p-0" style="height: 300px;">
+            <div class="card-body table-responsive p-0" style="height: 300px;" id="table">
             <table class="table table-head-fixed text-nowrap">
             <thead>
             <tr>

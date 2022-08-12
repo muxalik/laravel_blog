@@ -137,7 +137,7 @@
         <h4 class="small-title">Leave a Reply</h4>
         <div class="row">
             <div class="col-lg-12">
-                <form class="form-wrapper" action="{{ route('comments.store') }}" method="POST">
+                <form class="form-wrapper" action="{{ route('comments.store', $post->id) }}#reply" method="POST">
                     @csrf
                     <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Your comment"></textarea>
                     <button type="submit" class="btn btn-primary" style="cursor: pointer">Submit Comment</button>
