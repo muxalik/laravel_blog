@@ -26,7 +26,9 @@
 <body>
 
     <div id="wrapper">
+
         @include('layouts.header')
+
         <div class="page-title db">
             <div class="container">
                 <div class="row" data-aos="zoom-in">
@@ -106,7 +108,9 @@
                 </div><!-- end row -->
             </div><!-- end container -->
         </section>
+
         @include('layouts.footer')
+        
         <div class="dmtop">Scroll to Top</div>
         
     </div><!-- end wrapper -->

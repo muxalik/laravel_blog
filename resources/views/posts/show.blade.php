@@ -15,16 +15,12 @@
             <li class="breadcrumb-item"><a href="{{ route('categories.single', ['slug' => $post->category->slug]) }}">{{ $post->category->title }}</a></li>
             <li class="breadcrumb-item active">{{ $post->title }}</li>
         </ol>
-
         <span class="color-yellow"><a href="{{ route('categories.single', ['slug' => $post->category->slug]) }}" title="">{{ $post->category->title }}</a></span>
-
         <h3>{{ $post->title }}</h3>
-
         <div class="blog-meta big-meta">
             <small>{{ $post->getPostDate() }}</small>
             <small><i class="fa fa-eye"></i> <span id="views_count" class="d-inline">{{ $post->views }}</span></small>
         </div><!-- end meta -->
-        {{-- {{ dd($post) }} --}}
         <div class="post-sharing">
             <ul class="list-inline">
                 <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
@@ -47,12 +43,10 @@
         @if ($post->tags->count())
             <div class="tag-cloud-single">
                 <span>Tags</span>
-
                 @foreach ($post->tags as $tag)
                     <small><a href="{{ route('tags.single', ['slug' => $tag->slug]) }}" title="">{{ $tag->title }}</a></small>
                 @endforeach
-
-            </div><!-- end meta -->
+            </div>
         @endif
 
         <div class="post-sharing">
@@ -176,7 +170,7 @@
             return;
         }
 
-        if (disliked) { 
+        if (disliked) {
             dislikeCount.textContent = +dislikeCount.textContent - 1; 
             disliked = false;
         }
@@ -201,7 +195,7 @@
         likeCount.textContent = +likeCount.textContent + 1; 
         liked = true
 
-        console.log('Likes' + {{ $post->likes }})
+        console.log('Likes ' + {{ $post->likes }} + ' ' + likeCount.textContent)
     });
 
     dislike.addEventListener('click', () => {

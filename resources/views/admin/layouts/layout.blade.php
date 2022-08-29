@@ -470,28 +470,32 @@
   });
 
 
-  $(function() {
-    $('#refresh').on('click', function() {
+  // $(function() {
+  //   $('#refresh').on('click', function() {
 
-      $.ajax({
+  //     $.ajax({
 
-        url: "/refresh",
-        type: "GET",
-        headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (data) {
-          console.log(data)
-        },
-        error: function (msg) {
-          alert('Ошибка');
-        }
+  //       url: "/refresh",
+  //       type: "GET",
+  //       headers: {
+  //       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+  //       },
+  //       success: function (data) {
+  //         console.log(data)
+  //       },
+  //       error: function (msg) {
+  //         alert('Ошибка');
+  //       }
 
-      });
-    });
+  //     });
+  //   });
 
-    return false;
-  });
+  //   return false;
+  // });
+
+  // $('#card').CardRefresh({
+  //   'source': '{{ route('categories.refresh') }}'
+  // });
 
 
   $('#card').on('maximized.lte.cardwidget', () => {

@@ -53,9 +53,8 @@ class UserController extends Controller
         ])) {
             session()->flash('success', 'Вы успешно вошли в систему');
 
-            if (Auth::user()->is_admin) {
+            if (Auth::user()->is_admin) 
                 return redirect()->route('admin.index');
-            }
 
             return redirect()->route('home');
         }
@@ -94,6 +93,9 @@ class UserController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
+        
+        if (!Auth::check()) 
+            return redirect()->route('login.create');
 
         Comment::create([
             'user_id' => Auth::user()->id,

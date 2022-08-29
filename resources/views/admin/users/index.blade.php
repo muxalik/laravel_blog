@@ -64,9 +64,9 @@
                       <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1" title="Редактировать">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
-                      <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1" title="Войти">
+                      {{-- <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1" title="Войти">
                         <i class="fas fa-arrow-circle-right"></i>
-                      </a>
+                      </a> --}}
                       <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" class="float-left mr-1" title="Удалить">
                         @csrf
                         @method('DELETE')

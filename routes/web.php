@@ -20,7 +20,7 @@ Route::get('/tag/{slug}', 'TagController@show')->name('tags.single');
 Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/contact', 'UserController@contactForm')->name('contact');
 Route::post('/contact/store', 'UserController@contactStore')->name('contact.store');
-Route::post('/comment/store', 'UserController@commentStore')->name('comments.store');
+Route::post('/comment/{id}/store', 'UserController@commentStore')->name('comments.store');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
