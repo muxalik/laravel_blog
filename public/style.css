@@ -598,7 +598,12 @@ div.tab button:hover {
 
 .footer {
     padding: 4rem 0 4rem;
+    filter: brightness(200%);
     background: url(images/footer.png) repeat-x center bottom #edeff2;
+}
+
+.footer .container { 
+    filter: brightness(50%);
 }
 
 .footer.wb {
