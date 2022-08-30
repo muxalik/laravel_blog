@@ -57,13 +57,16 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('admin.index', function($view) {
             $view->with('users_count', User::count('id'));
-            $view->with('posts_count', Post::count('id'));
-            $view->with('avg_views', Post::pluck('views')->all());
+            $posts = Post::count('id');
+            $view->with('posts_count', $posts);
+            $view->with('avg_views', ceil(collect(Post::pluck('views')->all())->avg()));
 
             $rate = Post::pluck('likes', 'dislikes')->all();
             $likes = array_sum(array_values($rate));
             $dislikes = array_sum(array_keys($rate));
-            $view->with('avg_rating', ceil($likes / $dislikes ? $dislikes : 1));
+            $view->with('avg_rating', ceil(($likes - $dislikes) / $posts 
+                ? ($likes - $dislikes) / $posts 
+                : 1));
         });
     }
 }

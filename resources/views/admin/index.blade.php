@@ -178,7 +178,7 @@
       new CountUp('posts_count', {{ $posts_count }}, { enableScrollSpy: true })
       .handleScroll();
 
-      new CountUp('views_count', {{ ceil(collect($avg_views)->avg()) }}, { enableScrollSpy: true })
+      new CountUp('views_count', {{ $avg_views }}, { enableScrollSpy: true })
       .handleScroll();
 
       new CountUp('users_count', {{ $users_count }}, { enableScrollSpy: true })
