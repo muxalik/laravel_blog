@@ -15,10 +15,6 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Marketing', 'Make Money', 'Blog', 'Programming'];
-        foreach ($categories as $category) 
-        {
-            Category::create(['title' => $category]);
-        }
+        Category::factory(4)->create();
     }
 }

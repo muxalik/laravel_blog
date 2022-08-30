@@ -15,10 +15,6 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = ['Marketing', 'SEO', 'Digital Agency', 'Blogging', 'Video Tuts', 'Teamwork', 'Coding', 'Books', 'Frontend', 'Backend', 'HTML', 'CSS', 'JavaScript', 'Python', 'PHP', 'C#', 'Java', 'Game Development'];
-        foreach ($tags as $tag) 
-        {
-            Tag::create(['title' => $tag]);
-        }
+        Tag::factory(18)->create();
     }
 }

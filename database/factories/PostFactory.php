@@ -22,14 +22,14 @@ class PostFactory extends Factory
         $dislikes = fake()->numberBetween(50, floor($likes / 2));
 
         return [
-            'title' => fake()->sentence(10),
+            'title' => fake()->text(60),
             'description' => fake()->paragraph(4),
             'content' => fake()->text(3000),
             'category_id' => fake()->numberBetween(1, 4),
             'views' => $views,
             'likes' => $likes,
             'dislikes' => $dislikes,
-            'thumbnail' => 'images/' . date('Y-m-d') . '/post-' . fake()->unique()->numberBetween(1, 13) . '.jpg'
+            'thumbnail' => 'images/2022-08-29/post-' . fake()->unique()->numberBetween(1, 13) . '.jpg'
         ];
     }
 }
