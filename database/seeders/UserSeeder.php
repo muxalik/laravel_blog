@@ -38,6 +38,6 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        User::factory(117)->create();
+        User::factory(17)->create();
     }
 }

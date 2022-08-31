@@ -16,8 +16,13 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory(13)
-            // ->has(Tag::factory(fake()->numberBetween(3, 9)))
-            ->create();
+        Post::factory(13)->create();
+
+        $posts = Post::all();
+        Tag::all()->each(function ($tag) use ($posts) {
+            $tag->posts()->attach(
+                $posts->random(fake()->numberBetween(3, 10))->pluck('id')->toArray()
+            );
+        });
     }
 }

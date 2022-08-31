@@ -16,7 +16,7 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $tags = ['Marketing', 'SEO', 'Digital Agency', 'Blogging', 'Video Tuts', 'Teamwork', 'Coding', 'Books', 'Frontend', 'Backend', 'HTML', 'CSS', 'JavaScript', 'Python', 'PHP', 'C#', 'Java', 'Game Development'];
+        $tags = ['SEO', 'Digital Agency', 'Blogging', 'Video Tuts', 'Teamwork', 'Coding', 'Books', 'Frontend', 'Backend', 'HTML', 'CSS', 'JavaScript', 'Python', 'PHP', 'C#', 'Java', 'Game Development'];
 
         return [
             'title' => fake()->unique()->randomElement($tags)

@@ -37,11 +37,7 @@
                                     <div>
                                         <h5 class="mb-1">{{ $post->title }}</h5>
                                         <span class="rating position-absolute">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            <small>{{ $post->likes }} Likes {{ $post->dislikes }} Dislikes</small>
                                         </span>
                                     </div>
                                 </div>

@@ -16,7 +16,6 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-
         $views    = fake()->numberBetween(700, 5000);
         $likes    = fake()->numberBetween(200, floor($views / 4));
         $dislikes = fake()->numberBetween(50, floor($likes / 2));
