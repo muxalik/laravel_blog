@@ -13,7 +13,9 @@
                                         <img src="{{ $post->getImage() }}" alt="recent_post" class="img-fluid float-left">
                                         <div>
                                             <h5 class="mb-1">{{ $post->title }}</h5>
-                                            <small>{{ $post->getPostDate() }}</small>
+                                            <span>
+                                                <small>{{ $post->getPostDate() }}</small>
+                                            <span>
                                         </div>
                                     </div>
                                 </a>
@@ -36,7 +38,7 @@
                                     <img src="{{ $post->getImage() }}" alt="popular_post" class="img-fluid float-left">
                                     <div>
                                         <h5 class="mb-1">{{ $post->title }}</h5>
-                                        <span class="rating position-absolute">
+                                        <span class="rating">
                                             <small>{{ $post->likes }} Likes {{ $post->dislikes }} Dislikes</small>
                                         </span>
                                     </div>

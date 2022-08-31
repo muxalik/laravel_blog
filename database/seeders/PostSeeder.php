@@ -16,12 +16,14 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory(13)->create();
-
+        Post::factory(env('POST_AMOUNT', 13))->create();
         $posts = Post::all();
-        Tag::all()->each(function ($tag) use ($posts) {
+        $min = 3;
+        $max = 10 <= env('TAGS_AMOUNT', 17) ? 10 : env('TAGS_AMOUNT');
+
+        Tag::all()->each(function ($tag) use ($posts, $min, $max) {
             $tag->posts()->attach(
-                $posts->random(fake()->numberBetween(3, 10))->pluck('id')->toArray()
+                $posts->random(fake()->numberBetween($min, $max))->pluck('id')->toArray()
             );
         });
     }

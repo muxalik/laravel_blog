@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'views' => $views,
             'likes' => $likes,
             'dislikes' => $dislikes,
-            'thumbnail' => 'images/2022-08-29/post-' . fake()->unique()->numberBetween(1, 13) . '.jpg'
+            'thumbnail' => 'images/2022-08-29/post-' . fake()->unique()->numberBetween(1, env('POSTS_AMOUNT', 13)) . '.jpg'
         ];
     }
 }

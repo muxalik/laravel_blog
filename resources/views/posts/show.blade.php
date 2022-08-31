@@ -81,7 +81,7 @@
                 <div class="col-lg-6">
                     <div class="blog-box">
                         <div class="post-media">
-                            <a href="marketing-single.html" title="">
+                            <a href="{{ route('posts.single', ['slug' => $sim_post->slug]) }}" title="">
                                 <img src="{{ $sim_post->getImage() }}" alt="post_image" class="img-fluid">
                                 <div class="hovereffect">
                                     <span class=""></span>
@@ -89,7 +89,7 @@
                             </a>
                         </div><!-- end media -->
                         <div class="blog-meta">
-                            <h4><a href="marketing-single.html" title="{{ $sim_post->title }}">{{ $sim_post->title }}</a></h4>
+                            <h4><a href="{{ route('posts.single', ['slug' => $sim_post->slug]) }}" title="{{ $sim_post->title }}">{{ $sim_post->title }}</a></h4>
                             <small><a href="blog-category-01.html" title="{{ $sim_post->category->title }}">{{ $sim_post->category->title }}</a></small>
                             <small>{{ $sim_post->getPostDate() }}</small>
                         </div><!-- end meta -->
