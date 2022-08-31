@@ -77,6 +77,7 @@
     <div class="custombox clearfix" data-aos="zoom-in">
         <h4 class="small-title">You may also like</h4>
         <div class="row">
+
             @foreach($similar as $sim_post)
                 <div class="col-lg-6">
                     <div class="blog-box">
@@ -96,6 +97,7 @@
                     </div><!-- end blog-box -->
                 </div><!-- end col -->
             @endforeach
+
         </div><!-- end row -->
     </div><!-- end custom-box -->
 
@@ -107,10 +109,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="comments-list">
+
                         @foreach ($comments as $comment)
                             <div class="media">
                                 <a class="media-left" href="#">
-                                    <img src="{{ asset('upload/author.jpg') }}" alt="avatar" class="rounded-circle">
+                                    <img src="{{ asset('images/avatar'. mt_rand(1, 5) . '.png') }}" alt="avatar" class="rounded-circle">
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading user_name">{{ $comment->user->name }} <small>{{ $comment->getDate() }}</small></h4>
@@ -119,6 +122,7 @@
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                 </div><!-- end col -->
             </div><!-- end row -->
