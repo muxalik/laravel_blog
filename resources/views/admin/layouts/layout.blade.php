@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <!-- Icons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -17,7 +18,6 @@
     'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css',
     'resources/assets/admin/css/adminlte.css',
     'resources/assets/admin/css/pace.css',
-    'resources/assets/admin/css/sweetalert.css',
                 
     'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/plugins/select2/js/select2.full.js',
@@ -25,7 +25,6 @@
     'resources/assets/admin/js/adminlte.js',
     'resources/assets/admin/js/demo.js',
     'resources/assets/admin/js/pace.js',
-    'resources/assets/admin/js/sweetalert.js',
   ])
 
   <link rel="stylesheet" href="{{ asset('mainstyle.css') }}">
@@ -388,45 +387,28 @@
 
     @yield('content')
 
-    @if (session()->has('error') || session()->has('success'))
-      @if (session()->has('error'))
-        <div class="alerts" style="display: none">
-          <div class="alert my-alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <img src="{{ asset('images/icons/error_2.png') }}" alt="error" class="my-alerts-icon">
-            <h5>
-              {{-- <i class="icon fas fa-ban"></i>  --}}
-              Ошибка!
-            </h5>
-            {{ session('error') }}.
-          </div>
-        </div>
-      @endif
-        
-      @if (session()->has('success'))
-        <div class="alerts" style="display: none">
-          <div class="alert my-alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <img src="{{ asset('images/icons/success_1.png') }}" alt="success" class="my-alerts-icon">
-            <h5>
-              {{-- <i class="icon fas fa-check"></i>  --}}
-              Уведомление!
-            </h5>
-            {{ session('success') }}.
-          </div>
-        </div>
-      @endif
-
+    @if (session()->has('error'))
       <script>
-
-        $(".alerts").fadeIn(700);
-          
-        setTimeout(() => {
-          $(".alerts").fadeOut(500).hide(500);
-        }, 1000 * 5);
-
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: '{{ session('error') }}',
+          showConfirmButton: false,
+          timer: 1500
+        })
       </script>
-
+    @endif
+      
+    @if (session()->has('success'))
+      <script>
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: '{{ session('success') }}',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      </script>
     @endif
 
   </div>
@@ -505,6 +487,23 @@
     $('#table').removeClass('table-maximized');
   });
 
+  $('#deleteAll').on('click', (event) => {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#007bff',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'Yes, delete everything!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log($(event.target).closest('form').submit());
+      }
+    })
+  });
+  
 
 </script>
 

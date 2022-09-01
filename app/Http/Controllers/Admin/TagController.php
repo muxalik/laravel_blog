@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -79,11 +80,20 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $tag = Tag::find($id);
-        if ($tag->posts->count()) {
+        if ($id === 'all') {
+            $data = DB::select('SELECT * FROM post_tag LIMIT 1');
+            if (!count($data)) {
+                Tag::truncate();
+                return redirect()->route('tags.index')->with('success', 'Все теги успешно удалены');
+            }
             return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
+        } else {
+            $tag = Tag::find($id);
+            if ($tag->posts->count()) 
+                return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
+            
+            $tag->delete();
+            return redirect()->route('tags.index')->with('success', 'Тег успешно удален');
         }
-        $tag->delete();
-        return redirect()->route('tags.index')->with('success', 'Тег успешно удален');
     }
 }
