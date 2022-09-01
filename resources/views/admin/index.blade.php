@@ -1,5 +1,7 @@
 @extends('admin.layouts.layout')
 
+@section('title', 'Home')
+
 @section('content')
 
   <section class="content-header">
@@ -25,7 +27,7 @@
             <div class="icon">
               <i class="ion ion-document"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('posts.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -51,7 +53,7 @@
             <div class="icon">
               <i class="fas fa-user-plus"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
       

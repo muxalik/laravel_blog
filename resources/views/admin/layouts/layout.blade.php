@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Admin Page</title>
+  <title>Admin @yield('title')</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -18,7 +18,9 @@
     'resources/assets/admin/css/adminlte.css',
     'resources/assets/admin/css/pace.css',
     'resources/assets/admin/css/sweetalert.css',
-
+    'resources/assets/admin/css/jsgrid-theme.min.css',
+    'resources/assets/admin/css/jsgrid.min.css',
+                
     'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
     'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js',
@@ -26,7 +28,7 @@
     'resources/assets/admin/js/demo.js',
     'resources/assets/admin/js/pace.js',
     'resources/assets/admin/js/sweetalert.js',
-    
+    'resources/assets/admin/js/jsgrid.min.js',
   ])
 
   <link rel="stylesheet" href="{{ asset('mainstyle.css') }}">

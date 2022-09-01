@@ -11,6 +11,8 @@ export default defineConfig({
                 'resources/assets/admin/css/adminlte.css',
                 'resources/assets/admin/css/pace.css',
                 'resources/assets/admin/css/sweetalert.css',
+                'resources/assets/admin/css/jsgrid-theme.min.css',
+                'resources/assets/admin/css/jsgrid.min.css',
 
                 'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
                 'resources/assets/admin/plugins/select2/js/select2.full.js',
@@ -19,6 +21,7 @@ export default defineConfig({
                 'resources/assets/admin/js/demo.js',
                 'resources/assets/admin/js/pace.js',
                 'resources/assets/admin/js/sweetalert.js',
+                'resources/assets/admin/js/jsgrid.min.js',
             ],
             refresh: true,
         }),

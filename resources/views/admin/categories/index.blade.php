@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 
+@section('title', 'Categories Index')
 
 @section('content')
   <!-- Content Header (Page header) -->

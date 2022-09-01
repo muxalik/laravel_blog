@@ -1,5 +1,7 @@
 @extends('admin.layouts.layout')
 
+@section('title', 'Posts Create')
+
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
