@@ -394,7 +394,7 @@
           icon: 'error',
           title: '{{ session('error') }}',
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         })
       </script>
     @endif

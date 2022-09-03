@@ -85,7 +85,7 @@
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger mb-2 mr-2 my-icon-container" id="deleteAll">
-              <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete"> 
+              <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="deleteAll"> 
               Удалить все теги
             </button>
           </form>

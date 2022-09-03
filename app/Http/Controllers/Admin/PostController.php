@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -110,6 +111,12 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        if ($id === 'all') {
+            Post::truncate();
+            DB::table('post_tag')->truncate();
+            return redirect()->route('posts.index')->with('success', 'Все статьи успешно удалены');
+        }
+
         $post = Post::find($id);
         $post->tags()->sync([]);
 

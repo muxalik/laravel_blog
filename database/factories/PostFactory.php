@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,7 @@ class PostFactory extends Factory
             'title' => fake()->text(60),
             'description' => fake()->paragraph(4),
             'content' => fake()->text(3000),
-            'category_id' => fake()->numberBetween(1, 4),
+            'category_id' => Category::all()->random()->id,
             'views' => $views,
             'likes' => $likes,
             'dislikes' => $dislikes,

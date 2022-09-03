@@ -96,10 +96,14 @@
             Обновить
           </button>
           @if (count($users))
-            <a class="btn btn-danger mb-2 mr-2 my-icon-container" onclick="return confirm('Подтвердите удаление')">
-              <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete"> 
-              Удалить всех пользователей
-            </a>
+            <form action="{{ route('users.destroy', ['user' => 'all']) }}" method="POST" class="d-inline-block">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger mb-2 mr-2 my-icon-container" id="deleteAll">
+                <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="deleteAll"> 
+                  Удалить всех пользователей
+              </button>
+            </form>
           @endif
         </div>
       

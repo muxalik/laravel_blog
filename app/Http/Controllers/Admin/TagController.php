@@ -87,13 +87,13 @@ class TagController extends Controller
                 return redirect()->route('tags.index')->with('success', 'Все теги успешно удалены');
             }
             return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
-        } else {
-            $tag = Tag::find($id);
-            if ($tag->posts->count()) 
-                return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
-            
-            $tag->delete();
-            return redirect()->route('tags.index')->with('success', 'Тег успешно удален');
         }
+        
+        $tag = Tag::find($id);
+        if ($tag->posts->count()) 
+            return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
+        
+        $tag->delete();
+        return redirect()->route('tags.index')->with('success', 'Тег успешно удален');
     }
 }

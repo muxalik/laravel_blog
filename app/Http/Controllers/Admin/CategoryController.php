@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -83,6 +84,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        if ($id === 'all') {
+           $data = DB::select('SELECT * FROM posts LIMIT 1');
+            if (!count($data)) {
+                Category::truncate();
+                return redirect()->route('categories.index')->with('success', 'Все теги успешно удалены');
+            }
+            return redirect()->route('categories.index')->with('error', 'У категорий есть записи');
+        }
+
         $category = Category::find($id);
         if ($category->posts->count()) {
             return redirect()->route('categories.index')->with('error', 'У категории есть записи');

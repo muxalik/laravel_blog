@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -103,6 +104,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if ($id === 'all') {
+            DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
+            return redirect()->route('users.index')->with('success', 'Все пользователи успешно удалены');
+        }
+
         $user = User::find($id);
         $user->delete();
 
