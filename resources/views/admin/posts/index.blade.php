@@ -61,10 +61,10 @@
                   <td>{{ $post->dislikes }}</td>
                   <td>{{ $post->created_at }}</td>
                   <td class="table_actions">
-                    <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                    <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-info btn-sm float-left mr-1 table-action" title="Редактировать">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST" class="float-left">
+                    <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST" class="float-left table-action" title="Удалить">
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
@@ -78,6 +78,9 @@
                     <p>
                     {{ $post->description }}
                     </p>
+                    <p>
+                      {{ $post->content }}
+                      </p>
                   </td>
                 </tr>
               @endforeach

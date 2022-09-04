@@ -444,7 +444,7 @@
   });
 
 
-  [...document.querySelectorAll('.table_actions')].forEach(elem => {
+  [...document.querySelectorAll('.table-action')].forEach(elem => {
     elem.addEventListener('click', (event) => {
       event.stopPropagation();
     })
@@ -515,8 +515,8 @@
       confirmButtonText: 'Yes, exit!'
     }).then((result) => {
       if (result.isConfirmed) {
-        let href = window.location.href.match(/(.*\/admin\/[^\/]*)/)[1]
-        window.location.href = href
+        let href = window.location.href.match(/(.*\/admin\/[^\/]*)/)
+        window.location.href = href[1]
       }
     })
   });

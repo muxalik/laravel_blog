@@ -63,13 +63,13 @@
                       @endif
                     </td>
                     <td class="table_actions">
-                      <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1" title="Редактировать">
+                      <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1 table-action" title="Редактировать">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
                       {{-- <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1" title="Войти">
                         <i class="fas fa-arrow-circle-right"></i>
                       </a> --}}
-                      <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" class="float-left mr-1" title="Удалить">
+                      <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" class="float-left mr-1 table-action" title="Удалить">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">

@@ -19,10 +19,10 @@
             <td>{{ $category->slug }}</td>
             <td>{{ $category->posts()->count('id') }}</td>
             <td class="table_actions">
-              <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+              <a href="{{ route('categories.edit', ['category' => $category->id]) }}" class="btn btn-info btn-sm float-left mr-1 table-action" title="Редактировать">
                 <i class="fas fa-pencil-alt"></i>
               </a>
-              <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="POST" class="float-left">
+              <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="POST" class="float-left table-action" title="Удалить">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
