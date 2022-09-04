@@ -503,6 +503,23 @@
       }
     })
   });
+
+  $('#cancel').on('click', (event) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "All unsaved data will be lost!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#007bff',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'Yes, exit!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let href = window.location.href.match(/(.*\/admin\/[^\/]*)/)[1]
+        window.location.href = href
+      }
+    })
+  });
   
 
 </script>

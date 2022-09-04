@@ -43,7 +43,7 @@
                             <img src="{{ asset('images/icons/save_1.png') }}" class="my-icon"> 
                             Сохранить
                           </button>
-                          <a href="{{ route('tags.index') }}" class="btn btn-danger mb-2 mr-2 my-icon-container">
+                          <a class="btn btn-danger mb-2 mr-2 my-icon-container" id="cancel">
                             <img src="{{ asset('images/icons/cancel_1.png') }}" class="my-icon" alt="cancel"> 
                             Отменить
                           </a>

@@ -74,7 +74,7 @@
                                 </div>
                               </div>
                               <div>
-                                <img src="{{ $post->getImage() }}" alt="" class="img-thumbnail mt-2" width="200px">
+                                <img src="{{ $post->getImage() }}" alt="" class="img-thumbnail mt-4" width="200px">
                               </div>
                             </div>
 
@@ -84,7 +84,7 @@
                             <img src="{{ asset('images/icons/save_1.png') }}" class="my-icon" alt="save"> 
                             Сохранить
                           </button>
-                          <a href="{{ route('posts.index') }}" class="btn btn-danger mb-2 mr-2 my-icon-container">
+                          <a class="btn btn-danger mb-2 mr-2 my-icon-container" id="cancel">
                             <img src="{{ asset('images/icons/cancel_1.png') }}" class="my-icon" alt="cancel"> 
                             Отменить
                           </a>
