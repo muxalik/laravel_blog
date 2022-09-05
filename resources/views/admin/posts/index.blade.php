@@ -67,8 +67,8 @@
                     <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST" class="float-left table-action" title="Удалить">
                       @csrf
                       @method('DELETE')
-                      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
-                          <i class="fas fa-trash-alt"></i>
+                      <button type="submit" class="btn btn-danger btn-sm action-delete">
+                        <i class="fas fa-trash-alt"></i>
                       </button>
                     </form>
                   </td>
@@ -76,11 +76,11 @@
                 <tr class="expandable-body">
                   <td colspan="9">
                     <p>
-                    {{ $post->description }}
+                      {{ $post->description }}
                     </p>
                     <p>
                       {{ $post->content }}
-                      </p>
+                    </p>
                   </td>
                 </tr>
               @endforeach

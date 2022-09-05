@@ -59,7 +59,7 @@
                     <form action="{{ route('tags.destroy', ['tag' => $tag->id]) }}" method="POST" class="float-left table-action" title="Удалить">
                       @csrf
                       @method('DELETE')
-                      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
+                      <button type="submit" class="btn btn-danger btn-sm action-delete">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                     </form>

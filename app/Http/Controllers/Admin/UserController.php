@@ -51,15 +51,13 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        session()->flash('success', 'Пользователь успешно зарегистрирован');
-
         if ($request->check) {
             Auth::logout();
             Auth::login($user);
             return redirect()->route('home');
         }
         
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Пользователь успешно зарегистрирован');
     }
 
     // /**
@@ -81,7 +79,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -93,7 +92,36 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:64',
+            'password' => 'required|confirmed'
+        ]);
+
+        $user = User::find($id);
+
+        $user->update([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+        ]);
+
+        if (Auth::user()->email === $user->email && Auth::user() != $user) {
+            Auth::logout();
+            Auth::login($user);
+        }
+
+        if ($request->check) {
+            if (Auth::user() != $user) {
+                Auth::logout();
+                Auth::login($user);
+            }
+            
+            if ($user->is_admin) 
+                return redirect()->route('admin.index');    
+            
+            return redirect()->route('home');
+        }
+        
+        return redirect()->route('users.index')->with('success', 'Пользователь успешно зарегистрирован');
     }
 
     /**

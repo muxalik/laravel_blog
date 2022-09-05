@@ -72,8 +72,8 @@
                       <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" class="float-left mr-1 table-action" title="Удалить">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
-                            <i class="fas fa-trash-alt"></i>
+                        <button type="submit" class="btn btn-danger btn-sm action-delete">
+                          <i class="fas fa-trash-alt"></i>
                         </button>
                       </form>
                     </td>

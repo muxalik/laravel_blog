@@ -445,9 +445,28 @@
 
 
   [...document.querySelectorAll('.table-action')].forEach(elem => {
-    elem.addEventListener('click', (event) => {
+    elem.addEventListener('click', event => {
       event.stopPropagation();
     })
+  });
+
+  [...document.querySelectorAll('.action-delete')].forEach(element => {
+    element.addEventListener('click', event => {
+      event.preventDefault();
+      Swal.fire({
+        title: 'Do you really want to delete this record?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#dc3545',
+        confirmButtonText: 'Yes, delete!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $(event.target).closest('form').submit();
+        }
+      })
+    });
   });
 
 
@@ -499,7 +518,7 @@
       confirmButtonText: 'Yes, delete everything!'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log($(event.target).closest('form').submit());
+        $(event.target).closest('form').submit();
       }
     })
   });
