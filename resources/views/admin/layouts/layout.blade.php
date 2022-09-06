@@ -283,6 +283,12 @@
                   <p>Новая категория</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <div class="nav-link" data-block="categories" style="display: none">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Редактирование</p>
+                </div>
+              </li>
             </ul>
           </li>
 
@@ -306,6 +312,12 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Новый тег</p>
                 </a>
+              </li>
+              <li class="nav-item">
+                <div class="nav-link" data-block="tags" style="display: none">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Редактирование</p>
+                </div>
               </li>
             </ul>
           </li>
@@ -331,6 +343,12 @@
                   <p>Новая статья</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <div class="nav-link" data-block="posts" style="display: none">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Редактирование</p>
+                </div>
+              </li>
             </ul>
           </li>
 
@@ -354,6 +372,12 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Новый пользователь</p>
                 </a>
+              </li>
+              <li class="nav-item">
+                <div class="nav-link" data-block="users" style="display: none">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Редактирование</p>
+                </div>
               </li>
             </ul>
           </li>
@@ -428,12 +452,13 @@
 
 <script type="module">
 
-  [...document.querySelectorAll('.nav-sidebar a')].forEach(element => {
-    let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
+  [...document.querySelectorAll('.nav-sidebar .nav-link')].forEach(element => {
+    let location = window.location.href;
     let link = element.href;
 
-    if (link == location) {
+    if (link == location || location.includes(element.dataset.block) && location.includes('edit')) {
       element.classList.add('active');
+      element.style.display = 'block';
 
       if (element.closest('.has-treeview')) {
         element.closest('.has-treeview').classList.add('menu-open');
@@ -442,7 +467,6 @@
       }
     }
   });
-
 
   [...document.querySelectorAll('.table-action')].forEach(elem => {
     elem.addEventListener('click', event => {
