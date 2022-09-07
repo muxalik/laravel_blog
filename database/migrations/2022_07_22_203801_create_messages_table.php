@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
+            $table->tinyInteger('is_seen')->default(0);
             $table->string('name');
             $table->string('email');
             $table->string('phone');

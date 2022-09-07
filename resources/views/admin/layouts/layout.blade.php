@@ -8,6 +8,7 @@
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   
   <!-- Icons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -235,7 +236,7 @@
           {{-- <img src="{{ asset('images/icons/anonym_1.png') }}" alt="avatar"> --}}
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <span class="d-block" style="color: rgba(255, 255, 255, .8)">{{ Auth::user()->name }}</span>
         </div>
       </div>
 
@@ -453,7 +454,7 @@
 <script type="module">
 
   [...document.querySelectorAll('.nav-sidebar .nav-link')].forEach(element => {
-    let location = window.location.href;
+    let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
     let link = element.href;
 
     if (link == location || location.includes(element.dataset.block) && location.includes('edit')) {

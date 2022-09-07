@@ -93,7 +93,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|max:64',
+            'name' => 'required|max:64|unique:users',
             'password' => 'required|confirmed'
         ]);
 
@@ -121,7 +121,7 @@ class UserController extends Controller
             return redirect()->route('home');
         }
         
-        return redirect()->route('users.index')->with('success', 'Пользователь успешно зарегистрирован');
+        return redirect()->route('users.index')->with('success', 'Пользователь успешно сохранен');
     }
 
     /**

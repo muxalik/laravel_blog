@@ -76,7 +76,7 @@ class UserController extends Controller
     public function contactStore(Request $request) 
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:users',
             'email' => 'required|email',
             'phone' => 'required|regex:/[0-9\s]{13}/',
             'subject' => 'required|max:50',
