@@ -5,9 +5,9 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -76,6 +76,22 @@ class AppServiceProvider extends ServiceProvider
                 : 1));
 
             // Statistics
+            // Categories of posts
+            $categories = Category::pluck('title')->toArray();
+            $posts_to_cats = DB::table('posts')
+                ->select('category_id', DB::raw('count(*) as total'))
+                ->groupBy('category_id')
+                ->get()
+                ->toArray();
+
+            $posts_to_cats = array_map(function($value) {
+                return $value->total;
+            }, $posts_to_cats);
+
+            $view->with('categories', json_encode($categories));
+            $view->with('posts_to_cats', json_encode($posts_to_cats));
+
+            // Rating of latest posts
             $posts = $latest_posts = Post::orderBy('created_at')->get();
             $latest_labels = $latest_likes = $latest_dislikes = $latest_views = [];
 
@@ -93,6 +109,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('latest_likes', json_encode($latest_likes));
             $view->with('latest_dislikes', json_encode($latest_dislikes));
             $view->with('latest_views', json_encode($latest_views));
+
+            // Rating of all posts
 
         });
     }
