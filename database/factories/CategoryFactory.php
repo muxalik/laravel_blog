@@ -19,7 +19,8 @@ class CategoryFactory extends Factory
         $categories = ['Marketing', 'Make Money', 'Blog', 'Programming'];
         
         return [
-            'title' => fake()->unique()->randomElement($categories)
+            'title' => fake()->unique()->randomElement($categories),
+            'created_at' => fake()->dateTimeBetween('-1 year')
         ];
     }
 }

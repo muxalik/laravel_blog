@@ -18,7 +18,8 @@ class CommentFactory extends Factory
     {
         return [
             'user_id' => fake()->numberBetween(3, env('USERS_AMOUNT', 17)),
-            'content' => fake()->text(fake()->numberBetween(10, 100))
+            'content' => fake()->text(fake()->numberBetween(10, 100)),
+            'created_at' => fake()->dateTimeBetween('-1 year')
         ];
     }
 }

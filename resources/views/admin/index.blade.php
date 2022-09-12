@@ -212,7 +212,7 @@
         
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Bar Chart</h3>
+              <h3 class="card-title">Rating of latest posts</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -280,7 +280,7 @@
         
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Stacked Bar Chart</h3>
+              <h3 class="card-title">Rating of all posts</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -447,12 +447,36 @@
     //-------------
     //- BAR CHART -
     //-------------
+
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
+
+    var barChartData = {
+      labels  : {!! $latest_labels !!},
+      datasets: [
+        {
+          label               : 'Likes',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius         : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : {!! $latest_likes !!}
+        },
+        {
+          label               : 'Dislikes',
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'rgba(210, 214, 222, 1)',
+          pointRadius         : false,
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : {!! $latest_dislikes !!}
+        },
+      ]
+    }
 
     var barChartOptions = {
       responsive              : true,

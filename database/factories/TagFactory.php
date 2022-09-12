@@ -19,7 +19,8 @@ class TagFactory extends Factory
         $tags = ['SEO', 'Digital Agency', 'Blogging', 'Video Tuts', 'Teamwork', 'Coding', 'Books', 'Frontend', 'Backend', 'HTML', 'CSS', 'JavaScript', 'Python', 'PHP', 'C#', 'Java', 'Game Development'];
 
         return [
-            'title' => fake()->unique()->randomElement($tags)
+            'title' => fake()->unique()->randomElement($tags),
+            'created_at' => fake()->dateTimeBetween('-1 year')
         ];
     }
 }
