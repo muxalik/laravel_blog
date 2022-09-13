@@ -76,6 +76,18 @@ class AppServiceProvider extends ServiceProvider
                 : 1));
 
             // Statistics
+            // Popular tags 
+            $tags = DB::select("SELECT COUNT(*) as amount, tags.title FROM post_tag INNER JOIN tags ON tag_id = tags.id GROUP BY tag_id LIMIT 6");
+            $tags_labels = $tags_posts = [];
+
+            foreach ($tags as $tag) {
+                $tags_labels[] = $tag->title;
+                $tags_posts[] = $tag->amount;
+            }
+
+            $view->with('tags_labels', json_encode($tags_labels));
+            $view->with('tags_posts', json_encode($tags_posts));
+
             // Categories of posts
             $categories = Category::pluck('title')->toArray();
             $posts_to_cats = DB::table('posts')
@@ -92,12 +104,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('posts_to_cats', json_encode($posts_to_cats));
 
             // Rating of latest posts
-            $posts = $latest_posts = Post::orderBy('created_at')->get();
+            $posts = $latest_posts = Post::orderBy('created_at')->limit(7)->get();
             $latest_labels = $latest_likes = $latest_dislikes = $latest_views = [];
 
-            if ($posts->count() > 7) 
-                $latest_posts = $posts->slice(0, 7);
-            
             foreach ($latest_posts as $post) {
                 $latest_labels[] = $post->changePostDate();
                 $latest_likes[] = $post->likes;
@@ -111,11 +120,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('latest_views', json_encode($latest_views));
 
             // Rating of popular posts
-            if ($posts->count() > 7)
-                $posts = Post::orderBy('views')->limit(7)->get();
-            else 
-                $posts = Post::orderBy('views')->get();
-
+            $posts = Post::orderBy('views')->limit(7)->get();
             $popular_labels = $popular_likes = $popular_dislikes = $popular_views = [];
 
             foreach ($posts as $post) {

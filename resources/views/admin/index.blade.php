@@ -192,7 +192,7 @@
         
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Donut Chart</h3>
+              <h3 class="card-title">Popular tags</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -384,17 +384,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
-      labels: [
-          'Chrome',
-          'IE',
-          'FireFox',
-          'Safari',
-          'Opera',
-          'Navigator',
-      ],
+      labels: {!! $tags_labels !!},
       datasets: [
         {
-          data: [700,500,400,600,300,100],
+          data: {!! $tags_posts !!},
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
         }
       ]
@@ -412,7 +405,7 @@
     })
 
     //-------------
-    //- PIE CHART -
+    //- categories of posts -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
@@ -438,7 +431,7 @@
     })
 
     //-------------
-    //- BAR CHART -
+    //- latest posts -
     //-------------
 
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
@@ -484,7 +477,7 @@
     })
 
     //---------------------
-    //- STACKED BAR CHART -
+    //- popular posts -
     //---------------------
     var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
     var stackedBarChartData = $.extend(true, {}, barChartData)
