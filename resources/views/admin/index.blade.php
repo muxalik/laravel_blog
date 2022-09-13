@@ -280,7 +280,7 @@
         
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Rating of all posts</h3>
+              <h3 class="card-title">Rating of popular posts</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -488,6 +488,10 @@
     //---------------------
     var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
     var stackedBarChartData = $.extend(true, {}, barChartData)
+
+    stackedBarChartData.labels = {!! $popular_labels !!}
+    stackedBarChartData.datasets[0].data = {!! $popular_likes !!}
+    stackedBarChartData.datasets[1].data = {!! $popular_dislikes !!}
 
     var stackedBarChartOptions = {
       responsive              : true,

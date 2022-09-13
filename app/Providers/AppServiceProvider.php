@@ -110,8 +110,25 @@ class AppServiceProvider extends ServiceProvider
             $view->with('latest_dislikes', json_encode($latest_dislikes));
             $view->with('latest_views', json_encode($latest_views));
 
-            // Rating of all posts
+            // Rating of popular posts
+            if ($posts->count() > 7)
+                $posts = Post::orderBy('views')->limit(7)->get();
+            else 
+                $posts = Post::orderBy('views')->get();
 
+            $popular_labels = $popular_likes = $popular_dislikes = $popular_views = [];
+
+            foreach ($posts as $post) {
+                $popular_labels[] = $post->changePostDate();
+                $popular_likes[] = $post->likes;
+                $popular_dislikes[] = $post->dislikes;
+                $popular_views[] = $post->views;
+            }
+
+            $view->with('popular_labels', json_encode($popular_labels));
+            $view->with('popular_likes', json_encode($popular_likes));
+            $view->with('popular_dislikes', json_encode($popular_dislikes));
+            $view->with('popular_views', json_encode($popular_views));
         });
     }
 }
