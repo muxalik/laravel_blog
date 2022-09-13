@@ -88,20 +88,17 @@ class AppServiceProvider extends ServiceProvider
             $view->with('tags_labels', json_encode($tags_labels));
             $view->with('tags_posts', json_encode($tags_posts));
 
-            // Categories of posts
-            $categories = Category::pluck('title')->toArray();
-            $posts_to_cats = DB::table('posts')
-                ->select('category_id', DB::raw('count(*) as total'))
-                ->groupBy('category_id')
-                ->get()
-                ->toArray();
+            // Popular categories
+            $categories = DB::select("SELECT COUNT(*) AS amount, categories.title FROM posts INNER JOIN categories ON category_id = categories.id GROUP BY category_id");
+            $categories_labels = $categories_posts = [];
 
-            $posts_to_cats = array_map(function($value) {
-                return $value->total;
-            }, $posts_to_cats);
+            foreach ($categories as $category) {
+                $categories_labels[] = $category->title;
+                $categories_posts[] = $category->amount;
+            }
 
-            $view->with('categories', json_encode($categories));
-            $view->with('posts_to_cats', json_encode($posts_to_cats));
+            $view->with('categories_labels', json_encode($categories_labels));
+            $view->with('categories_posts', json_encode($categories_posts));
 
             // Rating of latest posts
             $posts = $latest_posts = Post::orderBy('created_at')->limit(7)->get();
