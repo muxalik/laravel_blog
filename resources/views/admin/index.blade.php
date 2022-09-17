@@ -167,29 +167,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-        
-          <div class="card card-info">
-            <div class="card-header">
-              <h3 class="card-title">Area Chart</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" id="maximize" data-card-widget="maximize">
-                  <i class="fas fa-expand"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 797px;" width="797" height="250" class="chartjs-render-monitor"></canvas>
-              </div>
-            </div>
-          </div>
-        
+
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Popular tags</h3>
@@ -235,28 +213,6 @@
         </div>
         
         <div class="col-md-6">
-        
-          <div class="card card-info">
-            <div class="card-header">
-              <h3 class="card-title">Line Chart</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" id="maximize" data-card-widget="maximize">
-                  <i class="fas fa-expand"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 797px;" width="797" height="250" class="chartjs-render-monitor"></canvas>
-              </div>
-            </div>
-          </div>
         
           <div class="card card-primary">
             <div class="card-header">
@@ -310,81 +266,6 @@
      * -------
      * Here we will create a few charts using ChartJS
      */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-    const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label               : 'Dataset',
-          borderColor         : 'transparent',
-          backgroundColor     : 'rgba(60,141,188,0.8)',
-          pointRadius         : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          fill                : 'start',
-          data                : [28, 48, 40, 19, 86, 27, 90],
-        },
-        {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          fill                : 'start',
-          data                : [65, 59, 80, 81, 56, 55, 40]
-        },
-      ]
-    };
-
-    const areaChartConfig = {
-      type: 'line',
-      data: data,
-      options: {
-        plugins: {
-          filler: {
-            propagate: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-        },
-        maintainAspectRatio : false,
-        responsive : true,
-        elements : {
-          line : {
-            tension : .3
-          }
-        }
-      }
-    };
-
-    const areaChart = new Chart(
-      areaChartCanvas,
-      areaChartConfig,
-    );
-    //-------------
-    //- LINE CHART -
-    //--------------
-    // var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    // var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    // var lineChartData = $.extend(true, {}, areaChartData)
-
-    // var lineChart = new Chart(lineChartCanvas, {
-    //   type: 'line',
-    //   data: lineChartData,
-    //   options: lineChartOptions
-    // })
 
     //-------------
     //- DONUT CHART -
@@ -487,23 +368,64 @@
     //---------------------
     //- popular posts -
     //---------------------
-    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-    var stackedBarChartData = $.extend(true, {}, barChartData)
+    var areaChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+    const areaChartData = {
+      labels: {!! $popular_labels !!},
+      datasets: [
+        {
+          label               : 'Dislikes',
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'transparent',
+          pointRadius         : false,
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(210, 214, 222, 1)',
+          fill                : 'start',
+          data                : {!! $popular_dislikes !!}
+        },
+        {
+          label               : 'Likes',
+          borderColor         : 'transparent',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          pointRadius         : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,0.9)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,0.9)',
+          fill                : 'start',
+          data                : {!! $popular_likes !!},
+        },
+        
+      ]
+    };
 
-    stackedBarChartData.labels = {!! $popular_labels !!}
-    stackedBarChartData.datasets[0].data = {!! $popular_likes !!}
-    stackedBarChartData.datasets[1].data = {!! $popular_dislikes !!}
+    const areaChartConfig = {
+      type: 'line',
+      data: areaChartData,
+      options: {
+        plugins: {
+          filler: {
+            propagate: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+        },
+        maintainAspectRatio : false,
+        responsive : true,
+        elements : {
+          line : {
+            tension : .3
+          }
+        }
+      }
+    };
 
-    var stackedBarChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-    }
-
-    new Chart(stackedBarChartCanvas, {
-      type: 'bar',
-      data: stackedBarChartData,
-      options: stackedBarChartOptions
-    })
+    const areaChart = new Chart(
+      areaChartCanvas,
+      areaChartConfig,
+    );
   })
     </script>
   </section>
