@@ -38,6 +38,6 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        User::factory(env('USERS_AMOUNT', 17))->create();
+        User::factory(env('USERS_AMOUNT', 100))->create();
     }
 }

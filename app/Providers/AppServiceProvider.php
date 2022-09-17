@@ -60,12 +60,12 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('admin.index', function($view) {
             
             // Widgets
-            $view->with('users_count', User::count('id'));
-
-            $avg_views = ceil(collect(Post::pluck('views')->all())->avg());
-            $view->with('avg_views', $avg_views);
             
+            $avg_views = ceil(Post::avg('views'));
             $posts = Post::count('id');
+            
+            $view->with('users_count', User::count('id'));
+            $view->with('avg_views', $avg_views);
             $view->with('posts_count', $posts);
 
             // Rating

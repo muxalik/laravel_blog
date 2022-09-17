@@ -317,20 +317,20 @@
 
     // Get context with jQuery - using jQuery's .get() method.
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
-    var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    const data = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
         {
-          label               : 'Digital Goods',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
+          label: 'Dataset',
+          borderColor: 'transparent',
+          backgroundColor: 'rgba(60,141,188,0.8)',
           pointRadius          : false,
           pointColor          : '#3b8bba',
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          fill: 'start',
+          data: [28, 48, 40, 19, 86, 27, 90],
         },
         {
           label               : 'Electronics',
@@ -341,42 +341,50 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
+          fill: 'start',
           data                : [65, 59, 80, 81, 56, 55, 40]
         },
       ]
-    }
+    };
 
-    var areaChartOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-      legend: {
-        display: false
-      },
-      
-    }
-
-    // This will get the first returned node in the jQuery collection.
-    new Chart(areaChartCanvas, {
+    const areaChartConfig = {
       type: 'line',
-      data: areaChartData,
-      options: areaChartOptions
-    })
+      data: data,
+      options: {
+        plugins: {
+          filler: {
+            propagate: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+        },
+        maintainAspectRatio : false,
+        responsive : true,
+        elements : {
+          line : {
+            tension : .3
+          }
+        }
+      }
+    };
 
+    const areaChart = new Chart(
+      areaChartCanvas,
+      areaChartConfig,
+    );
     //-------------
     //- LINE CHART -
     //--------------
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
+    // var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+    // var lineChartOptions = $.extend(true, {}, areaChartOptions)
+    // var lineChartData = $.extend(true, {}, areaChartData)
 
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: lineChartData,
-      options: lineChartOptions
-    })
+    // var lineChart = new Chart(lineChartCanvas, {
+    //   type: 'line',
+    //   data: lineChartData,
+    //   options: lineChartOptions
+    // })
 
     //-------------
     //- DONUT CHART -
