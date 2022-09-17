@@ -21,6 +21,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->freeEmail(),
             'password' => bcrypt(fake()->password()),
+            'is_admin' => fake()->optional(0.1, '1')->randomElement([0]),
             'created_at' => $registry,
             'updated_at' => fake()->dateTimeBetween($registry),
         ];

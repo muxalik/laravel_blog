@@ -74,6 +74,10 @@ class AppServiceProvider extends ServiceProvider
             $view->with('avg_rating', ceil(($likes - $dislikes) / $posts 
                 ? ($likes - $dislikes) / $posts 
                 : 1));
+            // Admin list
+            $admins = User::where('is_admin', '=', 1)->get();
+            
+            $view->with('admins', $admins);
 
             // Statistics
             // Popular tags 
@@ -119,20 +123,18 @@ class AppServiceProvider extends ServiceProvider
             $view->with('latest_views', json_encode($latest_views));
 
             // Rating of popular posts
-            $posts = Post::orderBy('views')->limit(7)->get();
-            $popular_labels = $popular_likes = $popular_dislikes = $popular_views = [];
+            $posts = Post::orderBy('views')->limit(7)->get()->sortBy('created_at');
+            $popular_labels = $popular_likes = $popular_dislikes = [];
 
             foreach ($posts as $post) {
                 $popular_labels[] = $post->changePostDate();
                 $popular_likes[] = $post->likes;
                 $popular_dislikes[] = $post->dislikes;
-                $popular_views[] = $post->views;
             }
 
             $view->with('popular_labels', json_encode($popular_labels));
             $view->with('popular_likes', json_encode($popular_likes));
             $view->with('popular_dislikes', json_encode($popular_dislikes));
-            $view->with('popular_views', json_encode($popular_views));
         });
     }
 }

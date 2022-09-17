@@ -75,8 +75,9 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+
             <div class="card-header" id="card">
-              <h3 class="card-title">Fixed Header Table</h3>
+              <h3 class="card-title">Список админов</h3>
               <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
               <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -89,78 +90,47 @@
               </div>
             </div>
             
-            <div class="card-body table-responsive p-0" style="height: 300px;" id="table">
-            <table class="table table-head-fixed text-nowrap">
-            <thead>
-            <tr>
-            <th>ID</th>
-            <th>User</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Reason</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>183</td>
-            <td>John Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-success">Approved</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>219</td>
-            <td>Alexander Pierce</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-warning">Pending</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>657</td>
-            <td>Bob Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-primary">Approved</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>175</td>
-            <td>Mike Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-danger">Denied</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>134</td>
-            <td>Jim Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-success">Approved</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>494</td>
-            <td>Victoria Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-warning">Pending</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>832</td>
-            <td>Michael Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-primary">Approved</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            <tr>
-            <td>982</td>
-            <td>Rocky Doe</td>
-            <td>11-7-2014</td>
-            <td><span class="tag tag-danger">Denied</span></td>
-            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-            </tr>
-            </tbody>
-            </table>
+            <div class="card-body table-responsive p-0" style="max-height: 300px;" id="table">
+              @if (count($admins))
+                <table class="table table-head-fixed table-bordered table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
+                      <th>Имя</th>
+                      <th>Email</th>
+                      <th>Регистрация</th>
+                      <th>Последнее посещение</th>
+                      <th>Действия</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($admins as $admin)
+                      <tr>
+                        <td style="width: 30px; text-align: center; padding-left: 0.75rem">{{ $admin->id }}</td>
+                        <td>{{ $admin->name }}</td>
+                        <td>{{ $admin->email }}</td>
+                        <td>{{ $admin->created_at }}</td>
+                        <td>{{ $admin->updated_at }}</td>
+                        <td class="table_actions">
+                          <a href="{{ route('users.edit', ['user' => $admin->id]) }}" class="btn btn-info btn-sm float-left mr-1 table-action" title="Редактировать">
+                            <i class="fas fa-pencil-alt"></i>
+                          </a>
+                          <form action="{{ route('users.destroy', ['user' => $admin->id]) }}" method="POST" class="float-left mr-1 table-action" title="Удалить">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm action-delete">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              @else
+                <p style="padding: 0.75rem 1.25rem 0">Админов пока нет...</p>
+              @endif
             </div>
-          
           </div>
         
         </div>
@@ -168,7 +138,7 @@
       <div class="row">
         <div class="col-md-6">
 
-          <div class="card card-primary">
+          <div class="card card-info">
             <div class="card-header">
               <h3 class="card-title">Popular tags</h3>
               <div class="card-tools">
@@ -214,7 +184,7 @@
         
         <div class="col-md-6">
         
-          <div class="card card-primary">
+          <div class="card card-info">
             <div class="card-header">
               <h3 class="card-title">Popular categories</h3>
               <div class="card-tools">
