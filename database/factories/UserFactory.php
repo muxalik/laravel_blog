@@ -16,7 +16,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $registry = fake()->dateTimeBetween('-2 year');
+        $registry = fake()->optional(0.3, fake()->unique()->dateTimeThisYear())->dateTimeBetween('-2 year');
         return [
             'name' => fake()->name(),
             'email' => fake()->freeEmail(),

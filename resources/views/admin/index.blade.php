@@ -321,16 +321,16 @@
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
         {
-          label: 'Dataset',
-          borderColor: 'transparent',
-          backgroundColor: 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
+          label               : 'Dataset',
+          borderColor         : 'transparent',
+          backgroundColor     : 'rgba(60,141,188,0.8)',
+          pointRadius         : false,
           pointColor          : '#3b8bba',
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          fill: 'start',
-          data: [28, 48, 40, 19, 86, 27, 90],
+          fill                : 'start',
+          data                : [28, 48, 40, 19, 86, 27, 90],
         },
         {
           label               : 'Electronics',
@@ -341,7 +341,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          fill: 'start',
+          fill                : 'start',
           data                : [65, 59, 80, 81, 56, 55, 40]
         },
       ]
