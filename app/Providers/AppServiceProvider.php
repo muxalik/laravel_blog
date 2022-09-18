@@ -76,7 +76,6 @@ class AppServiceProvider extends ServiceProvider
                 : 1));
             // Admin list
             $admins = User::where('is_admin', '=', 1)->get();
-            
             $view->with('admins', $admins);
 
             // Statistics

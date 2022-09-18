@@ -40,7 +40,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('posts.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -66,7 +66,7 @@
             <div class="icon">
               <i class="fas fa-chart-pie"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('posts.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -79,20 +79,22 @@
             <div class="card-header" id="card">
               <h3 class="card-title">Список админов</h3>
               <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-              <div class="input-group-append">
-              <button type="submit" class="btn btn-default">
-              <i class="fas fa-search"></i>
-              </button>
-              </div>
-              </div>
+                <div class="input-group input-group-sm" style="width: 150px;float: left;margin-right: 0.5rem">
+                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="search-text" onkeyup="tableSearch()">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                <button type="button" class="btn btn-tool" id="maximize" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
               </div>
             </div>
             
             <div class="card-body table-responsive p-0" style="max-height: 300px;" id="table">
               @if (count($admins))
-                <table class="table table-head-fixed table-bordered table-hover text-nowrap">
+                <table class="table table-head-fixed table-bordered table-hover text-nowrap" id="table-info">
                   <thead>
                     <tr>
                       <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
@@ -232,171 +234,166 @@
     </div>
     <script async>
       $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
 
-    //-------------
-    //- DONUT CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-    var donutData        = {
-      labels: {!! $tags_labels !!},
-      datasets: [
-        {
-          data: {!! $tags_posts !!},
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        // ChartJS
+
+        //--------------
+        //- Popular tags
+        //--------------
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+        var donutData        = {
+          labels: {!! $tags_labels !!},
+          datasets: [
+            {
+              data: {!! $tags_posts !!},
+              backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+            }
+          ]
         }
-      ]
-    }
-    var donutOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(donutChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions
-    })
-
-    //-------------
-    //- popular categories -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData        = {
-      labels: {!! $categories_labels !!},
-      datasets: [
-        {
-          data: {!! $categories_posts !!},
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        var donutOptions     = {
+          maintainAspectRatio : false,
+          responsive : true,
         }
-      ]
-    };
-    var pieOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions
-    })
+        // Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+          type: 'doughnut',
+          data: donutData,
+          options: donutOptions
+        })
 
-    //-------------
-    //- latest posts -
-    //-------------
+        //--------------------
+        //- Popular categories
+        //--------------------
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData        = {
+          labels: {!! $categories_labels !!},
+          datasets: [
+            {
+              data: {!! $categories_posts !!},
+              backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+            }
+          ]
+        };
+        var pieOptions     = {
+          maintainAspectRatio : false,
+          responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(pieChartCanvas, {
+          type: 'pie',
+          data: pieData,
+          options: pieOptions
+        })
 
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        //--------------
+        //- Latest posts
+        //--------------
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
 
-    var barChartData = {
-      labels  : {!! $latest_labels !!},
-      datasets: [
-        {
-          label               : 'Likes',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius         : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : {!! $latest_likes !!}
-        },
-        {
-          label               : 'Dislikes',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : {!! $latest_dislikes !!}
-        },
-      ]
-    }
+        var barChartData = {
+          labels  : {!! $latest_labels !!},
+          datasets: [
+            {
+              label               : 'Likes',
+              backgroundColor     : 'rgba(60,141,188,0.9)',
+              borderColor         : 'rgba(60,141,188,0.8)',
+              pointRadius         : false,
+              pointColor          : '#3b8bba',
+              pointStrokeColor    : 'rgba(60,141,188,1)',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(60,141,188,1)',
+              data                : {!! $latest_likes !!}
+            },
+            {
+              label               : 'Dislikes',
+              backgroundColor     : 'rgba(210, 214, 222, 1)',
+              borderColor         : 'rgba(210, 214, 222, 1)',
+              pointRadius         : false,
+              pointColor          : 'rgba(210, 214, 222, 1)',
+              pointStrokeColor    : '#c1c7d1',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(220,220,220,1)',
+              data                : {!! $latest_dislikes !!}
+            },
+          ]
+        }
 
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
-    }
+        var barChartOptions = {
+          responsive              : true,
+          maintainAspectRatio     : false,
+          datasetFill             : false
+        }
 
-    new Chart(barChartCanvas, {
-      type: 'bar',
-      data: barChartData,
-      options: barChartOptions
-    })
+        new Chart(barChartCanvas, {
+          type: 'bar',
+          data: barChartData,
+          options: barChartOptions
+        })
 
-    //---------------------
-    //- popular posts -
-    //---------------------
-    var areaChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-    const areaChartData = {
-      labels: {!! $popular_labels !!},
-      datasets: [
-        {
-          label               : 'Dislikes',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'transparent',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(210, 214, 222, 1)',
-          fill                : 'start',
-          data                : {!! $popular_dislikes !!}
-        },
-        {
-          label               : 'Likes',
-          borderColor         : 'transparent',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          pointRadius         : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,0.9)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,0.9)',
-          fill                : 'start',
-          data                : {!! $popular_likes !!},
-        },
-        
-      ]
-    };
+        //---------------
+        //- Popular posts
+        //---------------
+        var areaChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
 
-    const areaChartConfig = {
-      type: 'line',
-      data: areaChartData,
-      options: {
-        plugins: {
-          filler: {
-            propagate: false,
+        const areaChartData = {
+          labels: {!! $popular_labels !!},
+          datasets: [
+            {
+              label               : 'Dislikes',
+              backgroundColor     : 'rgba(210, 214, 222, 1)',
+              borderColor         : 'transparent',
+              pointRadius         : false,
+              pointColor          : 'rgba(210, 214, 222, 1)',
+              pointStrokeColor    : '#c1c7d1',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(210, 214, 222, 1)',
+              fill                : 'start',
+              data                : {!! $popular_dislikes !!}
+            },
+            {
+              label               : 'Likes',
+              borderColor         : 'transparent',
+              backgroundColor     : 'rgba(60,141,188,0.9)',
+              pointRadius         : false,
+              pointColor          : '#3b8bba',
+              pointStrokeColor    : 'rgba(60,141,188,0.9)',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(60,141,188,0.9)',
+              fill                : 'start',
+              data                : {!! $popular_likes !!},
+            }
+          ]
+        };
+
+        const areaChartConfig = {
+          type: 'line',
+          data: areaChartData,
+          options: {
+            plugins: {
+              filler: {
+                propagate: false,
+              }
+            },
+            interaction: {
+              intersect: false,
+            },
+            maintainAspectRatio : false,
+            responsive : true,
+            elements : {
+              line : {
+                tension : .3
+              }
+            }
           }
-        },
-        interaction: {
-          intersect: false,
-        },
-        maintainAspectRatio : false,
-        responsive : true,
-        elements : {
-          line : {
-            tension : .3
-          }
-        }
-      }
-    };
+        };
 
-    const areaChart = new Chart(
-      areaChartCanvas,
-      areaChartConfig,
-    );
-  })
+        const areaChart = new Chart(
+          areaChartCanvas,
+          areaChartConfig,
+        );
+      }) 
     </script>
   </section>
 

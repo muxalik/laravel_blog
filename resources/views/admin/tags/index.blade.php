@@ -27,6 +27,14 @@
       <div class="card-header border-transparent" style="border-bottom: none">
         <h3 class="card-title">Список тегов</h3>
         <div class="card-tools">
+          <div class="input-group input-group-sm" style="width: 150px;float: left;margin-right: 0.5rem">
+            <input type="text" name="table_search" class="form-control float-right" placeholder="Search" id="search-text" onkeyup="tableSearch()">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-default">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
           <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
           <button type="button" class="btn btn-tool" id="maximize" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
         </div>
