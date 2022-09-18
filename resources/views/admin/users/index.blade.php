@@ -42,7 +42,7 @@
       
         <div class="card-body table-responsive p-0" id="table">
           @if (count($users))
-            <table class="table table-head-fixed table-bordered table-hover">
+            <table class="table table-head-fixed table-bordered table-hover" id="table-info">
               <thead>
                 <tr>
                   <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
@@ -73,9 +73,6 @@
                       <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1 table-action" title="Редактировать">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
-                      {{-- <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm float-left mr-1" title="Войти">
-                        <i class="fas fa-arrow-circle-right"></i>
-                      </a> --}}
                       <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" class="float-left mr-1 table-action" title="Удалить">
                         @csrf
                         @method('DELETE')

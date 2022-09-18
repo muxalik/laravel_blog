@@ -34,7 +34,7 @@
       
       <div class="card-body table-responsive p-0" id="table">
         @if (count($posts))
-          <table class="table table-head-fixed table-bordered table-hover">
+          <table class="table table-head-fixed table-bordered table-hover" id="table-info">
             <thead>
               <tr>
                 <th style="width: 30px; text-align: center; padding-left: 0.75rem">#</th>
