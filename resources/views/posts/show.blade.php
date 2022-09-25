@@ -22,11 +22,25 @@
             <small><i class="fa fa-eye"></i> <span id="views_count" class="d-inline">{{ $post->views }}</span></small>
         </div><!-- end meta -->
         <div class="post-sharing">
-            <ul class="list-inline">
-                <li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
-                <li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
-                <li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
-            </ul>
+          <ul class="list-inline share-icon-container">
+            <li>
+              <a href="https://vk.com/share.php?url={{ Request::url() }}" class="btn btn-primary" style="background-color: #1d4393!important; border-radius: 5px !important;">
+                <img src="{{ asset('images/icons/vk_1.png') }}" alt="vk">
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/sharer.php?u={{ Request::url() }}" class="fb-button btn btn-primary" style="border-radius: 5px !important;">
+                <img src="{{ asset('images/icons/facebook_1.png') }}" alt="facebook"> 
+                <span class="down-mobile">Share on Facebook</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/intent/tweet?text={{ $post->title }}" class="tw-button btn btn-primary" style="border-radius: 5px !important;">
+                <img src="{{ asset('images/icons/twitter_1.png') }}" alt="twitter"> 
+                <span class="down-mobile">Tweet on Twitter</span>
+              </a>
+            </li>
+          </ul>
         </div><!-- end post-sharing -->
     </div><!-- end title -->
 
@@ -63,11 +77,23 @@
                 </li>
             </ul>
             <ul class="list-inline share-icon-container">
-                <li><a href="#" class="fb-button btn btn-primary"><img src="{{ asset('images/icons/facebook_1.png') }}" alt="facebook"> <span class="down-mobile">Share on Facebook</span></a></li>
-                <li><a href="#" class="tw-button btn btn-primary"><img src="{{ asset('images/icons/twitter_1.png') }}" alt="twitter"> <span class="down-mobile">Tweet on Twitter</span></a></li>
-                <li><a href="#" class="go-button btn btn-primary"><img src="{{ asset('images/icons/google_1.png') }}" alt="google+"></a></li>
-                {{-- <li><a href="#" class="in-button btn btn-primary"><img src="{{ asset('images/icons/inst_1.png') }}" alt="inst"></a></li>
-                <li><a href="#" class="re-button btn btn-primary"><img src="{{ asset('images/icons/reddit_1.png') }}" alt="reddit"></a></li> --}}
+              <li>
+                <a href="https://vk.com/share.php?url={{ Request::url() }}" class="btn btn-primary" style="background-color: #1d4393!important">
+                  <img src="{{ asset('images/icons/vk_1.png') }}" alt="vk">
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/sharer.php?u={{ Request::url() }}" class="fb-button btn btn-primary">
+                  <img src="{{ asset('images/icons/facebook_1.png') }}" alt="facebook"> 
+                  <span class="down-mobile">Share on Facebook</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/intent/tweet?text={{ $post->title }}" class="tw-button btn btn-primary">
+                  <img src="{{ asset('images/icons/twitter_1.png') }}" alt="twitter"> 
+                  <span class="down-mobile">Tweet on Twitter</span>
+                </a>
+              </li>
             </ul>
         </div><!-- end post-sharing -->
     </div><!-- end title -->

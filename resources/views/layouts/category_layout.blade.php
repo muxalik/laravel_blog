@@ -19,6 +19,7 @@
     <link href="{{ asset('css/colors.css') }}" rel="stylesheet">
     <link href="{{ asset('css/version/marketing.css') }}" rel="stylesheet">
     <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('mainstyle.css') }}" rel="stylesheet">
     <script src="{{ asset('js/aos.js') }}"></script>
 </head>
 <body>
