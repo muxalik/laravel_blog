@@ -33,7 +33,7 @@
     @if ($posts->count())
         <div class="page-wrapper">
             <div class="blog-custom-build">
-              @include('layouts.posts_index')
+                @include('layouts.posts_index')
             </div>
         </div>
 
@@ -46,7 +46,6 @@
                 </nav>
             </div>
         </div>
-
     @endif
 
 @endsection
