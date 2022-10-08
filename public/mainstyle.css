@@ -125,3 +125,7 @@ label {
     padding: 0 !important;
     justify-content: center !important;
 }
+
+.breadcrumb {
+    display: inherit !important;
+}
