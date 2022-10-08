@@ -127,5 +127,5 @@ label {
 }
 
 .breadcrumb {
-    display: inherit !important;
+    justify-content: flex-end;
 }
