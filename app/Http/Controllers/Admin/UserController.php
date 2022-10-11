@@ -22,7 +22,7 @@ class UserController extends Controller
             $users = Cache::get('users_all');
         } else {
             $users = User::all();
-            Cache::put('users_all', $users, env('CACHE_TIME_FOR_ADMIN_PART'));
+            Cache::put('users_all', $users, env('CACHE_TIME_FOR_ADMIN_DATA'));
         }
 
         return view('admin.users.index', compact('users'));

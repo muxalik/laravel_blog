@@ -24,7 +24,7 @@ class PostController extends Controller
             $posts = Cache::get('posts_all');
         } else {
             $posts = Post::with('category', 'tags')->get();
-            Cache::put('posts_all', $posts, env('CACHE_TIME_FOR_ADMIN'));
+            Cache::put('posts_all', $posts, env('CACHE_TIME_FOR_ADMIN_DATA'));
         }
 
         return view('admin.posts.index', compact('posts'));
@@ -41,14 +41,14 @@ class PostController extends Controller
             $categories = Cache::get('categories_pluck');
         } else {
             $categories = Category::pluck('title', 'id')->all();
-            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN'));
+            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN_DATA'));
         }
 
         if (Cache::has('tags_pluck')) {
             $tags = Cache::get('tags_pluck');
         } else {
             $tags = Tag::pluck('title', 'id')->all();
-            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN'));
+            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN_DATA'));
         }
 
         return view('admin.posts.create', compact('categories', 'tags'));
@@ -94,12 +94,12 @@ class PostController extends Controller
             $categories = Cache::get('categories_pluck');
         } else {
             $categories = Category::pluck('title', 'id')->all();
-            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN'));
+            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN_DATA'));
         }
 
         if (Cache::has('tags_pluck')) {
             $tags = Tag::pluck('title', 'id')->all();
-            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN'));
+            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN_DATA'));
         }
 
         return view('admin.posts.edit', compact('categories', 'tags', 'post'));

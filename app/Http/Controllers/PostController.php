@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     public function index() 
     {
-        $posts = Post::with('category')->orderBy('id', 'desc')->paginate(3);
+        if (Cache::has('sorted_posts')) {
+            $posts = Cache::get('sorted_posts');
+        } else {
+            $posts = Post::with('category')->orderBy('id', 'desc')->paginate(3);
+            Cache::put('sorted_posts', $posts, env('CACHE_TIME_FOR_USER_DATA'));
+        }
+
         return view('posts.index', compact('posts'));
     }
 
