@@ -90,6 +90,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
+        // Delete all tags
         if ($id === 'all') {
             $data = DB::select('SELECT * FROM post_tag LIMIT 1');
             if (!count($data)) {
@@ -99,6 +100,7 @@ class TagController extends Controller
             return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
         }
 
+        // Delete tag
         $tag = Tag::find($id);
         if ($tag->posts->count())
             return redirect()->route('tags.index')->with('error', 'У тегов есть записи');

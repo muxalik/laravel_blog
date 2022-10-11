@@ -30,9 +30,8 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        session()->flash('success', 'Вы успешно зарегистрировались');
         Auth::login($user);
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Вы успешно зарегистрировались');
     }
 
     public function loginForm()
@@ -53,7 +52,7 @@ class UserController extends Controller
         ])) {
             session()->flash('success', 'Вы успешно вошли в систему');
 
-            if (Auth::user()->is_admin) 
+            if (Auth::user()->is_admin)
                 return redirect()->route('admin.index');
 
             return redirect()->route('home');
@@ -73,7 +72,7 @@ class UserController extends Controller
         return view('user.contact');
     }
 
-    public function contactStore(Request $request) 
+    public function contactStore(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:users',
@@ -84,7 +83,7 @@ class UserController extends Controller
         ]);
 
         Message::create($request->all());
-        
+
         return redirect()->route('home')->with('success', 'Сообщение было успешно отправлено');
     }
 
@@ -93,8 +92,8 @@ class UserController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
-        
-        if (!Auth::check()) 
+
+        if (!Auth::check())
             return redirect()->route('login.create');
 
         Comment::create([
@@ -110,6 +109,5 @@ class UserController extends Controller
     {
         $data = Post::all();
         return $data;
-
     }
 }

@@ -58,12 +58,13 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
+        // Login after creating
         if ($request->check) {
             Auth::logout();
             Auth::login($user);
             return redirect()->route('home');
         }
-        
+
         return redirect()->route('users.index')->with('success', 'Пользователь успешно зарегистрирован');
     }
 
@@ -111,23 +112,25 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
+        // Relogin if current user has been updated
         if (Auth::user()->email === $user->email && Auth::user() != $user) {
             Auth::logout();
             Auth::login($user);
         }
 
+        // Login after updating
         if ($request->check) {
             if (Auth::user() != $user) {
                 Auth::logout();
                 Auth::login($user);
             }
-            
-            if ($user->is_admin) 
-                return redirect()->route('admin.index');    
-            
+
+            if ($user->is_admin)
+                return redirect()->route('admin.index');
+
             return redirect()->route('home');
         }
-        
+
         return redirect()->route('users.index')->with('success', 'Пользователь успешно сохранен');
     }
 

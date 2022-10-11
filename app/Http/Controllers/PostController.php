@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-    public function index() 
+    public function index()
     {
         if (Cache::has('sorted_posts')) {
             $posts = Cache::get('sorted_posts');

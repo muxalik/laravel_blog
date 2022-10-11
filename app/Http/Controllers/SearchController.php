@@ -15,7 +15,7 @@ class SearchController extends Controller
         ]);
 
         $s = $request->s;
-        
+
         if (Cache::has("searched_posts_$s")) {
             $posts = Cache::get("searched_posts_$s");
         } else {

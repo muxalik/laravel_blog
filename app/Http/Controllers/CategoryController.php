@@ -9,6 +9,7 @@ class CategoryController extends Controller
 {
     public function show($slug)
     {
+        // Posts related to category
         $category = Category::where('slug', $slug)->firstOrFail();
         $posts = $category->posts()->orderBy('id', 'desc')->paginate(3);
         return view('categories.show', compact('category', 'posts'));

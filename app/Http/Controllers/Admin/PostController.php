@@ -71,7 +71,6 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
-
         $data['thumbnail'] = Post::uploadImage($request);
 
         $post = Post::create($data);
@@ -124,9 +123,11 @@ class PostController extends Controller
 
         $post = Post::find($id);
         $data = $request->all();
+
         if ($file = Post::uploadImage($request, $post->thumbnail)) {
             $data['thumbnail'] = $file;
         }
+
         $post->update($data);
         $post->tags()->sync($request->tags);
 
@@ -141,12 +142,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        // Delete all posts (with post_tag)
         if ($id === 'all') {
             Post::truncate();
             DB::table('post_tag')->truncate();
             return redirect()->route('posts.index')->with('success', 'Все статьи успешно удалены');
         }
 
+        // Delete post and related data
         $post = Post::find($id);
         $post->tags()->sync([]);
 
