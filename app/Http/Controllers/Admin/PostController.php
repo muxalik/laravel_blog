@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +20,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'tags')->get();
+        if (Cache::has('posts_all')) {
+            $posts = Cache::get('posts_all');
+        } else {
+            $posts = Post::with('category', 'tags')->get();
+            Cache::put('posts_all', $posts, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -30,8 +37,20 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::pluck('title', 'id')->all();
-        $tags = Tag::pluck('title', 'id')->all();
+        if (Cache::has('categories_pluck')) {
+            $categories = Cache::get('categories_pluck');
+        } else {
+            $categories = Category::pluck('title', 'id')->all();
+            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
+        if (Cache::has('tags_pluck')) {
+            $tags = Cache::get('tags_pluck');
+        } else {
+            $tags = Tag::pluck('title', 'id')->all();
+            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
         return view('admin.posts.create', compact('categories', 'tags'));
     }
 
@@ -57,7 +76,7 @@ class PostController extends Controller
 
         $post = Post::create($data);
         $post->tags()->sync($request->tags);
-        
+
         return redirect()->route('posts.index')->with('success', 'Статья успешно добавлена');
     }
 
@@ -70,8 +89,19 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        $categories = Category::pluck('title', 'id')->all();
-        $tags = Tag::pluck('title', 'id')->all();
+
+        if (Cache::has('categories_pluck')) {
+            $categories = Cache::get('categories_pluck');
+        } else {
+            $categories = Category::pluck('title', 'id')->all();
+            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
+        if (Cache::has('tags_pluck')) {
+            $tags = Tag::pluck('title', 'id')->all();
+            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
         return view('admin.posts.edit', compact('categories', 'tags', 'post'));
     }
 
@@ -99,7 +129,7 @@ class PostController extends Controller
         }
         $post->update($data);
         $post->tags()->sync($request->tags);
-        
+
         return redirect()->route('posts.index')->with('success', 'Изменения успешно сохранены');
     }
 
@@ -122,8 +152,9 @@ class PostController extends Controller
 
         if ($post->thumbnail)
             Storage::delete($post->thumbnail);
-            
+
         $post->delete();
+
         return redirect()->route('posts.index')->with('success', 'Статья успешно удалена');
     }
 }

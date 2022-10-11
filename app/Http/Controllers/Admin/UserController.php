@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -17,7 +18,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        if (Cache::has('users_all')) {
+            $users = Cache::get('users_all');
+        } else {
+            $users = User::all();
+            Cache::put('users_all', $users, env('CACHE_TIME_FOR_ADMIN_PART'));
+        }
+
         return view('admin.users.index', compact('users'));
     }
 

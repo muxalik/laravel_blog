@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
@@ -16,7 +17,13 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        if (Cache::has('tags_all')) {
+            $tags = Cache::get('tags_all');
+        } else {
+            $tags = Tag::all();
+            Cache::put('tags_all', $tags, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
         return view('admin.tags.index', compact('tags'));
     }
 
@@ -43,6 +50,7 @@ class TagController extends Controller
         ]);
 
         Tag::create($request->all());
+
         return redirect()->route('tags.index')->with('success', 'Тег успешно добавлен');
     }
 
@@ -55,6 +63,7 @@ class TagController extends Controller
     public function edit($id)
     {
         $tag = Tag::find($id);
+
         return view('admin.tags.edit', compact('tag'));
     }
 
@@ -69,6 +78,7 @@ class TagController extends Controller
     {
         $tag = Tag::find($id);
         $tag->update($request->all());
+
         return redirect()->route('tags.index')->with('success', 'Изменения успешно сохранены');
     }
 
@@ -88,12 +98,13 @@ class TagController extends Controller
             }
             return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
         }
-        
+
         $tag = Tag::find($id);
-        if ($tag->posts->count()) 
+        if ($tag->posts->count())
             return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
-        
+
         $tag->delete();
+
         return redirect()->route('tags.index')->with('success', 'Тег успешно удален');
     }
 }

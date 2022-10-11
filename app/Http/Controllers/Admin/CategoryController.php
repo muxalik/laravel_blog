@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -16,7 +17,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        if (Cache::has('categories_all')) {
+            $categories = Cache::get('categories_all');
+        } else {
+            $categories = Category::all();
+            Cache::put('categories_all', $categories, env('CACHE_TIME_FOR_ADMIN'));
+        }
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -43,6 +50,7 @@ class CategoryController extends Controller
         ]);
 
         Category::create($request->all());
+
         return redirect()->route('categories.index')->with('success', 'Категория успешно добавлена');
     }
 
@@ -55,6 +63,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
+
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -70,9 +79,10 @@ class CategoryController extends Controller
         $request->validate([
             'title' => 'required'
         ]);
-        
+
         $category = Category::find($id);
         $category->update($request->all());
+
         return redirect()->route('categories.index')->with('success', 'Изменения успешно сохранены');
     }
 
@@ -85,25 +95,31 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         if ($id === 'all') {
-           $data = DB::select('SELECT * FROM posts LIMIT 1');
+            $data = DB::select('SELECT * FROM posts LIMIT 1');
+
             if (!count($data)) {
                 Category::truncate();
                 return redirect()->route('categories.index')->with('success', 'Все теги успешно удалены');
             }
+
             return redirect()->route('categories.index')->with('error', 'У категорий есть записи');
         }
 
         $category = Category::find($id);
+
         if ($category->posts->count()) {
             return redirect()->route('categories.index')->with('error', 'У категории есть записи');
         }
+
         $category->delete();
+
         return redirect()->route('categories.index')->with('success', 'Категория успешно удалена');
     }
 
     public function refresh()
     {
         $categories = Category::all();
+
         return view('admin.categories.card_body', compact('categories'));
     }
 }
