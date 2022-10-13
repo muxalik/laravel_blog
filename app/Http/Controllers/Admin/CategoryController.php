@@ -17,12 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if (Cache::has('categories_all')) {
-            $categories = Cache::get('categories_all');
-        } else {
-            $categories = Category::all();
-            Cache::put('categories_all', $categories, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $categories = Cache::remember('categories_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Category::all();
+        });
 
         return view('admin.categories.index', compact('categories'));
     }

@@ -18,12 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Cache::has('users_all')) {
-            $users = Cache::get('users_all');
-        } else {
-            $users = User::all();
-            Cache::put('users_all', $users, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $users = Cache::remember('users_all', env('CACHE_TIME_FOR_DATA'), function () {
+            return User::all();
+        });
 
         return view('admin.users.index', compact('users'));
     }

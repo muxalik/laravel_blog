@@ -12,12 +12,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        if (Cache::has('sorted_posts')) {
-            $posts = Cache::get('sorted_posts');
-        } else {
-            $posts = Post::with('category')->orderBy('id', 'desc')->paginate(3);
-            Cache::put('sorted_posts', $posts, env('CACHE_TIME_FOR_USER_DATA'));
-        }
+        $posts = Cache::remember('sorted_posts', env('CACHE_TIME_FOR_USER_DATA'), function () {
+            return Post::with('category')->orderBy('id', 'desc')->paginate(3);
+        });
 
         return view('posts.index', compact('posts'));
     }

@@ -17,12 +17,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        if (Cache::has('tags_all')) {
-            $tags = Cache::get('tags_all');
-        } else {
-            $tags = Tag::all();
-            Cache::put('tags_all', $tags, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $tags = Cache::remember('tags_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Tag::all();
+        });
 
         return view('admin.tags.index', compact('tags'));
     }

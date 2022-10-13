@@ -20,12 +20,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        if (Cache::has('posts_all')) {
-            $posts = Cache::get('posts_all');
-        } else {
-            $posts = Post::with('category', 'tags')->get();
-            Cache::put('posts_all', $posts, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $posts = Cache::remember('posts_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Post::with('category', 'tags')->get();
+        });
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -37,19 +34,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        if (Cache::has('categories_pluck')) {
-            $categories = Cache::get('categories_pluck');
-        } else {
-            $categories = Category::pluck('title', 'id')->all();
-            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $categories = Cache::remember('categories_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Category::pluck('title', 'id')->all();
+        });
 
-        if (Cache::has('tags_pluck')) {
-            $tags = Cache::get('tags_pluck');
-        } else {
-            $tags = Tag::pluck('title', 'id')->all();
-            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $tags = Cache::remember('tags_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Tag::pluck('title', 'id')->all();
+        });
 
         return view('admin.posts.create', compact('categories', 'tags'));
     }
@@ -89,17 +80,13 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-        if (Cache::has('categories_pluck')) {
-            $categories = Cache::get('categories_pluck');
-        } else {
-            $categories = Category::pluck('title', 'id')->all();
-            Cache::put('categories_pluck', $categories, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $categories = Cache::remember('categories_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Category::pluck('title', 'id')->all();
+        });
 
-        if (Cache::has('tags_pluck')) {
-            $tags = Tag::pluck('title', 'id')->all();
-            Cache::put('tags_pluck', $tags, env('CACHE_TIME_FOR_ADMIN_DATA'));
-        }
+        $tags = Cache::remember('tags_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+            return Tag::pluck('title', 'id')->all();
+        });
 
         return view('admin.posts.edit', compact('categories', 'tags', 'post'));
     }
