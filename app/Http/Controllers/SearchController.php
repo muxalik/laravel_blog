@@ -15,9 +15,10 @@ class SearchController extends Controller
         ]);
 
         $s = $request->s;
-        Cache::forget("searched_posts_$s");
+
         $posts = Cache::remember("searched_posts_$s", env('CACHE_TIME_FOR_ADMIN_DATA'), function () use ($s) {
-            return Post::like($s)
+            return Post::where('title', 'like', "%$s%")
+                ->orWhere('description', 'like', "%$s%")
                 ->with('category')
                 ->paginate(3)
                 ->fragment('main-section');
