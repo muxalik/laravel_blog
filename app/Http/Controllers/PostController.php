@@ -13,7 +13,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = Cache::remember('sorted_posts', env('CACHE_TIME_FOR_USER_DATA'), function () {
-            return Post::with('category')->orderBy('id', 'desc')->paginate(3);
+            return Post::with('category')
+                ->orderBy('id', 'desc')
+                ->paginate(3)
+                ->fragment('main-section');
         });
 
         return view('posts.index', compact('posts'));

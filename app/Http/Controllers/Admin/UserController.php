@@ -109,7 +109,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        // Relogin if current user has been updated
+        // Relogin if current user was updated
         if (Auth::user()->email === $user->email && Auth::user() != $user) {
             Auth::logout();
             Auth::login($user);

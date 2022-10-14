@@ -1,9 +1,22 @@
+body {
+    overflow-x: hidden;
+}
+
 aside {
     position: fixed !important;
 }
 
 label {
     margin-top: .5rem;
+}
+
+#cta {
+    margin-bottom: -4rem;
+    z-index: 1;
+}
+
+#main-section {
+    padding-top: 8rem;
 }
 
 .ck-editor__editable_inline {
