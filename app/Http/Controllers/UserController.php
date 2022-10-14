@@ -31,7 +31,9 @@ class UserController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect()->route('home')->with('success', 'Вы успешно зарегистрировались');
+        return redirect()
+            ->route('home')
+            ->with('success', 'Вы успешно зарегистрировались');
     }
 
     public function loginForm()
@@ -58,7 +60,9 @@ class UserController extends Controller
             return redirect()->route('home');
         }
 
-        return redirect()->back()->with('error', 'Неправильный логин или пароль');
+        return redirect()
+            ->back()
+            ->with('error', 'Неправильный логин или пароль');
     }
 
     public function logout()
@@ -84,7 +88,9 @@ class UserController extends Controller
 
         Message::create($request->all());
 
-        return redirect()->route('home')->with('success', 'Сообщение было успешно отправлено');
+        return redirect()
+            ->route('home')
+            ->with('success', 'Сообщение было успешно отправлено');
     }
 
     public function commentStore(Request $request, $id)

@@ -48,7 +48,9 @@ class TagController extends Controller
 
         Tag::create($request->all());
 
-        return redirect()->route('tags.index')->with('success', 'Тег успешно добавлен');
+        return redirect()
+            ->route('tags.index')
+            ->with('success', 'Тег успешно добавлен');
     }
 
     /**
@@ -76,7 +78,9 @@ class TagController extends Controller
         $tag = Tag::find($id);
         $tag->update($request->all());
 
-        return redirect()->route('tags.index')->with('success', 'Изменения успешно сохранены');
+        return redirect()
+            ->route('tags.index')
+            ->with('success', 'Изменения успешно сохранены');
     }
 
     /**
@@ -92,18 +96,26 @@ class TagController extends Controller
             $data = DB::select('SELECT * FROM post_tag LIMIT 1');
             if (!count($data)) {
                 Tag::truncate();
-                return redirect()->route('tags.index')->with('success', 'Все теги успешно удалены');
+                return redirect()
+                    ->route('tags.index')
+                    ->with('success', 'Все теги успешно удалены');
             }
-            return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
+            return redirect()
+                ->route('tags.index')
+                ->with('error', 'У тегов есть записи');
         }
 
         // Delete tag
         $tag = Tag::find($id);
         if ($tag->posts->count())
-            return redirect()->route('tags.index')->with('error', 'У тегов есть записи');
+            return redirect()
+                ->route('tags.index')
+                ->with('error', 'У тегов есть записи');
 
         $tag->delete();
 
-        return redirect()->route('tags.index')->with('success', 'Тег успешно удален');
+        return redirect()
+            ->route('tags.index')
+            ->with('success', 'Тег успешно удален');
     }
 }

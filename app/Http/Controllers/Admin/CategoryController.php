@@ -48,7 +48,9 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Категория успешно добавлена');
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Категория успешно добавлена');
     }
 
     /**
@@ -80,7 +82,9 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->update($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Изменения успешно сохранены');
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Изменения успешно сохранены');
     }
 
     /**
@@ -96,21 +100,29 @@ class CategoryController extends Controller
 
             if (!count($data)) {
                 Category::truncate();
-                return redirect()->route('categories.index')->with('success', 'Все теги успешно удалены');
+                return redirect()
+                    ->route('categories.index')
+                    ->with('success', 'Все теги успешно удалены');
             }
 
-            return redirect()->route('categories.index')->with('error', 'У категорий есть записи');
+            return redirect()
+                ->route('categories.index')
+                ->with('error', 'У категорий есть записи');
         }
 
         $category = Category::find($id);
 
         if ($category->posts->count()) {
-            return redirect()->route('categories.index')->with('error', 'У категории есть записи');
+            return redirect()
+                ->route('categories.index')
+                ->with('error', 'У категории есть записи');
         }
 
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Категория успешно удалена');
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Категория успешно удалена');
     }
 
     public function refresh()

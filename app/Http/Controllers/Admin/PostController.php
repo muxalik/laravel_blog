@@ -67,7 +67,9 @@ class PostController extends Controller
         $post = Post::create($data);
         $post->tags()->sync($request->tags);
 
-        return redirect()->route('posts.index')->with('success', 'Статья успешно добавлена');
+        return redirect()
+            ->route('posts.index')
+            ->with('success', 'Статья успешно добавлена');
     }
 
     /**
@@ -118,7 +120,9 @@ class PostController extends Controller
         $post->update($data);
         $post->tags()->sync($request->tags);
 
-        return redirect()->route('posts.index')->with('success', 'Изменения успешно сохранены');
+        return redirect()
+            ->route('posts.index')
+            ->with('success', 'Изменения успешно сохранены');
     }
 
     /**
@@ -133,7 +137,9 @@ class PostController extends Controller
         if ($id === 'all') {
             Post::truncate();
             DB::table('post_tag')->truncate();
-            return redirect()->route('posts.index')->with('success', 'Все статьи успешно удалены');
+            return redirect()
+                ->route('posts.index')
+                ->with('success', 'Все статьи успешно удалены');
         }
 
         // Delete post and related data
@@ -145,6 +151,8 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Статья успешно удалена');
+        return redirect()
+            ->route('posts.index')
+            ->with('success', 'Статья успешно удалена');
     }
 }

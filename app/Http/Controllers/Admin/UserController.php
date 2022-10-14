@@ -59,6 +59,7 @@ class UserController extends Controller
         if ($request->check) {
             Auth::logout();
             Auth::login($user);
+
             return redirect()->route('home');
         }
 
@@ -128,7 +129,9 @@ class UserController extends Controller
             return redirect()->route('home');
         }
 
-        return redirect()->route('users.index')->with('success', 'Пользователь успешно сохранен');
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'Пользователь успешно сохранен');
     }
 
     /**
@@ -141,12 +144,16 @@ class UserController extends Controller
     {
         if ($id === 'all') {
             DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
-            return redirect()->route('users.index')->with('success', 'Все пользователи успешно удалены');
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'Все пользователи успешно удалены');
         }
 
         $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Пользователь успешно удален');
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'Пользователь успешно удален');
     }
 }

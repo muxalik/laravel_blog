@@ -24,21 +24,38 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        // Get necessary post
-        $post = Post::where('slug', $slug)->firstOrFail();
-        $post->views += 1;
-        $post->update();
-
-        // Get similar posts
-        $array = $post->tags->random(2);
-        $first = $array[0]->posts->random(1)[0];
-        $key = $first->id;
-        $second = $array[1]->posts->except($key)->random(1)[0];
-        $similar = [$first, $second];
-
-        // Get comments
+        $post = $this->get($slug);
+        $similar = $this->getSimilar($post);
         $comments = $post->comments;
 
         return view('posts.show', compact('post', 'similar', 'comments'));
+    }
+
+    private function get($slug)
+    {
+        $post = Post::where('slug', $slug)
+            ->firstOrFail();
+        $post->views += 1;
+        $post->update();
+
+        return $post;
+    }
+
+    private function getSimilar($post)
+    {
+        $array = $post
+            ->tags
+            ->random(2);
+        $first = $array[0]
+            ->posts
+            ->random(1)[0];
+        $key = $first->id;
+        $second = $array[1]
+            ->posts
+            ->except($key)
+            ->random(1)[0];
+        $similar = [$first, $second];
+
+        return $similar;
     }
 }
