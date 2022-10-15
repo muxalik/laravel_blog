@@ -32,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
+        view()->composer('layouts.header', function ($view) {
+            $view->with('categories', Category::getAllCached());
+        });
+
         view()->composer('layouts.sidebar', function ($view) {
             if (Cache::has('cats')) {
                 $cats = Cache::get('cats');

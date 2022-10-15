@@ -7,18 +7,11 @@
             <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('images/version/market-logo.png') }}" alt="home" data-aos="zoom-in"></a>
             <div class="collapse navbar-collapse" id="navbarCollapse" data-aos="zoom-in">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('categories.single', ['slug' => 'marketing']) }}">Marketing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('categories.single', ['slug' => 'make-money']) }}">Make Money</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('categories.single', ['slug' => 'blog']) }}">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('categories.single', ['slug' => 'programming']) }}">Programming</a>
-                    </li>
+                    @foreach ($categories as $category)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories.single', ['slug' => $category->slug]) }}">{{ $category->title }}</a>
+                        </li>
+                    @endforeach
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                     </li>
