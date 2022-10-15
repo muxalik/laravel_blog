@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function show($slug)
     {
-        // Posts related to category
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $posts = $category
-            ->posts()
-            ->orderBy('id', 'desc')
-            ->paginate(3);
+        $category = Category::getBySlug($slug);
+        $posts = Category::getPosts($category);
             
         return view('categories.show', compact('category', 'posts'));
     }

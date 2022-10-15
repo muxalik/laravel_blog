@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -17,11 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Cache::remember('categories_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Category::all();
-        });
-
-        return view('admin.categories.index', compact('categories'));
+        if (session('success'))
+            Category::clearCache();
+            
+        return view('admin.categories.index', [
+            'categories' => Category::getAllCached()
+        ]);
     }
 
     /**
@@ -50,7 +50,10 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('categories.index')
-            ->with('success', 'Категория успешно добавлена');
+            ->with([
+                'success' => 'Категория успешно добавлена',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -61,9 +64,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-
-        return view('admin.categories.edit', compact('category'));
+        return view('admin.categories.edit', [
+            'category' => Category::find($id)
+        ]);
     }
 
     /**
@@ -79,8 +82,8 @@ class CategoryController extends Controller
             'title' => 'required'
         ]);
 
-        $category = Category::find($id);
-        $category->update($request->all());
+        Category::find($id)
+            ->update($request->all());
 
         return redirect()
             ->route('categories.index')
@@ -93,13 +96,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string|int $id)
     {
         if ($id === 'all') {
-            $data = DB::select('SELECT * FROM posts LIMIT 1');
-
-            if (!count($data)) {
+            if (!count(Post::first())) {
                 Category::truncate();
+                
                 return redirect()
                     ->route('categories.index')
                     ->with('success', 'Все теги успешно удалены');
@@ -127,8 +129,8 @@ class CategoryController extends Controller
 
     public function refresh()
     {
-        $categories = Category::all();
-
-        return view('admin.categories.card_body', compact('categories'));
+        return view('admin.categories.card_body', [
+            'categories' => Category::all()
+        ]);
     }
 }

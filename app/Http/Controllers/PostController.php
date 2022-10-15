@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -31,7 +28,7 @@ class PostController extends Controller
         return view('posts.show', compact('post', 'similar', 'comments'));
     }
 
-    private function get($slug)
+    protected function get($slug)
     {
         $post = Post::where('slug', $slug)
             ->firstOrFail();
@@ -41,7 +38,7 @@ class PostController extends Controller
         return $post;
     }
 
-    private function getSimilar($post)
+    protected function getSimilar($post)
     {
         $array = $post
             ->tags
