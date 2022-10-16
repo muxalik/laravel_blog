@@ -17,11 +17,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Cache::remember('tags_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Tag::all();
-        });
-
-        return view('admin.tags.index', compact('tags'));
+        return view('admin.tags.index', [
+            'tags' => Tag::getAllCached()
+        ]);
     }
 
     /**
@@ -47,6 +45,7 @@ class TagController extends Controller
         ]);
 
         Tag::create($request->all());
+        Tag::clearCache();
 
         return redirect()
             ->route('tags.index')
@@ -59,11 +58,11 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        $tag = Tag::find($id);
-
-        return view('admin.tags.edit', compact('tag'));
+        return view('admin.tags.edit', [
+            'tag' => Tag::getById($id)
+        ]);
     }
 
     /**
@@ -73,10 +72,11 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        $tag = Tag::find($id);
-        $tag->update($request->all());
+        Tag::getById($id)
+            ->update($request->all());
+        Tag::clearCache();
 
         return redirect()
             ->route('tags.index')
@@ -89,30 +89,36 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int|string $id)
     {
         // Delete all tags
         if ($id === 'all') {
             $data = DB::select('SELECT * FROM post_tag LIMIT 1');
+
             if (!count($data)) {
                 Tag::truncate();
+                Tag::clearCache();
+
                 return redirect()
                     ->route('tags.index')
                     ->with('success', 'Все теги успешно удалены');
             }
+
             return redirect()
                 ->route('tags.index')
                 ->with('error', 'У тегов есть записи');
         }
 
-        // Delete tag
-        $tag = Tag::find($id);
+        // Delete one tag
+        $tag = Tag::getById($id);
+
         if ($tag->posts->count())
             return redirect()
                 ->route('tags.index')
                 ->with('error', 'У тегов есть записи');
 
         $tag->delete();
+        Tag::clearCache();
 
         return redirect()
             ->route('tags.index')
