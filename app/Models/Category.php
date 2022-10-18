@@ -43,6 +43,11 @@ class Category extends Model
             ->paginate(3);
     }
 
+    public function getPostsAmount()
+    {
+        return $this->posts->count();
+    }
+
     public static function getAllCached()
     {
         return Cache::remember('categories_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {

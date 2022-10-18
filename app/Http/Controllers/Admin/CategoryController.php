@@ -101,26 +101,45 @@ class CategoryController extends Controller
      */
     public function destroy(string|int $id)
     {
-        if ($id === 'all') {
-            if (!count(Post::first())) {
-                Category::truncate();
-                
-                return redirect()
-                    ->route('categories.index')
-                    ->with([
-                        'success' => 'Все теги успешно удалены',
-                        'clearCache' => true
-                    ]);
-            }
+        if ($id === 'all')
+            static::deleteAll();
 
+        if (is_numeric($id))
+            static::deleteOne((int) $id);
+        
+        abort(404);
+    }
+
+    public function refresh()
+    {
+        return view('admin.categories.card_body', [
+            'categories' => Category::all()
+        ]);
+    }
+
+    protected function deleteAll()
+    {
+        if (!count(Post::first())) {
+            Category::truncate();
+            
             return redirect()
                 ->route('categories.index')
-                ->with('error', 'У категорий есть записи');
+                ->with([
+                    'success' => 'Все теги успешно удалены',
+                    'clearCache' => true
+                ]);
         }
 
+        return redirect()
+            ->route('categories.index')
+            ->with('error', 'У категорий есть записи');
+    }
+
+    protected function deleteOne(int $id)
+    {
         $category = Category::find($id);
 
-        if ($category->posts->count()) {
+        if ($category->getPostsCount()) {
             return redirect()
                 ->route('categories.index')
                 ->with('error', 'У категории есть записи');
@@ -134,12 +153,5 @@ class CategoryController extends Controller
                 'success' => 'Категория успешно удалена',
                 'clearCache' => true
             ]);
-    }
-
-    public function refresh()
-    {
-        return view('admin.categories.card_body', [
-            'categories' => Category::all()
-        ]);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
@@ -66,7 +65,7 @@ class TagController extends Controller
     public function edit(int $id)
     {
         return view('admin.tags.edit', [
-            'tag' => Tag::getById($id)
+            'tag' => Tag::find($id)
         ]);
     }
 
@@ -79,7 +78,7 @@ class TagController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        Tag::getById($id)
+        Tag::find($id)
             ->update($request->all());
 
         return redirect()
@@ -98,27 +97,37 @@ class TagController extends Controller
      */
     public function destroy(int|string $id)
     {
-        // Delete all tags
-        if ($id === 'all') {
-            $data = DB::select('SELECT * FROM post_tag LIMIT 1');
+        if ($id === 'all') 
+            static::deleteAll();
 
-            if (!count($data)) {
-                Tag::truncate();
+        if (is_numeric($id))
+            static::deleteOne($id);
 
-                return redirect()
-                    ->route('tags.index')
-                    ->with([
-                        'success' => 'Все теги успешно удалены',
-                        'clearCache' => true
-                    ]);
-            }
+        abort(404);
+    }
+
+    protected function deleteAll()
+    {
+        $data = DB::select('SELECT * FROM post_tag LIMIT 1');
+
+        if (!count($data)) {
+            Tag::truncate();
 
             return redirect()
                 ->route('tags.index')
-                ->with('error', 'У тегов есть записи');
+                ->with([
+                    'success' => 'Все теги успешно удалены',
+                    'clearCache' => true
+                ]);
         }
 
-        // Delete one tag
+        return redirect()
+            ->route('tags.index')
+            ->with('error', 'У тегов есть записи');
+    }
+
+    protected function deleteOne(int $id)
+    {
         $tag = Tag::getById($id);
 
         if ($tag->posts->count())

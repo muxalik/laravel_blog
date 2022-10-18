@@ -142,19 +142,30 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        // Delete all posts (with post_tag)
-        if ($id === 'all') {
-            Post::truncate();
-            DB::table('post_tag')->truncate();
-            return redirect()
-                ->route('posts.index')
-                ->with([
-                    'success' => 'Все статьи успешно удалены',
-                    'clearCache' => true
-                ]);
-        }
+        if ($id === 'all') 
+            static::deleteAll();
 
-        // Delete post and related data
+        if (is_numeric($id))
+            static::deleteOne($id);
+
+        abort(404);
+    }
+
+    protected function deleteAll()
+    {
+        Post::truncate();
+        DB::table('post_tag')->truncate();
+
+        return redirect()
+            ->route('posts.index')
+            ->with([
+                'success' => 'Все статьи успешно удалены',
+                'clearCache' => true
+            ]);
+    }
+
+    protected function deleteOne(int $id)
+    {
         $post = Post::find($id);
         $post->tags()->sync([]);
 

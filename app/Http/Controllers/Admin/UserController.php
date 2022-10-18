@@ -150,18 +150,31 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if ($id === 'all') {
-            DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
-            return redirect()
-                ->route('users.index')
-                ->with([
-                    'success' => 'Все пользователи успешно удалены',
-                    'clearCache' => true
-                ]);
-        }
+        if ($id === 'all') 
+            static::deleteAll();
 
-        $user = User::find($id);
-        $user->delete();
+        if (is_numeric($id))
+            static::deleteOne($id);
+
+        abort(404);
+    }
+
+    protected function deleteAll()
+    {
+        DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
+        
+        return redirect()
+            ->route('users.index')
+            ->with([
+                'success' => 'Все пользователи успешно удалены',
+                'clearCache' => true
+            ]);
+    }
+
+    protected function deleteOne(int $id)
+    {
+        User::find($id)
+            ->delete();
 
         return redirect()
             ->route('users.index')

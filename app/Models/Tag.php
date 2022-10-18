@@ -28,11 +28,6 @@ class Tag extends Model
         ];
     }
 
-    public static function getById(int $id): Tag
-    {
-        return static::find($id);
-    }
-
     public static function getAllCached()
     {
         return Cache::remember('tags_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
