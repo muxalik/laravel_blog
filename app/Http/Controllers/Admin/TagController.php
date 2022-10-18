@@ -65,7 +65,7 @@ class TagController extends Controller
     public function edit(int $id)
     {
         return view('admin.tags.edit', [
-            'tag' => Tag::find($id)
+            'tag' => Tag::getById($id)
         ]);
     }
 
@@ -78,8 +78,7 @@ class TagController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        Tag::find($id)
-            ->update($request->all());
+        Tag::updateOne($request, $id);
 
         return redirect()
             ->route('tags.index')
@@ -97,7 +96,7 @@ class TagController extends Controller
      */
     public function destroy(int|string $id)
     {
-        if ($id === 'all') 
+        if ($id === 'all')
             static::deleteAll();
 
         if (is_numeric($id))
@@ -130,7 +129,7 @@ class TagController extends Controller
     {
         $tag = Tag::getById($id);
 
-        if ($tag->posts->count())
+        if ($tag->getPostsAmount())
             return redirect()
                 ->route('tags.index')
                 ->with('error', 'У тегов есть записи');
@@ -140,7 +139,7 @@ class TagController extends Controller
         return redirect()
             ->route('tags.index')
             ->with([
-                'success' => 'Тег успешно удален', 
+                'success' => 'Тег успешно удален',
                 'clearCache' => true
             ]);
     }

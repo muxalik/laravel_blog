@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         if (session('clearCache'))
             Category::clearCache();
-            
+
         return view('admin.categories.index', [
             'categories' => Category::getAllCached()
         ]);
@@ -65,7 +65,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         return view('admin.categories.edit', [
-            'category' => Category::find($id)
+            'category' => Category::getById($id)
         ]);
     }
 
@@ -82,8 +82,7 @@ class CategoryController extends Controller
             'title' => 'required'
         ]);
 
-        Category::find($id)
-            ->update($request->all());
+        Category::updateById($request, $id);
 
         return redirect()
             ->route('categories.index')
@@ -106,7 +105,7 @@ class CategoryController extends Controller
 
         if (is_numeric($id))
             static::deleteOne((int) $id);
-        
+
         abort(404);
     }
 
@@ -121,7 +120,7 @@ class CategoryController extends Controller
     {
         if (!count(Post::first())) {
             Category::truncate();
-            
+
             return redirect()
                 ->route('categories.index')
                 ->with([
@@ -137,7 +136,7 @@ class CategoryController extends Controller
 
     protected function deleteOne(int $id)
     {
-        $category = Category::find($id);
+        $category = Category::getById($id);
 
         if ($category->getPostsCount()) {
             return redirect()

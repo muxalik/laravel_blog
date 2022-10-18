@@ -18,11 +18,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = Cache::remember('users_all', env('CACHE_TIME_FOR_DATA'), function () {
-            return User::all();
-        });
+        if (session('clearCache'))
+            User::clearCache();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', [
+            'users' => User::getAllCached()
+        ]);
     }
 
     /**
@@ -60,7 +61,9 @@ class UserController extends Controller
             Auth::logout();
             Auth::login($user);
 
-            return redirect()->route('home');
+            return redirect()
+                ->route('home')
+                ->with('clearCache', true);
         }
 
         return redirect()
@@ -90,8 +93,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        return view('admin.users.edit', [
+            'users' => User::getById($id)
+        ]);
     }
 
     /**
@@ -108,7 +112,7 @@ class UserController extends Controller
             'password' => 'required|confirmed'
         ]);
 
-        $user = User::find($id);
+        $user = User::getById($id);
 
         $user->update([
             'name' => $request->name,
@@ -129,9 +133,13 @@ class UserController extends Controller
             }
 
             if ($user->is_admin)
-                return redirect()->route('admin.index');
+                return redirect()
+                    ->route('admin.index')
+                    ->with('clearCache', true);
 
-            return redirect()->route('home');
+            return redirect()
+                ->route('home')
+                ->with('clearCache', true);
         }
 
         return redirect()
@@ -150,7 +158,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if ($id === 'all') 
+        if ($id === 'all')
             static::deleteAll();
 
         if (is_numeric($id))
@@ -162,7 +170,7 @@ class UserController extends Controller
     protected function deleteAll()
     {
         DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
-        
+
         return redirect()
             ->route('users.index')
             ->with([
@@ -173,13 +181,12 @@ class UserController extends Controller
 
     protected function deleteOne(int $id)
     {
-        User::find($id)
-            ->delete();
+        User::deleteById($id);
 
         return redirect()
             ->route('users.index')
             ->with([
-                'success' =>'Пользователь успешно удален',
+                'success' => 'Пользователь успешно удален',
                 'clearCache' => true
             ]);
     }

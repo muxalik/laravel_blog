@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
@@ -29,13 +30,19 @@ class Category extends Model
         ];
     }
 
+    public static function getById($id)
+    {
+        return static::find($id)
+            ->firstOrFail();
+    }
+
     public static function getBySlug($slug): Category
     {
         return static::where('slug', $slug)
             ->firstOrFail();
     }
 
-    public static function getPosts(Category $category)
+    public static function getPostsByCategory(Category $category)
     {
         return $category
             ->posts()
@@ -55,8 +62,9 @@ class Category extends Model
         });
     }
 
-    public static function clearCache(): bool
+    public static function updateById(Request $request, $id)
     {
-        return Cache::forget('categories_all');
+        static::findById($id)
+            ->update($request->all());
     }
 }

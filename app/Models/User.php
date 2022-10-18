@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -41,4 +41,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getById($id)
+    {
+        return static::find($id)
+            ->firstOrFail();
+    }
+
+    public static function deleteById($id)
+    {
+        static::getById($id)
+            ->delete();
+    }
+
+    public static function getAllCached()
+    {
+        return Cache::remember('users_all', env('CACHE_TIME_FOR_DATA'), function () {
+            return User::all();
+        });
+    }
+
+    public static function clearCache(): bool
+    {
+        return Cache::forget('users_all');
+    }
 }

@@ -23,11 +23,9 @@ class PostController extends Controller
         if (session('clearCache'))
             Post::clearCache();
 
-        $posts = Cache::remember('posts_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Post::with('category', 'tags')->get();
-        });
-
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', [
+            'posts' => Post::getAllCached()
+        ]);
     }
 
     /**

@@ -9,7 +9,7 @@ class CategoryController extends Controller
     public function show($slug)
     {
         $category = Category::getBySlug($slug);
-        $posts = Category::getPosts($category);
+        $posts = Category::getPostsByCategory($category);
             
         return view('categories.show', compact('category', 'posts'));
     }
