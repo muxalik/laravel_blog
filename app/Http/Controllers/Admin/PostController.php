@@ -20,6 +20,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        if (session('clearCache'))
+            Post::clearCache();
+
         $posts = Cache::remember('posts_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
             return Post::with('category', 'tags')->get();
         });
@@ -69,7 +72,10 @@ class PostController extends Controller
 
         return redirect()
             ->route('posts.index')
-            ->with('success', 'Статья успешно добавлена');
+            ->with([
+                'success' => 'Статья успешно добавлена',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -122,7 +128,10 @@ class PostController extends Controller
 
         return redirect()
             ->route('posts.index')
-            ->with('success', 'Изменения успешно сохранены');
+            ->with([
+                'success' => 'Изменения успешно сохранены',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -139,7 +148,10 @@ class PostController extends Controller
             DB::table('post_tag')->truncate();
             return redirect()
                 ->route('posts.index')
-                ->with('success', 'Все статьи успешно удалены');
+                ->with([
+                    'success' => 'Все статьи успешно удалены',
+                    'clearCache' => true
+                ]);
         }
 
         // Delete post and related data
@@ -153,6 +165,9 @@ class PostController extends Controller
 
         return redirect()
             ->route('posts.index')
-            ->with('success', 'Статья успешно удалена');
+            ->with([
+                'success' => 'Статья успешно удалена',
+                'clearCache' => true
+            ]);
     }
 }

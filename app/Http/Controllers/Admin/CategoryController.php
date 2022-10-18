@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if (session('success'))
+        if (session('clearCache'))
             Category::clearCache();
             
         return view('admin.categories.index', [
@@ -87,7 +87,10 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('categories.index')
-            ->with('success', 'Изменения успешно сохранены');
+            ->with([
+                'success' => 'Изменения успешно сохранены',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -104,7 +107,10 @@ class CategoryController extends Controller
                 
                 return redirect()
                     ->route('categories.index')
-                    ->with('success', 'Все теги успешно удалены');
+                    ->with([
+                        'success' => 'Все теги успешно удалены',
+                        'clearCache' => true
+                    ]);
             }
 
             return redirect()
@@ -124,7 +130,10 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('categories.index')
-            ->with('success', 'Категория успешно удалена');
+            ->with([
+                'success' => 'Категория успешно удалена',
+                'clearCache' => true
+            ]);
     }
 
     public function refresh()

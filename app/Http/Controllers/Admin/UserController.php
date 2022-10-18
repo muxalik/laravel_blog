@@ -63,7 +63,12 @@ class UserController extends Controller
             return redirect()->route('home');
         }
 
-        return redirect()->route('users.index')->with('success', 'Пользователь успешно зарегистрирован');
+        return redirect()
+            ->route('users.index')
+            ->with([
+                'success' => 'Пользователь успешно зарегистрирован',
+                'clearCache' => true
+            ]);
     }
 
     // /**
@@ -131,7 +136,10 @@ class UserController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'Пользователь успешно сохранен');
+            ->with([
+                'success' => 'Пользователь успешно сохранен',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -146,7 +154,10 @@ class UserController extends Controller
             DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
             return redirect()
                 ->route('users.index')
-                ->with('success', 'Все пользователи успешно удалены');
+                ->with([
+                    'success' => 'Все пользователи успешно удалены',
+                    'clearCache' => true
+                ]);
         }
 
         $user = User::find($id);
@@ -154,6 +165,9 @@ class UserController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'Пользователь успешно удален');
+            ->with([
+                'success' =>'Пользователь успешно удален',
+                'clearCache' => true
+            ]);
     }
 }

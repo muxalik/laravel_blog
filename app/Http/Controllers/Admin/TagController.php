@@ -17,6 +17,9 @@ class TagController extends Controller
      */
     public function index()
     {
+        if (session('clearCache'))
+            Tag::clearCache();
+
         return view('admin.tags.index', [
             'tags' => Tag::getAllCached()
         ]);
@@ -45,11 +48,13 @@ class TagController extends Controller
         ]);
 
         Tag::create($request->all());
-        Tag::clearCache();
 
         return redirect()
             ->route('tags.index')
-            ->with('success', 'Тег успешно добавлен');
+            ->with([
+                'success' => 'Тег успешно добавлен',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -76,11 +81,13 @@ class TagController extends Controller
     {
         Tag::getById($id)
             ->update($request->all());
-        Tag::clearCache();
 
         return redirect()
             ->route('tags.index')
-            ->with('success', 'Изменения успешно сохранены');
+            ->with([
+                'success' => 'Изменения успешно сохранены',
+                'clearCache' => true
+            ]);
     }
 
     /**
@@ -97,11 +104,13 @@ class TagController extends Controller
 
             if (!count($data)) {
                 Tag::truncate();
-                Tag::clearCache();
 
                 return redirect()
                     ->route('tags.index')
-                    ->with('success', 'Все теги успешно удалены');
+                    ->with([
+                        'success' => 'Все теги успешно удалены',
+                        'clearCache' => true
+                    ]);
             }
 
             return redirect()
@@ -118,10 +127,12 @@ class TagController extends Controller
                 ->with('error', 'У тегов есть записи');
 
         $tag->delete();
-        Tag::clearCache();
 
         return redirect()
             ->route('tags.index')
-            ->with('success', 'Тег успешно удален');
+            ->with([
+                'success' => 'Тег успешно удален', 
+                'clearCache' => true
+            ]);
     }
 }
