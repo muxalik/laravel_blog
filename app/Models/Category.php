@@ -32,13 +32,13 @@ class Category extends Model
 
     public static function getById($id)
     {
-        return static::find($id)
+        return Category::find($id)
             ->firstOrFail();
     }
 
     public static function getBySlug($slug): Category
     {
-        return static::where('slug', $slug)
+        return Category::where('slug', $slug)
             ->firstOrFail();
     }
 
@@ -57,14 +57,21 @@ class Category extends Model
 
     public static function getAllCached()
     {
-        return Cache::remember('categories_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return static::all();
+        return Cache::remember('categories_all', env('CACHE_TIME'), function () {
+            return Category::all();
         });
     }
 
     public static function updateById(Request $request, $id)
     {
-        static::findById($id)
+        Category::findById($id)
             ->update($request->all());
+    }
+
+    public static function getAllTitleIdCached()
+    {
+        return Cache::remember('categories_pluck', env('CACHE_TIME'), function () {
+            return Category::pluck('title', 'id')->all();
+        });
     }
 }

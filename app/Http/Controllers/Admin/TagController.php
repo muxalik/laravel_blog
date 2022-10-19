@@ -78,7 +78,7 @@ class TagController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        Tag::updateOne($request, $id);
+        Tag::updateById($request, $id);
 
         return redirect()
             ->route('tags.index')

@@ -35,15 +35,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Cache::remember('categories_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Category::pluck('title', 'id')->all();
-        });
-
-        $tags = Cache::remember('tags_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Tag::pluck('title', 'id')->all();
-        });
-
-        return view('admin.posts.create', compact('categories', 'tags'));
+        return view('admin.posts.create', [
+            'categories' => Category::getAllTitleIdCached(),
+            'tags' => Tag::getAllTitleIdCached()
+        ]);
     }
 
     /**
@@ -84,17 +79,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
-
-        $categories = Cache::remember('categories_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Category::pluck('title', 'id')->all();
-        });
-
-        $tags = Cache::remember('tags_pluck', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
-            return Tag::pluck('title', 'id')->all();
-        });
-
-        return view('admin.posts.edit', compact('categories', 'tags', 'post'));
+        return view('admin.posts.edit', [
+            'categories' => Category::getAllTitleIdCached(),
+            'tags' => Tag::getAllTitleIdCached(),
+            'post' => Post::getById($id)
+        ]);
     }
 
     /**
@@ -114,7 +103,7 @@ class PostController extends Controller
             'thumbnail' => 'nullable|image'
         ]);
 
-        $post = Post::find($id);
+        $post = Post::findById($id);
         $data = $request->all();
 
         if ($file = Post::uploadImage($request, $post->thumbnail)) {

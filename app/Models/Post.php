@@ -73,16 +73,21 @@ class Post extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('Y.m.d');
     }
 
+    public static function getById($id)
+    {
+        return Post::find($id)
+            ->firstOrFail();
+    }
 
     public static function getAllCached()
     {
-        return Cache::remember('posts_all', env('CACHE_TIME_FOR_ADMIN_DATA'), function () {
+        return Cache::remember('posts_all', env('CACHE_TIME'), function () {
             return Post::with('category', 'tags')->get();
         });
     }
 
     public static function clearCache(): bool
     {
-        return Cache::forget('categories_all');
+        return Cache::forget('posts_all');
     }
 }
