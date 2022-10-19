@@ -13,17 +13,10 @@ class SearchController extends Controller
         $request->validate([
             's' => 'required'
         ]);
-
-        $s = $request->s;
-
-        $posts = Cache::remember("searched_posts_$s", env('CACHE_TIME_FOR_ADMIN_DATA'), function () use ($s) {
-            return Post::where('title', 'like', "%$s%")
-                ->orWhere('description', 'like', "%$s%")
-                ->with('category')
-                ->paginate(3)
-                ->fragment('main-section');
-        });
-
-        return view('posts.search', compact('posts', 's'));
+        
+        return view('posts.search', [
+            'posts' => Post::getSearchedPosts($request->s),
+            's' => $request->s
+        ]);
     }
 }

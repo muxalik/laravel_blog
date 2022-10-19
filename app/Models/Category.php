@@ -42,14 +42,6 @@ class Category extends Model
             ->firstOrFail();
     }
 
-    public static function getPostsByCategory(Category $category)
-    {
-        return $category
-            ->posts()
-            ->orderBy('id', 'desc')
-            ->paginate(3);
-    }
-
     public function getPostsAmount()
     {
         return $this->posts->count();

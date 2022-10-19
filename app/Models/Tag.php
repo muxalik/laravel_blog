@@ -35,6 +35,12 @@ class Tag extends Model
             ->firstOrFail();
     }
 
+    public static function getBySlug($slug)
+    {
+        return Tag::where('slug', $slug)
+            ->firstOrFail();
+    }
+
     public function getPostsAmount()
     {
         return $this->posts->count();

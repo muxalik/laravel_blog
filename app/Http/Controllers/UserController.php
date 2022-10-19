@@ -31,6 +31,7 @@ class UserController extends Controller
         ]);
 
         Auth::login($user);
+        
         return redirect()
             ->route('home')
             ->with('success', 'Вы успешно зарегистрировались');

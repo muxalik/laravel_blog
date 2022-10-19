@@ -79,10 +79,53 @@ class Post extends Model
             ->firstOrFail();
     }
 
+    public static function getByCategory(Category $category)
+    {
+        return $category
+            ->posts()
+            ->orderBy('id', 'desc')
+            ->paginate(3);
+    }
+
+    public static function getBySlug($slug)
+    {
+        return Post::where('slug', $slug)
+            ->firstOrFail();
+    }
+
+    public static function getByTag($tag)
+    {
+        return $tag->posts()
+            ->with('category')
+            ->orderBy('id', 'desc')
+            ->paginate(2);
+    }
+
+    public static function getSearchedPosts($s)
+    {
+        return Cache::remember("searched_posts_$s", env('CACHE_TIME_FOR_ADMIN_DATA'), function () use ($s) {
+            return Post::where('title', 'like', "%$s%")
+                ->orWhere('description', 'like', "%$s%")
+                ->with('category')
+                ->paginate(3)
+                ->fragment('main-section');
+        });
+    }
+
     public static function getAllCached()
     {
         return Cache::remember('posts_all', env('CACHE_TIME'), function () {
             return Post::with('category', 'tags')->get();
+        });
+    }
+
+    public static function getSortedCached()
+    {
+        return Cache::remember('sorted_posts', env('CACHE_TIME'), function () {
+            return Post::with('category')
+                ->orderBy('id', 'desc')
+                ->paginate(3)
+                ->fragment('main-section');
         });
     }
 
