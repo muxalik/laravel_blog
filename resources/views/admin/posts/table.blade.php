@@ -40,7 +40,7 @@
                         </form>
                     </td>
                 </tr>
-                <tr class="expandable-body">
+                <tr class="expandable-body d-done">
                     <td colspan="9">
                         <p>
                             {{ $post->description }}
