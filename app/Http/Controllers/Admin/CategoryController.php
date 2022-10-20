@@ -109,13 +109,6 @@ class CategoryController extends Controller
         abort(404);
     }
 
-    public function refresh()
-    {
-        return view('admin.categories.card_body', [
-            'categories' => Category::all()
-        ]);
-    }
-
     protected function deleteAll()
     {
         if (!count(Post::first())) {
@@ -152,5 +145,12 @@ class CategoryController extends Controller
                 'success' => 'Категория успешно удалена',
                 'clearCache' => true
             ]);
+    }
+
+    public function refresh()
+    {
+        return view('admin.categories.table', [
+            'categories' => Category::all()
+        ]);
     }
 }

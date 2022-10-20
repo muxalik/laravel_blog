@@ -25,8 +25,11 @@ Route::post('/comment/{id}/store', 'UserController@commentStore')->name('comment
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
 
-    Route::get('/categories/refresh', 'CategoryController@refresh')->name('categories.refresh');
-
+    Route::get('/categories/refresh', 'CategoryController@refresh');
+    Route::get('/posts/refresh', 'PostController@refresh');
+    Route::get('/tags/refresh', 'TagController@refresh');
+    Route::get('/users/refresh', 'UserController@refresh');
+    
     Route::get('/', 'MainController@index')->name('admin.index');
     Route::resource('/categories', 'CategoryController');
     Route::resource('/tags', 'TagController');

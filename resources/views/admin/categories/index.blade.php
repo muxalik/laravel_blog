@@ -43,7 +43,9 @@
                 </div>
             </div>
 
-            @include('admin.categories.card_body')
+            <div class="card-body table-responsive p-0" id="table">
+                @include('admin.categories.table')
+            </div>
 
             <div class="card-footer clearfix" style="">
                 <a href="{{ route('categories.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">

@@ -10,6 +10,28 @@ label {
     margin-top: .5rem;
 }
 
+.overlay {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.overlay i {
+    animation: loading 1.5s linear infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 #cta {
     margin-bottom: -4rem;
     z-index: 1;
@@ -119,6 +141,10 @@ label {
 
 .blog-meta small {
     font-size: 14px;
+}
+
+.card-body {
+    position: relative;
 }
 
 .card-body:not(.maximized-card) {

@@ -190,4 +190,11 @@ class UserController extends Controller
                 'clearCache' => true
             ]);
     }
+
+    public function refresh()
+    {
+        return view('admin.users.table', [
+            'users' => User::all()
+        ]);
+    }
 }

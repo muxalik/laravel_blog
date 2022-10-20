@@ -66,4 +66,9 @@ class Category extends Model
             return Category::pluck('title', 'id')->all();
         });
     }
+
+    public static function clearCache()
+    {
+        Cache::forget('categories_all');
+    }
 }

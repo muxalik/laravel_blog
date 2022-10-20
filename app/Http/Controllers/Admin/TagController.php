@@ -143,4 +143,11 @@ class TagController extends Controller
                 'clearCache' => true
             ]);
     }
+
+    public function refresh()
+    {
+        return view('admin.tags.table', [
+            'tags' => Tag::all()
+        ]);
+    }
 }

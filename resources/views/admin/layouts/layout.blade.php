@@ -413,32 +413,22 @@
         });
 
 
-        // $(function() {
-        //   $('#refresh').on('click', function() {
+        $(() => {
+            $('#refresh').on('click', () => {
+                $.ajax({
+                    url: "{{ url()->current() . '/refresh' }}",
+                    type: "GET",
+                    beforeSend: () => {
+                        $('#table').prepend(
+                            '<div class="overlay"><i class="fas fa-3x fa-sync-alt"></i></div>');
+                    },
+                    success: (data) => $('#table').html(data),
+                    error: (msg) => alert('Ошибка')
+                });
+            });
 
-        //     $.ajax({
-
-        //       url: "/refresh",
-        //       type: "GET",
-        //       headers: {
-        //       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        //       },
-        //       success: function (data) {
-        //         console.log(data)
-        //       },
-        //       error: function (msg) {
-        //         alert('Ошибка');
-        //       }
-
-        //     });
-        //   });
-
-        //   return false;
-        // });
-
-        // $('#card').CardRefresh({
-        //   'source': '{{ route('categories.refresh') }}'
-        // });
+            return false;
+        });
 
 
         $('#card').on('maximized.lte.cardwidget', () => {

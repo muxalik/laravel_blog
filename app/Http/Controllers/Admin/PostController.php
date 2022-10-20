@@ -168,4 +168,11 @@ class PostController extends Controller
                 'clearCache' => true
             ]);
     }
+
+    public function refresh()
+    {
+        return view('admin.posts.table', [
+            'posts' => Post::with('category', 'tags')->get()
+        ]);
+    }
 }
