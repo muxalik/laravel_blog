@@ -23,7 +23,7 @@ Route::post('/contact/store', 'UserController@contactStore')->name('contact.stor
 Route::post('/comment/{id}/store', 'UserController@commentStore')->name('comments.store');
 
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
 
     Route::get('/categories/refresh', 'CategoryController@refresh')->name('categories.refresh');
 
@@ -34,14 +34,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::resource('/users', 'UserController');
 });
 
-Route::group(['middleware' => 'guest'], function() {
+Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', 'UserController@create')->name('register.create');
     Route::post('/register', 'UserController@store')->name('register.store');
     Route::get('/login', 'UserController@loginForm')->name('login.create');
     Route::post('/login', 'UserController@login')->name('login');
 });
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', 'UserController@logout')->name('logout');
 });
-

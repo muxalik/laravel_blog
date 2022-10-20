@@ -55,18 +55,18 @@ class AppServiceProvider extends ServiceProvider
                 $cats = Category::withCount('posts')->orderBy('posts_count', 'desc')->get();
                 Cache::put('cats', $cats, 30);
             }
-            
+
             $view->with('recent_posts', Post::orderBy('id', 'desc')->limit(3)->get());
             $view->with('popular_posts', Post::orderBy('views', 'desc')->limit(3)->get());
             $view->with('cats', $cats);
         });
 
-        view()->composer('admin.index', function($view) {
-            
+        view()->composer('admin.index', function ($view) {
+
             // Widgets
             $avg_views = ceil(Post::avg('views'));
             $posts = Post::count('id');
-            
+
             $view->with('users_count', User::count('id'));
             $view->with('avg_views', $avg_views);
             $view->with('posts_count', $posts);
@@ -75,8 +75,8 @@ class AppServiceProvider extends ServiceProvider
             $rate = Post::pluck('likes', 'dislikes')->all();
             $likes = array_sum(array_values($rate));
             $dislikes = array_sum(array_keys($rate));
-            $view->with('avg_rating', ceil(($likes - $dislikes) / $posts 
-                ? ($likes - $dislikes) / $posts 
+            $view->with('avg_rating', ceil(($likes - $dislikes) / $posts
+                ? ($likes - $dislikes) / $posts
                 : 1));
             // Admin list
             $admins = User::where('is_admin', '=', 1)->get();

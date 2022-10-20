@@ -129,7 +129,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        if ($id === 'all') 
+        if ($id === 'all')
             static::deleteAll();
 
         if (is_numeric($id))

@@ -11,7 +11,7 @@ class CategoryController extends Controller
     {
         $category = Category::getBySlug($slug);
         $posts = Post::getByCategory($category);
-            
+
         return view('categories.show', compact('category', 'posts'));
     }
 }
