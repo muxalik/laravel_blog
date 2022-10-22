@@ -420,7 +420,8 @@
                     type: "GET",
                     beforeSend: () => {
                         $('#table').prepend(
-                            '<div class="overlay"><i class="fas fa-3x fa-sync-alt"></i></div>');
+                            '<div class="overlay"><i class="fas fa-3x fa-sync-alt"></i></div>'
+                            );
                     },
                     success: (data) => $('#table').html(data),
                     error: (msg) => alert('Ошибка')

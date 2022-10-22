@@ -122,28 +122,21 @@
 
         @if (count($comments))
             <div class="custombox clearfix" data-aos="zoom-in">
-                <h4 class="small-title">{{ count($comments) }} Comments</h4>
+                <h4 class="small-title">{{ $amount }} Comments</h4>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="comments-list">
+                        <div class="comments-list" id="comments-list">
 
-                            @foreach ($comments as $comment)
-                                <div class="media">
-                                    <a class="media-left" href="#">
-                                        <img src="{{ asset('images/avatar' . mt_rand(1, 5) . '.png') }}" alt="avatar"
-                                            class="rounded-circle">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading user_name">{{ $comment->user->name }}
-                                            <small>{{ $comment->getDate() }}</small>
-                                        </h4>
-                                        <p>{{ $comment->content }}</p>
-                                        <a href="#reply" class="btn btn-primary btn-sm">Reply</a>
-                                    </div>
-                                </div>
-                            @endforeach
+                            @include('posts.comments')
 
                         </div>
+
+                        @if (count($comments) < $amount)
+                            <div class="d-flex justify-content-center mt-4">
+                                <button class="btn btn-primary" id="loadMore" style="cursor: pointer">Load more</button>
+                            </div>
+                        @endif
+
                     </div><!-- end col -->
                 </div><!-- end row -->
             </div><!-- end custom-box -->
@@ -155,7 +148,7 @@
             <h4 class="small-title">Leave a Reply</h4>
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-wrapper" action="{{ route('comments.store', $post->id) }}#reply" method="POST">
+                    <form class="form-wrapper" action="{{ route('comments.store', $post->id) }}" method="POST">
                         @csrf
                         <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Your comment"></textarea>
                         <button type="submit" class="btn btn-primary" style="cursor: pointer">Submit Comment</button>
@@ -255,7 +248,41 @@
         dislikeCount.textContent = +dislikeCount.textContent + 1; 
         disliked = true
         console.log('Dislikes' + {{ $post->dislikes }})
+    });
+
+
+    let page = 2;
+
+    $('#loadMore').on('click', () => {
+        load_more(page);
+        page++;
     })
+
+    function load_more(page){
+        $.ajax({
+          url: "{{ route('posts.loadmore', ['id' => $post->id]) }}" + "?page=" + page,
+          type: "get",
+          datatype: "json",
+          beforeSend: function()
+          {
+            // $('.ajax-loading').show();
+          }
+        })
+        .done(function(data)
+        {          
+        //   if(data.length == 0){
+        //   $('.ajax-loading').html("No more records!");
+        //   return;
+            console.log(data)
+        }
+        //   $('.ajax-loading').hide();
+        //   $("#comments-list").append(data);
+        )
+        .fail(function(jqXHR, ajaxOptions, thrownError)
+        {
+          alert('No response from server');
+        });
+    }
 
 </script>
 

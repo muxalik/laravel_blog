@@ -26,4 +26,17 @@ class Comment extends Model
     {
         return Carbon::parse($this->created_at)->diffForHumans();
     }
+
+    public static function getAmount($id)
+    {
+        return Comment::where('post_id', $id)
+            ->count();
+    }
+
+    public static function getByPostId($id)
+    {
+        return Comment::where('post_id', $id)
+            ->orderBy('created_at')
+            ->paginate(4);
+    }
 }

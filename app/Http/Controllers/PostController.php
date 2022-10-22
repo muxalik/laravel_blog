@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -17,9 +19,21 @@ class PostController extends Controller
     {
         $post = self::get($slug);
         $similar = self::getSimilar($post);
-        $comments = $post->comments;
+        
+        $comments = Comment::getByPostId($post->id);
+        $amount = Comment::getAmount($post->id);
 
-        return view('posts.show', compact('post', 'similar', 'comments'));
+        return view('posts.show', compact('post', 'similar', 'comments', 'amount'));
+    }
+
+    public function loadMoreComments(Request $request, $id)
+    {
+        dd(Comment::getByPostId($id));
+        if ($request->ajax()) {
+            return view('posts.comments', [
+                'comments' => Comment::getByPostId($id)
+            ]);
+        }
     }
 
     protected static function get($slug)

@@ -25,7 +25,8 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class)->withTimestamps();
+        return $this->belongsToMany(Tag::class)
+            ->withTimestamps();
     }
 
     public function category()
@@ -54,23 +55,29 @@ class Post extends Model
                 Storage::delete($image);
 
             $folder = date('Y-m-d');
-            return $request->file('thumbnail')->store("images/{$folder}");
+
+            return $request->file('thumbnail')
+                ->store("images/{$folder}");
         }
     }
 
     public function getImage()
     {
-        return $this->thumbnail ? asset("uploads/" . $this->thumbnail) : asset("images/icons/no-image_1.png");
+        return $this->thumbnail 
+            ? asset("uploads/" . $this->thumbnail) 
+            : asset("images/icons/no-image_1.png");
     }
 
     public function getPostDate()
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d F, Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)
+            ->format('d F, Y');
     }
 
     public function changePostDate()
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('Y.m.d');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)
+            ->format('Y.m.d');
     }
 
     public static function getById($id)
@@ -81,8 +88,7 @@ class Post extends Model
 
     public static function getByCategory(Category $category)
     {
-        return $category
-            ->posts()
+        return $category->posts()
             ->orderBy('id', 'desc')
             ->paginate(3);
     }
@@ -115,7 +121,8 @@ class Post extends Model
     public static function getAllCached()
     {
         return Cache::remember('posts_all', env('CACHE_TIME'), function () {
-            return Post::with('category', 'tags')->get();
+            return Post::with('category', 'tags')
+                ->get();
         });
     }
 
