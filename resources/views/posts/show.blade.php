@@ -252,32 +252,25 @@
 
 
     let page = 2;
+    let amount = {{ $amount }};
 
     $('#loadMore').on('click', () => {
         load_more(page);
         page++;
     })
 
-    function load_more(page){
+    function load_more(page) {
         $.ajax({
           url: "{{ route('posts.loadmore', ['id' => $post->id]) }}" + "?page=" + page,
           type: "get",
-          datatype: "json",
-          beforeSend: function()
-          {
-            // $('.ajax-loading').show();
-          }
+          datatype: "json"
         })
         .done(function(data)
-        {          
-        //   if(data.length == 0){
-        //   $('.ajax-loading').html("No more records!");
-        //   return;
-            console.log(data)
-        }
-        //   $('.ajax-loading').hide();
-        //   $("#comments-list").append(data);
-        )
+        {
+            $("#comments-list").append(data);
+            if (amount == $('.media').length)
+                $('#loadMore').remove()
+        })
         .fail(function(jqXHR, ajaxOptions, thrownError)
         {
           alert('No response from server');
