@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -25,6 +25,24 @@ class PostController extends Controller
         $amount = Comment::getAmount($post->id);
 
         return view('posts.show', compact('post', 'similar', 'comments', 'amount'));
+    }
+
+    public function commentStore(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required'
+        ]);
+
+        if (!Auth::check())
+            return redirect()->route('login.create');
+
+        Comment::create([
+            'user_id' => Auth::user()->id,
+            'post_id' => $id,
+            'content' => $request->content
+        ]);
+
+        return redirect()->back();
     }
 
     public function loadMoreComments(Request $request, $id)
