@@ -63,12 +63,32 @@ class Category extends Model
     public static function getAllTitleIdCached()
     {
         return Cache::remember('categories_pluck', env('CACHE_TIME'), function () {
-            return Category::pluck('title', 'id')->all();
+            return Category::pluck('title', 'id')
+                ->all();
         });
     }
 
     public static function clearCache()
     {
         Cache::forget('categories_all');
+    }
+
+    public static function getList()
+    {
+        return Cache::remember('categories_list', env('CACHE_TIME'), function () {
+            return Category::withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->get();
+        });
+    }
+
+    public static function getPopular()
+    {
+        return Cache::remember('popular_categories', env('CACHE_TIME'), function () {
+            return Category::withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->limit(6)
+                ->get();
+        });
     }
 }

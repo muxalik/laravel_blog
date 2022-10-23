@@ -63,8 +63,8 @@ class Post extends Model
 
     public function getImage()
     {
-        return $this->thumbnail 
-            ? asset("uploads/" . $this->thumbnail) 
+        return $this->thumbnail
+            ? asset("uploads/" . $this->thumbnail)
             : asset("images/icons/no-image_1.png");
     }
 
@@ -139,5 +139,50 @@ class Post extends Model
     public static function clearCache(): bool
     {
         return Cache::forget('posts_all');
+    }
+
+    public static function getRating()
+    {
+        return Cache::remember('posts_rating', env('CACHE_TIME'), function () {
+            return Post::pluck('likes', 'dislikes')
+                ->all();
+        });
+    }
+
+    public static function getPopular()
+    {
+        return Cache::remember('popular_posts', env('CACHE_TIME'), function () {
+            return Post::orderBy('views', 'desc')
+                ->limit(3)
+                ->get();
+        });
+    }
+
+    public static function getRecent()
+    {
+        return Cache::remember('recent_posts', env('CACHE_TIME'), function () {
+            return Post::orderBy('id', 'desc')
+                ->limit(3)
+                ->get();
+        });
+    }
+
+    public static function getPopularStats()
+    {
+        return Cache::remember('recent_posts', env('CACHE_TIME'), function () {
+            return Post::orderBy('views')
+                ->limit(7)
+                ->get()
+                ->sortBy('created_at');
+        });
+    }
+
+    public static function getRecentStats()
+    {
+        return Cache::remember('recent_posts', env('CACHE_TIME'), function () {
+            return Post::orderBy('created_at')
+                ->limit(7)
+                ->get();
+        });
     }
 }

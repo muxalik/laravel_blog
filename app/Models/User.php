@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return Cache::forget('users_all');
     }
+
+    public static function getAdmins()
+    {
+        return User::where('is_admin', 1)->get();
+    }
 }

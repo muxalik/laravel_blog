@@ -70,4 +70,14 @@ class Tag extends Model
         Tag::findById($id)
             ->update($request->all());
     }
+
+    public static function getPopular()
+    {
+        return Cache::remember('popular_tags', env('CACHE_TIME'), function () {
+            return Tag::withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->limit(6)
+                ->get();
+        });
+    }
 }

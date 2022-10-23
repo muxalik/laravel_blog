@@ -37,55 +37,40 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('layouts.sidebar', function ($view) {
-            if (Cache::has('cats')) {
-                $cats = Cache::get('cats');
-            } else {
-                $cats = Category::withCount('posts')->orderBy('posts_count', 'desc')->get();
-                Cache::put('cats', $cats, 30);
-            }
-
-            $view->with('popular_posts', Post::orderBy('views', 'desc')->limit(3)->get());
-            $view->with('cats', $cats);
+            $view->with('popular_posts', Post::getPopular());
+            $view->with('cats', Category::getList());
         });
 
         view()->composer('layouts.footer', function ($view) {
-            if (Cache::has('cats')) {
-                $cats = Cache::get('cats');
-            } else {
-                $cats = Category::withCount('posts')->orderBy('posts_count', 'desc')->get();
-                Cache::put('cats', $cats, 30);
-            }
-
-            $view->with('recent_posts', Post::orderBy('id', 'desc')->limit(3)->get());
-            $view->with('popular_posts', Post::orderBy('views', 'desc')->limit(3)->get());
-            $view->with('cats', $cats);
+            $view->with('recent_posts', Post::getRecent());
+            $view->with('popular_posts', Post::getPopular());
+            $view->with('cats', Category::getList());
         });
 
         view()->composer('admin.index', function ($view) {
 
             // Widgets
-            $avg_views = ceil(Post::avg('views'));
             $posts = Post::count('id');
 
             $view->with('users_count', User::count('id'));
-            $view->with('avg_views', $avg_views);
+            $view->with('avg_views', ceil(Post::avg('views')));
             $view->with('posts_count', $posts);
 
             // Rating
-            $rate = Post::pluck('likes', 'dislikes')->all();
+            $rate = Post::getRating();
             $likes = array_sum(array_values($rate));
             $dislikes = array_sum(array_keys($rate));
-            $view->with('avg_rating', ceil(($likes - $dislikes) / $posts
-                ? ($likes - $dislikes) / $posts
-                : 1));
-            // Admin list
-            $admins = User::where('is_admin', '=', 1)->get();
-            $view->with('admins', $admins);
+            $avg_rating = ceil(($likes - $dislikes) / $posts
+            ? ($likes - $dislikes) / $posts
+            : 1);
+
+            $view->with('avg_rating', $avg_rating);
+
+            $view->with('admins', User::getAdmins());
 
             // Statistics
-            // Popular tags 
-            // $tags = DB::select("SELECT COUNT(*) as amount, tags.title FROM post_tag INNER JOIN tags ON tag_id = tags.id GROUP BY tag_id LIMIT 6");
-            $tags = Tag::withCount('posts')->orderBy('posts_count', 'desc')->limit(6)->get();
+            // Popular tags
+            $tags = Tag::getPopular();
             $tags_labels = $tags_posts = [];
 
             foreach ($tags as $tag) {
@@ -97,8 +82,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('tags_posts', json_encode($tags_posts));
 
             // Popular categories
-            // $categories = DB::select("SELECT COUNT(*) AS amount, categories.title FROM posts INNER JOIN categories ON category_id = categories.id GROUP BY category_id LIMIT 6");
-            $categories = Category::withCount('posts')->orderBy('posts_count', 'desc')->limit(6)->get();
+            $categories = Category::getPopular();
             $categories_labels = $categories_posts = [];
 
             foreach ($categories as $category) {
@@ -110,7 +94,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('categories_posts', json_encode($categories_posts));
 
             // Rating of latest posts
-            $posts = $latest_posts = Post::orderBy('created_at')->limit(7)->get();
+            $posts = $latest_posts = Post::getRecentStats();
             $latest_labels = $latest_likes = $latest_dislikes = $latest_views = [];
 
             foreach ($latest_posts as $post) {
@@ -126,7 +110,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('latest_views', json_encode($latest_views));
 
             // Rating of popular posts
-            $posts = Post::orderBy('views')->limit(7)->get()->sortBy('created_at');
+            $posts = Post::getPopularStats();
             $popular_labels = $popular_likes = $popular_dislikes = [];
 
             foreach ($posts as $post) {
