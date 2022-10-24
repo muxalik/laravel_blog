@@ -85,10 +85,10 @@ class Category extends Model
     public static function getPopular()
     {
         return Cache::remember('popular_categories', env('CACHE_TIME'), function () {
-            return Category::withCount('posts')
+            return collect(Category::withCount('posts')
                 ->orderBy('posts_count', 'desc')
                 ->limit(6)
-                ->get();
+                ->get());
         });
     }
 }

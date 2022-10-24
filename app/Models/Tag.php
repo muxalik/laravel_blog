@@ -74,10 +74,10 @@ class Tag extends Model
     public static function getPopular()
     {
         return Cache::remember('popular_tags', env('CACHE_TIME'), function () {
-            return Tag::withCount('posts')
+            return collect(Tag::withCount('posts')
                 ->orderBy('posts_count', 'desc')
                 ->limit(6)
-                ->get();
+                ->get());
         });
     }
 }

@@ -9,8 +9,6 @@ use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
-use function GuzzleHttp\json_encode;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -76,10 +74,11 @@ class AppServiceProvider extends ServiceProvider
     public function getAvgRating()
     {
         $posts_count = Post::getAmount();
-        $rate = Post::getRating();
+        $rating = Post::getRating();
 
-        $likes = array_sum(array_values($rate));
-        $dislikes = array_sum(array_keys($rate));
+        $likes = $rating->values()->sum();
+        $dislikes = $rating->keys()->sum();
+
         $avg_rating = ceil(($likes - $dislikes) / $posts_count
             ? ($likes - $dislikes) / $posts_count
             : 1);
@@ -95,70 +94,77 @@ class AppServiceProvider extends ServiceProvider
     public function passPopularTags($view)
     {
         $tags = Tag::getPopular();
-        $labels = $posts = [];
+        $labels = collect();
+        $posts = collect();
 
-        foreach ($tags as $tag) {
+        $tags->each(function ($tag) use ($labels, $posts) {
             $labels[] = $tag->title;
             $posts[] = $tag->posts_count;
-        }
+        });
 
         $view->with([
-            'tags_labels' => json_encode($labels),
-            'tags_posts' => json_encode($posts),
+            'tags_labels' => $labels->toJson(),
+            'tags_posts' => $posts->toJson(),
         ]);
     }
 
     public function passPopularCategories($view)
     {
         $categories = Category::getPopular();
-        $labels = $posts = [];
+        $labels = collect();
+        $posts = collect();
 
-        foreach ($categories as $category) {
-            $labels[] = $category->title;
-            $posts[] = $category->posts_count;
-        }
+        $categories->each(function ($category) use ($labels, $posts) {
+            $labels->push($category->title);
+            $posts->push($category->posts_count);
+        });
 
         $view->with([
-            'categories_labels' => json_encode($labels),
-            'categories_posts' => json_encode($posts),
+            'categories_labels' => $labels->toJson(),
+            'categories_posts' => $posts->toJson(),
         ]);
     }
 
     public function passRecentPosts($view)
     {
         $posts = Post::getRecentStats();
-        $labels = $likes = $dislikes = $views = [];
+        $labels = collect();
+        $likes = collect();
+        $dislikes = collect();
+        $views = collect();
 
-        foreach ($posts as $post) {
-            $labels[] = $post->changePostDate();
-            $likes[] = $post->likes;
-            $dislikes[] = $post->dislikes;
-            $views[] = $post->views;
-        }
+        $posts->each(function ($post) use ($labels, $likes, $dislikes, $views) {
+            $labels->push($post->changePostDate());
+            $likes->push($post->likes);
+            $dislikes->push($post->dislikes);
+            $views->push($post->views);
+        });
 
         $view->with([
-            'latest_labels' => json_encode($labels),
-            'latest_likes' => json_encode($likes),
-            'latest_dislikes' => json_encode($dislikes),
-            'latest_views' => json_encode($views),
+            'latest_labels' => $labels->toJson(),
+            'latest_likes' => $likes->toJson(),
+            'latest_dislikes' => $dislikes->toJson(),
+            'latest_views' => $views->toJson(),
         ]);
     }
 
     public function passPopularPosts($view)
     {
         $posts = Post::getPopularStats();
-        $labels = $likes = $dislikes = [];
+        $labels = collect(); 
+        $likes = collect(); 
+        $dislikes = collect();
 
-        foreach ($posts as $post) {
-            $labels[] = $post->changePostDate();
-            $likes[] = $post->likes;
-            $dislikes[] = $post->dislikes;
-        }
+        $posts->each(function ($post) use ($labels, $likes, $dislikes) {
+            $labels->push($post->changePostDate());
+            $likes->push($post->likes);
+            $dislikes->push($post->dislikes);
+        });
 
         $view->with([
-            'popular_labels' => json_encode($labels),
-            'popular_likes' => json_encode($likes),
-            'popular_dislikes' => json_encode($dislikes),
+            'popular_labels' => $labels->toJson(),
+            'popular_likes' => $likes->toJson(),
+            'popular_dislikes' => $dislikes->toJson(),
         ]);
     }
 }

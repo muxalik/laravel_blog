@@ -144,8 +144,8 @@ class Post extends Model
     public static function getRating()
     {
         return Cache::remember('posts_rating', env('CACHE_TIME'), function () {
-            return Post::pluck('likes', 'dislikes')
-                ->all();
+            return collect(Post::pluck('likes', 'dislikes')
+                ->all());
         });
     }
 
@@ -180,9 +180,9 @@ class Post extends Model
     public static function getRecentStats()
     {
         return Cache::remember('recent_posts_stats', env('CACHE_TIME'), function () {
-            return Post::orderBy('created_at')
+            return collect(Post::orderBy('created_at')
                 ->limit(7)
-                ->get();
+                ->get());
         });
     }
 
