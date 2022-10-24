@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return User::where('is_admin', 1)->get();
     }
+
+    public static function getAmount()
+    {
+        return User::count('id');
+    }
 }

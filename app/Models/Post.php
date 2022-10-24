@@ -185,4 +185,14 @@ class Post extends Model
                 ->get();
         });
     }
+
+    public static function getAvgViews()
+    {
+        return ceil(Post::avg('views'));
+    }
+
+    public static function getAmount()
+    {
+        return Post::count('id');
+    }
 }

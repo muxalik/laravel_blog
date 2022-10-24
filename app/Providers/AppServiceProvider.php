@@ -7,9 +7,9 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+
+use function GuzzleHttp\json_encode;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,95 +33,132 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         view()->composer('layouts.header', function ($view) {
-            $view->with('categories', Category::getAllCached());
+            $view->with([
+                'categories' => Category::getAllCached()
+            ]);
         });
 
         view()->composer('layouts.sidebar', function ($view) {
-            $view->with('popular_posts', Post::getPopular());
-            $view->with('cats', Category::getList());
+            $view->with([
+                'popular_posts' => Post::getPopular(),
+                'cats' => Category::getList()
+            ]);
         });
 
         view()->composer('layouts.footer', function ($view) {
-            $view->with('recent_posts', Post::getRecent());
-            $view->with('popular_posts', Post::getPopular());
-            $view->with('cats', Category::getList());
+            $view->with([
+                'recent_posts' => Post::getRecent(),
+                'popular_posts' => Post::getPopular(),
+                'cats' => Category::getList()
+            ]);
         });
 
         view()->composer('admin.index', function ($view) {
+            $this->passWidgets($view);
+            $this->passAdminList($view);
+            $this->passPopularTags($view);
+            $this->passPopularCategories($view);
+            $this->passRecentPosts($view);
+            $this->passPopularPosts($view);
+        });
+    }
 
-            // Widgets
-            $posts = Post::count('id');
+    public function passWidgets($view)
+    {
+        $view->with([
+            'users_count' => User::getAmount(),
+            'avg_views' => Post::getAvgViews(),
+            'posts_count' => Post::getAmount(),
+            'avg_rating' => $this->getAvgRating(),
+        ]);
+    }
 
-            $view->with('users_count', User::count('id'));
-            $view->with('avg_views', ceil(Post::avg('views')));
-            $view->with('posts_count', $posts);
+    public function getAvgRating()
+    {
+        $posts_count = Post::getAmount();
+        $rate = Post::getRating();
 
-            // Rating
-            $rate = Post::getRating();
-            $likes = array_sum(array_values($rate));
-            $dislikes = array_sum(array_keys($rate));
-            $avg_rating = ceil(($likes - $dislikes) / $posts
-            ? ($likes - $dislikes) / $posts
+        $likes = array_sum(array_values($rate));
+        $dislikes = array_sum(array_keys($rate));
+        $avg_rating = ceil(($likes - $dislikes) / $posts_count
+            ? ($likes - $dislikes) / $posts_count
             : 1);
 
-            $view->with('avg_rating', $avg_rating);
+        return $avg_rating;
+    }
 
-            $view->with('admins', User::getAdmins());
+    public function passAdminList($view)
+    {
+        $view->with('admins', User::getAdmins());
+    }
 
-            // Statistics
-            // Popular tags
-            $tags = Tag::getPopular();
-            $tags_labels = $tags_posts = [];
+    public function passPopularTags($view)
+    {
+        $tags = Tag::getPopular();
+        $labels = $posts = [];
 
-            foreach ($tags as $tag) {
-                $tags_labels[] = $tag->title;
-                $tags_posts[] = $tag->posts_count;
-            }
+        foreach ($tags as $tag) {
+            $labels[] = $tag->title;
+            $posts[] = $tag->posts_count;
+        }
 
-            $view->with('tags_labels', json_encode($tags_labels));
-            $view->with('tags_posts', json_encode($tags_posts));
+        $view->with([
+            'tags_labels' => json_encode($labels),
+            'tags_posts' => json_encode($posts),
+        ]);
+    }
 
-            // Popular categories
-            $categories = Category::getPopular();
-            $categories_labels = $categories_posts = [];
+    public function passPopularCategories($view)
+    {
+        $categories = Category::getPopular();
+        $labels = $posts = [];
 
-            foreach ($categories as $category) {
-                $categories_labels[] = $category->title;
-                $categories_posts[] = $category->posts_count;
-            }
+        foreach ($categories as $category) {
+            $labels[] = $category->title;
+            $posts[] = $category->posts_count;
+        }
 
-            $view->with('categories_labels', json_encode($categories_labels));
-            $view->with('categories_posts', json_encode($categories_posts));
+        $view->with([
+            'categories_labels' => json_encode($labels),
+            'categories_posts' => json_encode($posts),
+        ]);
+    }
 
-            // Rating of latest posts
-            $posts = $latest_posts = Post::getRecentStats();
-            $latest_labels = $latest_likes = $latest_dislikes = $latest_views = [];
+    public function passRecentPosts($view)
+    {
+        $posts = Post::getRecentStats();
+        $labels = $likes = $dislikes = $views = [];
 
-            foreach ($latest_posts as $post) {
-                $latest_labels[] = $post->changePostDate();
-                $latest_likes[] = $post->likes;
-                $latest_dislikes[] = $post->dislikes;
-                $latest_views[] = $post->views;
-            }
+        foreach ($posts as $post) {
+            $labels[] = $post->changePostDate();
+            $likes[] = $post->likes;
+            $dislikes[] = $post->dislikes;
+            $views[] = $post->views;
+        }
 
-            $view->with('latest_labels', json_encode($latest_labels));
-            $view->with('latest_likes', json_encode($latest_likes));
-            $view->with('latest_dislikes', json_encode($latest_dislikes));
-            $view->with('latest_views', json_encode($latest_views));
+        $view->with([
+            'latest_labels' => json_encode($labels),
+            'latest_likes' => json_encode($likes),
+            'latest_dislikes' => json_encode($dislikes),
+            'latest_views' => json_encode($views),
+        ]);
+    }
 
-            // Rating of popular posts
-            $posts = Post::getPopularStats();
-            $popular_labels = $popular_likes = $popular_dislikes = [];
+    public function passPopularPosts($view)
+    {
+        $posts = Post::getPopularStats();
+        $labels = $likes = $dislikes = [];
 
-            foreach ($posts as $post) {
-                $popular_labels[] = $post->changePostDate();
-                $popular_likes[] = $post->likes;
-                $popular_dislikes[] = $post->dislikes;
-            }
+        foreach ($posts as $post) {
+            $labels[] = $post->changePostDate();
+            $likes[] = $post->likes;
+            $dislikes[] = $post->dislikes;
+        }
 
-            $view->with('popular_labels', json_encode($popular_labels));
-            $view->with('popular_likes', json_encode($popular_likes));
-            $view->with('popular_dislikes', json_encode($popular_dislikes));
-        });
+        $view->with([
+            'popular_labels' => json_encode($labels),
+            'popular_likes' => json_encode($likes),
+            'popular_dislikes' => json_encode($dislikes),
+        ]);
     }
 }
