@@ -169,7 +169,7 @@ class Post extends Model
 
     public static function getPopularStats()
     {
-        return Cache::remember('recent_posts', env('CACHE_TIME'), function () {
+        return Cache::remember('recent_posts_stats', env('CACHE_TIME'), function () {
             return Post::orderBy('views')
                 ->limit(7)
                 ->get()
@@ -179,7 +179,7 @@ class Post extends Model
 
     public static function getRecentStats()
     {
-        return Cache::remember('recent_posts', env('CACHE_TIME'), function () {
+        return Cache::remember('recent_posts_stats', env('CACHE_TIME'), function () {
             return Post::orderBy('created_at')
                 ->limit(7)
                 ->get();
