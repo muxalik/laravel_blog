@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\Message;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -14,14 +16,8 @@ class UserController extends Controller
         return view('user.create');
     }
 
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
-        ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -40,13 +36,8 @@ class UserController extends Controller
         return view('user.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
         if (Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
@@ -75,16 +66,8 @@ class UserController extends Controller
         return view('user.contact');
     }
 
-    public function contactStore(Request $request)
+    public function contactStore(ContactRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:users',
-            'email' => 'required|email',
-            'phone' => 'required|regex:/[0-9\s]{13}/',
-            'subject' => 'required|max:50',
-            'message' => 'required|max:299'
-        ]);
-
         Message::create($request->all());
 
         return redirect()
