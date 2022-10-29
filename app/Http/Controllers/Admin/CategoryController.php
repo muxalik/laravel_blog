@@ -42,10 +42,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required'
-        ]);
-
         Category::create($request->all());
 
         return redirect()
@@ -78,10 +74,6 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title' => 'required'
-        ]);
-
         Category::updateById($request, $id);
 
         return redirect()
@@ -101,15 +93,13 @@ class CategoryController extends Controller
     public function destroy(string|int $id)
     {
         if ($id === 'all')
-            static::deleteAll();
+            return static::deleteAll();
 
-        if (is_numeric($id))
-            static::deleteOne((int) $id);
-
-        abort(404);
+        if (is_numeric($id)) 
+            return static::deleteOne($id);
     }
 
-    protected function deleteAll()
+    protected static function deleteAll()
     {
         if (!count(Post::first())) {
             Category::truncate();
@@ -127,11 +117,11 @@ class CategoryController extends Controller
             ->with('error', 'У категорий есть записи');
     }
 
-    protected function deleteOne(int $id)
+    protected static function deleteOne(int $id)
     {
         $category = Category::getById($id);
 
-        if ($category->getPostsCount()) {
+        if ($category->getPostsAmount()) {
             return redirect()
                 ->route('categories.index')
                 ->with('error', 'У категории есть записи');

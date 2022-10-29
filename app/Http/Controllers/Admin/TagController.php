@@ -97,15 +97,13 @@ class TagController extends Controller
     public function destroy(int|string $id)
     {
         if ($id === 'all')
-            static::deleteAll();
+            return static::deleteAll();
 
         if (is_numeric($id))
-            static::deleteOne($id);
-
-        abort(404);
+            return static::deleteOne($id);
     }
 
-    protected function deleteAll()
+    protected static function deleteAll()
     {
         $data = DB::select('SELECT * FROM post_tag LIMIT 1');
 
@@ -125,7 +123,7 @@ class TagController extends Controller
             ->with('error', 'У тегов есть записи');
     }
 
-    protected function deleteOne(int $id)
+    protected static function deleteOne(int $id)
     {
         $tag = Tag::getById($id);
 

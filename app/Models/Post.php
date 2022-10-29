@@ -82,11 +82,10 @@ class Post extends Model
 
     public static function getById($id)
     {
-        return Post::find($id)
-            ->firstOrFail();
+        return Post::find($id);
     }
 
-    public static function getByCategory(Category $category)
+    public static function getByCategory($category)
     {
         return $category->posts()
             ->orderBy('id', 'desc')

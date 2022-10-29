@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -94,7 +93,7 @@ class UserController extends Controller
     public function edit($id)
     {
         return view('admin.users.edit', [
-            'users' => User::getById($id)
+            'user' => User::getById($id)
         ]);
     }
 
@@ -159,15 +158,13 @@ class UserController extends Controller
     public function destroy($id)
     {
         if ($id === 'all')
-            static::deleteAll();
+            return static::deleteAll();
 
         if (is_numeric($id))
-            static::deleteOne($id);
-
-        abort(404);
+            return static::deleteOne($id);
     }
 
-    protected function deleteAll()
+    protected static function deleteAll()
     {
         DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
 
@@ -179,7 +176,7 @@ class UserController extends Controller
             ]);
     }
 
-    protected function deleteOne(int $id)
+    protected static function deleteOne(int $id)
     {
         User::deleteById($id);
 

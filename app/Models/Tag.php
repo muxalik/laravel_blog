@@ -31,8 +31,7 @@ class Tag extends Model
 
     public static function getById($id)
     {
-        return Tag::find($id)
-            ->firstOrFail();
+        return Tag::find($id);
     }
 
     public static function getBySlug($slug)
@@ -67,7 +66,7 @@ class Tag extends Model
 
     public static function updateById(Request $request, $id)
     {
-        Tag::findById($id)
+        Tag::getById($id)
             ->update($request->all());
     }
 

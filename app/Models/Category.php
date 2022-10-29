@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -32,14 +31,13 @@ class Category extends Model
 
     public static function getById($id)
     {
-        return Category::find($id)
-            ->firstOrFail();
+        return Category::find($id);
     }
 
-    public static function getBySlug($slug): Category
+    public static function getBySlug($slug)
     {
         return Category::where('slug', $slug)
-            ->firstOrFail();
+            ->first();
     }
 
     public function getPostsAmount()
@@ -56,7 +54,7 @@ class Category extends Model
 
     public static function updateById(Request $request, $id)
     {
-        Category::findById($id)
+        Category::find($id)
             ->update($request->all());
     }
 

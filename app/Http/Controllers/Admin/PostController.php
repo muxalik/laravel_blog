@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -103,7 +102,7 @@ class PostController extends Controller
             'thumbnail' => 'nullable|image'
         ]);
 
-        $post = Post::findById($id);
+        $post = Post::getById($id);
         $data = $request->all();
 
         if ($file = Post::uploadImage($request, $post->thumbnail)) {
@@ -130,15 +129,13 @@ class PostController extends Controller
     public function destroy($id)
     {
         if ($id === 'all')
-            static::deleteAll();
+            return static::deleteAll();
 
         if (is_numeric($id))
-            static::deleteOne($id);
-
-        abort(404);
+            return static::deleteOne($id);
     }
 
-    protected function deleteAll()
+    protected static function deleteAll()
     {
         Post::truncate();
         DB::table('post_tag')->truncate();
@@ -151,7 +148,7 @@ class PostController extends Controller
             ]);
     }
 
-    protected function deleteOne(int $id)
+    protected static function deleteOne(int $id)
     {
         $post = Post::find($id);
         $post->tags()->sync([]);

@@ -44,13 +44,12 @@ class User extends Authenticatable
 
     public static function getById($id)
     {
-        return static::find($id)
-            ->firstOrFail();
+        return User::find($id);
     }
 
     public static function deleteById($id)
     {
-        static::getById($id)
+        User::getById($id)
             ->delete();
     }
 
