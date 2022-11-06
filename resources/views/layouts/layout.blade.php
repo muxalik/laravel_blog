@@ -13,16 +13,17 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+@vite(['resources/assets/admin/plugins/fontawesome-free/css/all.min.css'])
 <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 <link href="{{ asset('style.css') }}" rel="stylesheet">
 <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
 <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">
 <link href="{{ asset('css/colors.css') }}" rel="stylesheet">
-<link href="{{ asset('css/aos.css') }}" rel="stylesheet">
 <link href="{{ asset('css/version/marketing.css') }}" rel="stylesheet">
 <link href="{{ asset('mainstyle.css') }}" rel="stylesheet">
-<script src="{{ asset('js/aos.js') }}"></script>
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 @yield('links')
 

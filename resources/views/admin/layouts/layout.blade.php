@@ -12,11 +12,14 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    @vite(['resources/assets/admin/plugins/fontawesome-free/css/all.min.css', 'resources/assets/admin/plugins/select2/css/select2.css', 'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css', 'resources/assets/admin/css/adminlte.css', 'resources/assets/admin/css/pace.css', 'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js', 'resources/assets/admin/plugins/select2/js/select2.full.js', 'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js', 'resources/assets/admin/js/adminlte.js', 'resources/assets/admin/js/demo.js', 'resources/assets/admin/js/pace.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
+    @vite(['resources/assets/admin/plugins/fontawesome-free/css/all.min.css', 'resources/assets/admin/plugins/select2/css/select2.css', 'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css', 'resources/assets/admin/css/pace.css', 'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js', 'resources/assets/admin/plugins/select2/js/select2.full.js', 'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js', 'resources/assets/admin/js/pace.js'])
 
     <link rel="stylesheet" href="{{ asset('mainstyle.css') }}">
 
@@ -25,10 +28,6 @@
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
-
-        {{-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
-  </div> --}}
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
