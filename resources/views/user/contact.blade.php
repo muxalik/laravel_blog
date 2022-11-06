@@ -20,8 +20,8 @@
 <link href="css/responsive.css" rel="stylesheet">
 <link href="css/colors.css" rel="stylesheet">
 <link href="css/version/marketing.css" rel="stylesheet">
-<link href="{{ asset('css/aos.css') }}" rel="stylesheet">
-<script src="{{ asset('js/aos.js') }}"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <link href="mainstyle.css" rel="stylesheet">
 </head>
 

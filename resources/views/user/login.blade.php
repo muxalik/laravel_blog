@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
 
-    @vite(['resources/assets/admin/plugins/fontawesome-free/css/all.min.css', 'resources/assets/admin/css/adminlte.css'])
-
+    @vite(['resources/assets/admin/plugins/fontawesome-free/css/all.min.css'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('mainstyle.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/aos.js') }}"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 </head>
 
