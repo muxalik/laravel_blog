@@ -161,7 +161,7 @@ class UserController extends Controller
             ]);
     }
 
-    protected static function deleteOne(int $id)
+    protected static function deleteOne($id)
     {
         User::deleteById($id);
 

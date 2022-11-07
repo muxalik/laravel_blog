@@ -68,7 +68,7 @@ class User extends Authenticatable
         });
     }
 
-    public static function clearCache(): bool
+    public static function clearCache()
     {
         return Cache::forget('users_all');
     }

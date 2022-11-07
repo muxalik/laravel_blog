@@ -58,7 +58,7 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id)
+    public function edit($id)
     {
         return view('admin.tags.edit', [
             'tag' => Tag::getById($id)
@@ -72,7 +72,7 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TagRequest $request, int $id)
+    public function update(TagRequest $request, $id)
     {
         Tag::updateById($request, $id);
 
@@ -90,7 +90,7 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int|string $id)
+    public function destroy($id)
     {
         if ($id === 'all')
             return static::deleteAll();
@@ -118,7 +118,7 @@ class TagController extends Controller
             ->with('error', 'У тегов есть записи');
     }
 
-    protected static function deleteOne(int $id)
+    protected static function deleteOne($id)
     {
         $tag = Tag::getById($id);
 

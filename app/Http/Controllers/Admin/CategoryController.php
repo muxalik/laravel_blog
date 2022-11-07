@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -91,7 +90,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string|int $id)
+    public function destroy($id)
     {
         if ($id === 'all')
             return static::deleteAll();
@@ -117,7 +116,7 @@ class CategoryController extends Controller
             ->with('error', 'У категорий есть записи');
     }
 
-    protected static function deleteOne(int $id)
+    protected static function deleteOne($id)
     {
         $category = Category::getById($id);
 

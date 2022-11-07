@@ -135,7 +135,7 @@ class Post extends Model
         });
     }
 
-    public static function clearCache(): bool
+    public static function clearCache()
     {
         return Cache::forget('posts_all');
     }

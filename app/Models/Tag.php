@@ -59,7 +59,7 @@ class Tag extends Model
         });
     }
 
-    public static function clearCache(): bool
+    public static function clearCache()
     {
         return Cache::forget('tags_all');
     }
