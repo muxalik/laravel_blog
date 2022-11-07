@@ -7,7 +7,6 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -116,8 +115,7 @@ class PostController extends Controller
         if ($id === 'all')
             return static::deleteAll();
 
-        if (is_numeric($id))
-            return static::deleteOne($id);
+        return static::deleteOne($id);
     }
 
     protected static function deleteAll()

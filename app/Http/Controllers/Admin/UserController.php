@@ -44,11 +44,7 @@ class UserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        $user = User::create($request->all());
 
         // Login after creating
         if ($request->check) {
@@ -150,8 +146,7 @@ class UserController extends Controller
         if ($id === 'all')
             return static::deleteAll();
 
-        if (is_numeric($id))
-            return static::deleteOne($id);
+        return static::deleteOne($id);
     }
 
     protected static function deleteAll()

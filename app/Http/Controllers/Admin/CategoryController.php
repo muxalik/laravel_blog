@@ -96,8 +96,7 @@ class CategoryController extends Controller
         if ($id === 'all')
             return static::deleteAll();
 
-        if (is_numeric($id)) 
-            return static::deleteOne($id);
+        return static::deleteOne($id);
     }
 
     protected static function deleteAll()

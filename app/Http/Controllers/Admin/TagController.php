@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TagRequest;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
@@ -96,8 +95,7 @@ class TagController extends Controller
         if ($id === 'all')
             return static::deleteAll();
 
-        if (is_numeric($id))
-            return static::deleteOne($id);
+        return static::deleteOne($id);
     }
 
     protected static function deleteAll()

@@ -18,13 +18,9 @@ class UserController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
-        Auth::login($user);
+        Auth::login(
+            User::create($request->all())
+        );
 
         return redirect()
             ->route('home')
