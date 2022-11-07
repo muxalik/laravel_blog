@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -18,8 +19,8 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        $post = self::get($slug);
-        $similar = self::getSimilar($post);
+        $post = static::get($slug);
+        $similar = static::getSimilar($post);
 
         $comments = Comment::getByPostId($post->id);
         $amount = Comment::getAmount($post->id);
@@ -27,12 +28,8 @@ class PostController extends Controller
         return view('posts.show', compact('post', 'similar', 'comments', 'amount'));
     }
 
-    public function commentStore(Request $request, $id)
+    public function commentStore(CommentRequest $request, $id)
     {
-        $request->validate([
-            'content' => 'required'
-        ]);
-
         if (!Auth::check())
             return redirect()->route('login.create');
 

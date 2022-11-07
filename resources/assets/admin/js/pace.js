@@ -15,10 +15,10 @@
       startOnPageLoad: true,
       restartOnPushState: true,
       restartOnRequestAfter: 500,
-      target: '.content-wrapper',
+      target: '.main-header',
       elements: {
         checkInterval: 100,
-        selectors: ['.content-wrapper']
+        selectors: ['.main-header']
       },
       eventLag: {
         minSamples: 10,

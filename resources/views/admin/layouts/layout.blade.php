@@ -309,7 +309,7 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper pt-2 position-relative px-3">
+        <div class="content-wrapper mt-5 pt-2 position-relative px-3">
             @if ($errors->any())
                 <div class="fluid-container mt-2">
                     <div class="row m-0">

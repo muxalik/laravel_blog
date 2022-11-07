@@ -13,13 +13,13 @@
 }
 
 .pace .pace-progress {
-  background: #2299dd;
-  position: absolute;
-  z-index: 1037;
-  top: 0;
-  right: 100%;
-  width: 100%;
-  height: 2px;
+    background: #2299dd;
+    position: absolute;
+    z-index: 1037;
+    bottom: -2px;
+    right: 100%;
+    width: 100%;
+    height: 2px;
 }
 
 .pace .pace-progress-inner {
@@ -38,17 +38,17 @@
 }
 
 .pace .pace-activity {
-  display: block;
-  position: absolute;
-  z-index: 1000;
-  top: 15px;
-  right: 15px;
-  width: 14px;
-  height: 14px;
-  border: solid 2px transparent;
-  border-top-color: #007bff;
-  border-left-color: #007bff;
-  border-radius: 10px;
+    display: block;
+    position: absolute;
+    z-index: 1000;
+    bottom: -30px;
+    right: 15px;
+    width: 14px;
+    height: 14px;
+    border: solid 2px transparent;
+    border-top-color: #007bff;
+    border-left-color: #007bff;
+    border-radius: 10px;
   -webkit-animation: pace-spinner 400ms linear infinite;
   -moz-animation: pace-spinner 400ms linear infinite;
   -ms-animation: pace-spinner 400ms linear infinite;
