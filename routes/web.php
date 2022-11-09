@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PostController@index')->name('home');
 Route::get('/article/{slug}', 'PostController@show')->name('posts.single');
-Route::get('/article/{id}/loadMore', 'PostController@loadMoreComments')->name('posts.loadmore');
+Route::get('/article/{id}/loadMore', 'CommentController@loadMore')->name('comments.loadmore');
 Route::get('/category/{slug}', 'CategoryController@show')->name('categories.single');
 Route::get('/tag/{slug}', 'TagController@show')->name('tags.single');
 Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/contact', 'UserController@contactForm')->name('contact');
 Route::post('/contact/store', 'UserController@contactStore')->name('contact.store');
-Route::post('/comment/{id}/store', 'PostController@commentStore')->name('comments.store');
+Route::post('/comment/{id}/store', 'CommentController@store')->name('comments.store');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
@@ -32,10 +32,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::get('/users/refresh', 'UserController@refresh');
 
     Route::get('/', 'MainController@index')->name('admin.index');
-    Route::resource('/categories', 'CategoryController');
-    Route::resource('/tags', 'TagController');
-    Route::resource('/posts', 'PostController');
-    Route::resource('/users', 'UserController');
+    
+    Route::resources([
+        '/categories' => 'CategoryController',
+        '/tags' => 'TagController',
+        '/posts' => 'PostController',
+        '/users' => 'UserController',
+    ]);
 });
 
 Route::group(['middleware' => 'guest'], function () {

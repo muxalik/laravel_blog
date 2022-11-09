@@ -10,7 +10,11 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'post_id', 'content'];
+    protected $fillable = [
+        'user_id',
+        'post_id',
+        'content'
+    ];
 
     public function user()
     {
@@ -24,7 +28,8 @@ class Comment extends Model
 
     public function getDate()
     {
-        return Carbon::parse($this->created_at)->diffForHumans();
+        return Carbon::parse($this->created_at)
+            ->diffForHumans();
     }
 
     public static function getAmount($id)

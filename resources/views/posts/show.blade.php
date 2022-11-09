@@ -261,7 +261,7 @@
 
     function load_more(page) {
         $.ajax({
-          url: "{{ route('posts.loadmore', ['id' => $post->id]) }}" + "?page=" + page,
+          url: "{{ route('comments.loadmore', ['id' => $post->id]) }}" + "?page=" + page,
           type: "get",
           datatype: "json"
         })

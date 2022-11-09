@@ -3,12 +3,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>@yield('title')</title>
+
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+<title>@yield('title')</title>
+
+<link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+<link rel="apple-touch-icon" href="{{ asset('images/favicon.ico') }}">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
