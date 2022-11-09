@@ -108,13 +108,42 @@ class Post extends Model
 
     public static function getSearchedPosts($s)
     {
-        return Cache::remember("searched_posts_$s", env('CACHE_TIME_FOR_ADMIN_DATA'), function () use ($s) {
+        return Cache::remember("searched_posts_$s", env('CACHE_TIME'), function () use ($s) {
             return Post::where('title', 'like', "%$s%")
                 ->orWhere('description', 'like', "%$s%")
                 ->with('category')
                 ->paginate(3)
                 ->fragment('main-section');
         });
+    }
+
+    public static function getWithIncrement($slug)
+    {
+        $post = Post::getBySlug($slug);
+        $post->views += 1;
+        $post->update();
+
+        return $post;
+    }
+
+    public static function getSimilar($post)
+    {
+        $tags = $post
+            ->tags
+            ->random(2);
+
+        $first = $tags[0]
+            ->posts
+            ->random(1)[0];
+
+        $key = $first->id;
+
+        $second = $tags[1]
+            ->posts
+            ->except($key)
+            ->random(1)[0];
+
+        return [$first, $second];
     }
 
     public static function getAllCached()
