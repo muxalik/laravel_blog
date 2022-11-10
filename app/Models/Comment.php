@@ -41,7 +41,7 @@ class Comment extends Model
     public static function getByPostId($id)
     {
         return Comment::where('post_id', $id)
-            ->orderBy('created_at')
+            ->oldest()
             ->paginate(4);
     }
 }

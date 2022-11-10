@@ -55,7 +55,8 @@ class Tag extends Model
     public static function getAllTitleIdCached()
     {
         return Cache::remember('tags_pluck', env('CACHE_TIME'), function () {
-            return Tag::pluck('title', 'id')->all();
+            return Tag::pluck('title', 'id')
+                ->all();
         });
     }
 

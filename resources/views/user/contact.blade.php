@@ -94,7 +94,7 @@
                                             value="{{ old('email') }}">
                                         <input type="tel" class="form-control @error('phone')is-invalid @enderror"
                                             placeholder="Phone" name="phone" id="phone"
-                                            value="{{ old('phone') }}">
+                                            value="{{ old('phone') }}" pattern="[1-9]{1}[0-9]{9}">
                                         <input type="text" class="form-control @error('subject')is-invalid @enderror"
                                             placeholder="Subject" name="subject" id="subject"
                                             value="{{ old('subject') }}">

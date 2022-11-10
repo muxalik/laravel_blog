@@ -88,7 +88,7 @@ class Post extends Model
     public static function getByCategory($category)
     {
         return $category->posts()
-            ->orderBy('id', 'desc')
+            ->latest()
             ->paginate(3);
     }
 
@@ -102,7 +102,7 @@ class Post extends Model
     {
         return $tag->posts()
             ->with('category')
-            ->orderBy('id', 'desc')
+            ->latest()
             ->paginate(2);
     }
 
@@ -158,7 +158,7 @@ class Post extends Model
     {
         return Cache::remember('sorted_posts', env('CACHE_TIME'), function () {
             return Post::with('category')
-                ->orderBy('id', 'desc')
+                ->latest()
                 ->paginate(3)
                 ->fragment('main-section');
         });
