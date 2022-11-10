@@ -7,7 +7,7 @@
     <title>Registration Page</title>
 
     @vite(['resources/assets/admin/plugins/fontawesome-free/css/all.min.css'])
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -17,7 +17,7 @@
 </head>
 
 <body class="hold-transition register-page">
-    <div class="register-box">
+    <div class="register-box" data-aos="zoom-in">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <h1>Register</h1>
@@ -79,6 +79,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        AOS.init({
+            duration: 600,
+        });
+    </script>
 </body>
 
 </html>
