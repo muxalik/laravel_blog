@@ -10,16 +10,17 @@
                     alt="home" data-aos="zoom-in"></a>
             <div class="collapse navbar-collapse" id="navbarCollapse" data-aos="zoom-in">
                 <ul class="navbar-nav mr-auto">
-                    @foreach ($categories as $category)
+                    @forelse ($categories as $category)
                         <li class="nav-item">
                             <a class="nav-link"
                                 href="{{ route('categories.single', ['slug' => $category->slug]) }}">{{ $category->title }}</a>
                         </li>
-                    @endforeach
+                    @empty
+                    @endforelse
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                     </li>
-                    @if (Auth::check())
+                    @auth
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                         </li>
@@ -30,8 +31,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register.create') }}">Register</a>
                         </li>
-                    @endif
-                    @if (Auth::check() && Auth::user()->is_admin)
+                    @endauth
+                    @if (auth()->check() && auth()->user()->is_admin)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
                         </li>

@@ -1,4 +1,4 @@
-@if (count($posts))
+@if ($posts->count())
     <table class="table table-head-fixed table-bordered table-hover" id="table-info">
         <thead>
             <tr>

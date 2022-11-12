@@ -23,12 +23,9 @@
                 <h1>Register</h1>
             </div>
             <div class="card-body">
-
                 @include('layouts.errors')
-
                 <form action="{{ route('register.store') }}" method="post">
                     @csrf
-
                     <div class="input-group mb-3">
                         <input type="text" name="name"
                             class="form-control @error('password') is-invalid @enderror" placeholder="Name"

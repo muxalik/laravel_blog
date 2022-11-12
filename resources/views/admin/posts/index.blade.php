@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 
+
 @section('title', 'Posts Index')
 
 @section('content')
@@ -47,7 +48,7 @@
                     <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
                     Обновить
                 </button>
-                @if (count($posts))
+                @if ($posts->count())
                     <form action="{{ route('posts.destroy', ['post' => 'all']) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')

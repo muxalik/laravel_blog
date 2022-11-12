@@ -31,7 +31,6 @@
 
     <div id="wrapper">
         @include('layouts.header')
-
         @yield('page-title')
 
         <section class="section lb m3rem">

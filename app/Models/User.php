@@ -46,7 +46,7 @@ class User extends Authenticatable
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn($value) => bcrypt($value)
+            set: fn ($value) => bcrypt($value)
         );
     }
 
@@ -75,7 +75,8 @@ class User extends Authenticatable
 
     public static function getAdmins()
     {
-        return User::where('is_admin', 1)->get();
+        return User::where('is_admin', 1)
+            ->get();
     }
 
     public static function getAmount()

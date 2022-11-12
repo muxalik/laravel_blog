@@ -28,9 +28,7 @@
 <body>
 
     <div id="wrapper">
-
         @include('layouts.header')
-
         <div class="page-title db">
             <div class="container">
                 <div class="row" data-aos="zoom-in">
@@ -80,9 +78,7 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
-
                                     @include('layouts.errors')
-
                                     <form class="form-wrapper" method="POST" action="{{ route('contact.store') }}">
                                         @csrf
                                         <h4>Contact form</h4>
@@ -118,13 +114,6 @@
 
     </div><!-- end wrapper -->
 
-    <!-- Core JavaScript
-    ================================================== -->
-    {{-- <script src="js/jquery.min.js"></script>
-    <script src="js/tether.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/animate.js"></script>
-    <script src="js/custom.js"></script> --}}
 </body>
 
 </html>

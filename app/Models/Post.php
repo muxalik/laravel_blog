@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -39,6 +40,15 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    protected function thumbnail(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($path) => $path
+                ? asset("uploads/" . $path)
+                : asset("images/icons/no-image_1.png")
+        );
+    }
+
     public function sluggable(): array
     {
         return [
@@ -59,13 +69,6 @@ class Post extends Model
             return $request->file('thumbnail')
                 ->store("images/{$folder}");
         }
-    }
-
-    public function getImage()
-    {
-        return $this->thumbnail
-            ? asset("uploads/" . $this->thumbnail)
-            : asset("images/icons/no-image_1.png");
     }
 
     public function getPostDate()

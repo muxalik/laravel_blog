@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 
+
 @section('title', 'Tags Index')
 
 @section('content')
@@ -56,7 +57,7 @@
                     <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
                     Обновить
                 </button>
-                @if (count($tags))
+                @if ($tags->count())
                     <form action="{{ route('tags.destroy', ['tag' => 'all']) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')

@@ -5,7 +5,7 @@
         </a>
         <div class="media-body">
             <h4 class="media-heading user_name">{{ $comment->user->name }}
-                <small>{{ $comment->getDate() }}</small>
+                <small>{{ $comment->created_at }}</small>
             </h4>
             <p>{{ $comment->content }}</p>
             <a href="" class="btn btn-primary btn-sm">Reply</a>

@@ -56,7 +56,7 @@
                     <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
                     Обновить
                 </button>
-                @if (count($users))
+                @if ($users->count())
                     <form action="{{ route('users.destroy', ['user' => 'all']) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')

@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 
+
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -55,9 +56,9 @@
                                     <label for="category_id">Категория</label>
                                     <select class="form-control @error('category_id') is-invalid @enderror" id="category_id"
                                         name="category_id">
-                                        @foreach ($categories as $k => $v)
-                                            <option value="{{ $k }}"
-                                                @if ($k == $post->category_id) selected @endif>{{ $v }}
+                                        @foreach ($categories as $key => $value)
+                                            <option value="{{ $key }}"
+                                                @if ($key == $post->category_id) selected @endif>{{ $value }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -67,9 +68,9 @@
                                     <label for="tags">Теги</label>
                                     <select name="tags[]" class="select2" id="tags" multiple="multiple"
                                         data-placeholder="Выбор тегов" style="width: 100%;">
-                                        @foreach ($tags as $k => $v)
-                                            <option value="{{ $k }}"
-                                                @if (in_array($k, $post->tags->pluck('id')->all())) selected @endif>{{ $v }}
+                                        @foreach ($tags as $key => $value)
+                                            <option value="{{ $key }}"
+                                                @if (in_array($key, $post->tags->pluck('id')->all())) selected @endif>{{ $value }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -84,7 +85,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <img src="{{ $post->getImage() }}" alt="" class="img-thumbnail mt-4"
+                                        <img src="{{ $post->thumbnail }}" alt="image" class="img-thumbnail mt-4"
                                             width="200px">
                                     </div>
                                 </div>

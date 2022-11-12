@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 
+
 @section('title', 'Categories Index')
 
 @section('content')
@@ -56,7 +57,7 @@
                     <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
                     Обновить
                 </button>
-                @if (count($categories))
+                @if ($categories->count())
                     <form action="{{ route('categories.destroy', ['category' => 'all']) }}" method="POST"
                         class="d-inline-block">
                         @csrf

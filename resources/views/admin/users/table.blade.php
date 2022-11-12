@@ -1,4 +1,4 @@
-@if (count($users))
+@if ($users->count())
     <table class="table table-head-fixed table-bordered table-hover" id="table-info">
         <thead>
             <tr>

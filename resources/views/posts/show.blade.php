@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+
 @section('title', 'Markedia - ' . $post->title)
 
 @section('posts-aos', 'fade-left')
@@ -27,20 +28,20 @@
             <div class="post-sharing">
                 <ul class="list-inline share-icon-container">
                     <li>
-                        <a href="https://vk.com/share.php?url={{ Request::url() }}" class="btn btn-primary"
+                        <a href="https://vk.com/share.php?url={{ url()->current() }}" class="btn btn-primary"
                             style="background-color: #1d4393!important; border-radius: 5px !important;">
                             <img src="{{ asset('images/icons/vk_1.png') }}" alt="vk">
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.facebook.com/sharer.php?u={{ Request::url() }}"
+                        <a href="https://www.facebook.com/sharer.php?u={{ url()->current() }}"
                             class="fb-button btn btn-primary" style="border-radius: 5px !important;">
                             <img src="{{ asset('images/icons/facebook_1.png') }}" alt="facebook">
                             <span class="down-mobile">Share on Facebook</span>
                         </a>
                     </li>
                     <li>
-                        <a href="https://twitter.com/intent/tweet?text={{ $post->title }}"
+                        <a href="https://twitter.com/intent/tweet?text={{ url()->current() }}"
                             class="tw-button btn btn-primary" style="border-radius: 5px !important;">
                             <img src="{{ asset('images/icons/twitter_1.png') }}" alt="twitter">
                             <span class="down-mobile">Tweet on Twitter</span>
@@ -51,7 +52,7 @@
         </div><!-- end title -->
 
         <div class="single-post-media" data-aos="zoom-in">
-            <img src="{{ $post->getImage() }}" alt="" class="img-fluid">
+            <img src="{{ $post->thumbnail }}" alt="" class="img-fluid">
         </div><!-- end media -->
 
         <div class="blog-content" data-aos="zoom-in">
@@ -93,12 +94,12 @@
             <h4 class="small-title">You may also like</h4>
             <div class="row">
 
-                @foreach ($similar as $sim_post)
+                @forelse ($similar as $sim_post)
                     <div class="col-lg-6">
                         <div class="blog-box">
                             <div class="post-media">
                                 <a href="{{ route('posts.single', ['slug' => $sim_post->slug]) }}" title="">
-                                    <img src="{{ $sim_post->getImage() }}" alt="post_image" class="img-fluid">
+                                    <img src="{{ $sim_post->thumbnail }}" alt="post_image" class="img-fluid">
                                     <div class="hovereffect">
                                         <span class=""></span>
                                     </div><!-- end hover -->
@@ -113,25 +114,24 @@
                             </div><!-- end meta -->
                         </div><!-- end blog-box -->
                     </div><!-- end col -->
-                @endforeach
+                @empty
+                @endforelse
 
             </div><!-- end row -->
         </div><!-- end custom-box -->
 
         <hr class="invis1">
 
-        @if (count($comments))
+        @if ($comments->count())
             <div class="custombox clearfix" data-aos="zoom-in">
                 <h4 class="small-title">{{ $amount }} Comments</h4>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="comments-list" id="comments-list">
-
                             @include('posts.comments')
-
                         </div>
 
-                        @if (count($comments) < $amount)
+                        @if ($comments->count() < $amount)
                             <div class="d-flex justify-content-center mt-4">
                                 <button class="btn btn-primary" id="loadMore" style="cursor: pointer">Load more</button>
                             </div>

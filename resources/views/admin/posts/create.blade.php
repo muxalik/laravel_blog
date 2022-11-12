@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 
+
 @section('title', 'Posts Create')
 
 @section('content')
@@ -57,8 +58,8 @@
                                     <label for="category_id">Категория</label>
                                     <select class="form-control @error('category_id') is-invalid @enderror"
                                         value="{{ old('category_id') }}" id="category_id" name="category_id">
-                                        @foreach ($categories as $k => $v)
-                                            <option value="{{ $k }}">{{ $v }}</option>
+                                        @foreach ($categories as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,8 +68,8 @@
                                     <label for="tags">Теги</label>
                                     <select name="tags[]" class="select2" id="tags" multiple="multiple"
                                         data-placeholder="Выбор тегов" style="width: 100%;">
-                                        @foreach ($tags as $k => $v)
-                                            <option value="{{ $k }}">{{ $v }}</option>
+                                        @foreach ($tags as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>

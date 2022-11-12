@@ -39,7 +39,6 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.sidebar', function ($view) {
             $view->with([
                 'popular_posts' => Post::getPopular(),
-                'cats' => Category::getList()
             ]);
         });
 
@@ -47,7 +46,12 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'recent_posts' => Post::getRecent(),
                 'popular_posts' => Post::getPopular(),
-                'cats' => Category::getList()
+            ]);
+        });
+
+        view()->composer('layouts.categories', function ($view) {
+            $view->with([
+                'categories' => Category::getList()
             ]);
         });
 

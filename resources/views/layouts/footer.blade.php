@@ -6,11 +6,11 @@
                     <h2 class="widget-title">Recent Posts</h2>
                     <div class="blog-list-widget">
                         <div class="list-group">
-                            @foreach ($recent_posts as $post)
+                            @forelse ($recent_posts as $post)
                                 <a href="{{ route('posts.single', ['slug' => $post->slug]) }}"
                                     class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="w-100">
-                                        <img src="{{ $post->getImage() }}" alt="recent_post"
+                                        <img src="{{ $post->thumbnail }}" alt="recent_post"
                                             class="img-fluid float-left">
                                         <div>
                                             <h5 class="mb-1">{{ $post->title }}</h5>
@@ -20,7 +20,8 @@
                                         </div>
                                     </div>
                                 </a>
-                            @endforeach
+                            @empty
+                            @endforelse
                         </div>
                     </div>
                 </div>

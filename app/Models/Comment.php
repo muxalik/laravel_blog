@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,10 +27,12 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function getDate()
+    protected function createdAt(): Attribute
     {
-        return Carbon::parse($this->created_at)
-            ->diffForHumans();
+        return Attribute::make(
+            get: fn($date) => Carbon::parse($date)
+                ->diffForHumans()
+        );
     }
 
     public static function getAmount($id)
