@@ -7,11 +7,16 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Services\PostService;
 
 class PostController extends Controller
 {
+
+    public function __construct(PostService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,11 +53,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $data = $request->all();
-        $data['thumbnail'] = Post::uploadImage($request);
-
-        $post = Post::create($data);
-        $post->tags()->sync($request->tags);
+        $this->service->store($request);
 
         return redirect()
             ->route('posts.index')
@@ -86,14 +87,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $data = $request->all();
-
-        if ($file = Post::uploadImage($request, $post->thumbnail)) {
-            $data['thumbnail'] = $file;
-        }
-
-        $post->update($data);
-        $post->tags()->sync($request->tags);
+        $this->service->update($request, $post);
 
         return redirect()
             ->route('posts.index')
@@ -111,41 +105,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        if ($id === 'all')
-            return static::deleteAll();
-
-        return static::deleteOne($id);
-    }
-
-    protected static function deleteAll()
-    {
-        Post::truncate();
-        DB::table('post_tag')->truncate();
-
-        return redirect()
-            ->route('posts.index')
-            ->with([
-                'success' => 'Все статьи успешно удалены',
-                'clearCache' => true
-            ]);
-    }
-
-    protected static function deleteOne(int $id)
-    {
-        $post = Post::find($id);
-        $post->tags()->sync([]);
-
-        if ($post->thumbnail)
-            Storage::delete($post->thumbnail);
-
-        $post->delete();
-
-        return redirect()
-            ->route('posts.index')
-            ->with([
-                'success' => 'Статья успешно удалена',
-                'clearCache' => true
-            ]);
+        return $this->service->delete($id);
     }
 
     public function refresh()
