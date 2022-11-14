@@ -49,12 +49,7 @@ class User extends Authenticatable
             set: fn ($value) => bcrypt($value)
         );
     }
-
-    public static function getById($id)
-    {
-        return User::find($id);
-    }
-
+    
     public static function deleteById($id)
     {
         User::getById($id)

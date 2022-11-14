@@ -48,8 +48,8 @@ class UserController extends Controller
 
         // Login after creating
         if ($request->check) {
-            Auth::logout();
-            Auth::login($user);
+            auth()->logout();
+            auth()->login($user);
 
             return redirect()
                 ->route('home')
@@ -64,57 +64,39 @@ class UserController extends Controller
             ]);
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        return view('admin.users.edit', [
-            'user' => User::getById($id)
-        ]);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user = User::getById($id);
-
-        $user->update([
-            'name' => $request->name,
-            'password' => bcrypt($request->password),
-        ]);
+        $user->update($request->all());
 
         // Relogin if current user was updated
-        if (Auth::user()->email === $user->email && Auth::user() != $user) {
-            Auth::logout();
-            Auth::login($user);
+        if (auth()->user()->email === $user->email && auth()->user() != $user) {
+            auth()->logout();
+            auth()->login($user);
         }
 
         // Login after updating
         if ($request->check) {
-            if (Auth::user() != $user) {
-                Auth::logout();
-                Auth::login($user);
+            if (auth()->user() != $user) {
+                auth()->logout();
+                auth()->login($user);
             }
 
             if ($user->is_admin)

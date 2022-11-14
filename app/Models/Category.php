@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
@@ -50,12 +49,6 @@ class Category extends Model
         return Cache::remember('categories_all', env('CACHE_TIME'), function () {
             return Category::all();
         });
-    }
-
-    public static function updateById(Request $request, $id)
-    {
-        Category::find($id)
-            ->update($request->all());
     }
 
     public static function getAllTitleIdCached()

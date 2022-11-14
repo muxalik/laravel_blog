@@ -65,15 +65,15 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
         return view('admin.posts.edit', [
             'categories' => Category::getAllTitleIdCached(),
             'tags' => Tag::getAllTitleIdCached(),
-            'post' => Post::getById($id)
+            'post' => $post
         ]);
     }
 
@@ -81,12 +81,11 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        $post = Post::getById($id);
         $data = $request->all();
 
         if ($file = Post::uploadImage($request, $post->thumbnail)) {

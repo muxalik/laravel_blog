@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Post;
+
 class SearchController extends Controller
 {
     public function index(SearchRequest $request)

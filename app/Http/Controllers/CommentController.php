@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -17,24 +15,22 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request, $id)
     {
-        if (!Auth::check())
+        if (auth()->guest())
             return redirect()->route('login.create');
 
         Comment::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => auth()->user()->id,
             'post_id' => $id,
             'content' => $request->content
         ]);
 
-        return redirect()->back();
+        return back();
     }
-
-    public function loadMore(Request $request, $id)
+    
+    public function loadMore($id)
     {
-        if ($request->ajax()) {
-            return view('posts.comments', [
-                'comments' => Comment::getByPostId($id)
-            ]);
-        }
+        return view('posts.comments', [
+            'comments' => Comment::getByPostId($id)
+        ]);
     }
 }

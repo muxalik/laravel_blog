@@ -51,30 +51,28 @@ class CategoryController extends Controller
                 'clearCache' => true
             ]);
     }
-
+        
     /**
-     * Show the form for editing the specified resource.
+     * edit
      *
-     * @param  int  $id
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        return view('admin.categories.edit', [
-            'category' => Category::getById($id)
-        ]);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(CategoryRequest $request, Category $category)
     {
-        Category::updateById($request, $id);
+        $category->update($request->all());
 
         return redirect()
             ->route('categories.index')

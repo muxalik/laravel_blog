@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Message;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,7 +17,7 @@ class UserController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        Auth::login(
+        auth()->login(
             User::create($request->all())
         );
 
@@ -34,26 +33,25 @@ class UserController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if (Auth::attempt([
+        if (auth()->attempt([
             'email' => $request->email,
             'password' => $request->password
         ])) {
             session()->flash('success', 'Вы успешно вошли в систему');
 
-            if (Auth::user()->is_admin)
+            if (auth()->user()->is_admin)
                 return redirect()->route('admin.index');
 
             return redirect()->route('home');
         }
 
-        return redirect()
-            ->back()
+        return back()
             ->with('error', 'Неправильный логин или пароль');
     }
 
     public function logout()
     {
-        Auth::logout();
+        auth()->logout();
         return redirect()->route('login.create');
     }
 

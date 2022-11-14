@@ -55,26 +55,24 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        return view('admin.tags.edit', [
-            'tag' => Tag::getById($id)
-        ]);
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(TagRequest $request, $id)
+    public function update(TagRequest $request, Tag $tag)
     {
-        Tag::updateById($request, $id);
+        $tag->update($request->all());
 
         return redirect()
             ->route('tags.index')
