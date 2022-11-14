@@ -43,7 +43,13 @@ class PostService
         $post->update($data);
         $post->tags()->sync($request->tags);
     }
-
+    
+    /**
+     * delete
+     *
+     * @param  int|string $id
+     * @return RedirectResponse
+     */
     public function delete(int|string $id): RedirectResponse
     {
         if ($id === 'all')
@@ -51,7 +57,12 @@ class PostService
 
         return static::deleteOne($id);
     }
-
+    
+    /**
+     * deleteAll
+     *
+     * @return void
+     */
     protected static function deleteAll()
     {
         Post::truncate();
@@ -64,8 +75,14 @@ class PostService
                 'clearCache' => true
             ]);
     }
-
-    protected static function deleteOne(int $id)
+    
+    /**
+     * deleteOne
+     *
+     * @param  int $id
+     * @return RedirectResponse
+     */
+    protected static function deleteOne(int $id): RedirectResponse
     {
         $post = Post::find($id);
         $post->tags()->sync([]);

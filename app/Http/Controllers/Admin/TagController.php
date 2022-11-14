@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\DeleteTagAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TagRequest;
 use App\Models\Tag;
-use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -88,51 +88,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, DeleteTagAction $action)
     {
-        if ($id === 'all')
-            return static::deleteAll();
-
-        return static::deleteOne($id);
-    }
-
-    protected static function deleteAll()
-    {
-        $data = DB::select('SELECT * FROM post_tag LIMIT 1');
-
-        if (!count($data)) {
-            Tag::truncate();
-
-            return redirect()
-                ->route('tags.index')
-                ->with([
-                    'success' => 'Все теги успешно удалены',
-                    'clearCache' => true
-                ]);
-        }
-
-        return redirect()
-            ->route('tags.index')
-            ->with('error', 'У тегов есть записи');
-    }
-
-    protected static function deleteOne($id)
-    {
-        $tag = Tag::getById($id);
-
-        if ($tag->getPostsAmount())
-            return redirect()
-                ->route('tags.index')
-                ->with('error', 'У тегов есть записи');
-
-        $tag->delete();
-
-        return redirect()
-            ->route('tags.index')
-            ->with([
-                'success' => 'Тег успешно удален',
-                'clearCache' => true
-            ]);
+        return $action->handle($id);
     }
 
     public function refresh()
