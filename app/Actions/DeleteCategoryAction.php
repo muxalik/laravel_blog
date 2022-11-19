@@ -2,12 +2,13 @@
 
 namespace App\Actions;
 
-use App\Models\Tag;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 
-class DeleteTagAction
+class DeleteCategoryAction
 {
+
     /**
      * handle
      *
@@ -29,13 +30,11 @@ class DeleteTagAction
      */
     protected static function deleteAll(): RedirectResponse
     {
-        $data = DB::select('SELECT * FROM post_tag LIMIT 1');
-
-        if (!count($data)) {
-            Tag::truncate();
+        if (!count(Post::first())) {
+            Category::truncate();
 
             return redirect()
-                ->route('tags.index')
+                ->route('categories.index')
                 ->with([
                     'success' => 'Все теги успешно удалены',
                     'clearCache' => true
@@ -43,8 +42,8 @@ class DeleteTagAction
         }
 
         return redirect()
-            ->route('tags.index')
-            ->with('error', 'У тегов есть записи');
+            ->route('categories.index')
+            ->with('error', 'У категорий есть записи');
     }
 
     /**
@@ -55,19 +54,20 @@ class DeleteTagAction
      */
     protected static function deleteOne(int|string $id): RedirectResponse
     {
-        $tag = Tag::getById($id);
+        $category = Category::find($id);
 
-        if ($tag->getPostsAmount())
+        if ($category->getPostsAmount()) {
             return redirect()
-                ->route('tags.index')
-                ->with('error', 'У тегов есть записи');
+                ->route('categories.index')
+                ->with('error', 'У категории есть записи');
+        }
 
-        $tag->delete();
+        $category->delete();
 
         return redirect()
-            ->route('tags.index')
+            ->route('categories.index')
             ->with([
-                'success' => 'Тег успешно удален',
+                'success' => 'Категория успешно удалена',
                 'clearCache' => true
             ]);
     }

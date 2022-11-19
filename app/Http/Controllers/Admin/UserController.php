@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,24 +48,8 @@ class UserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
-        $user = User::create($request->all());
-
-        // Login after creating
-        if ($request->check) {
-            auth()->logout();
-            auth()->login($user);
-
-            return redirect()
-                ->route('home')
-                ->with('clearCache', true);
-        }
-
-        return redirect()
-            ->route('users.index')
-            ->with([
-                'success' => 'Пользователь успешно зарегистрирован',
-                'clearCache' => true
-            ]);
+        $user = User::create($request->validated());
+        $this->service->store($user, $request->check);
     }
 
     /**
@@ -84,37 +72,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->all());
-
-        // Relogin if current user was updated
-        if (auth()->user()->email === $user->email && auth()->user() != $user) {
-            auth()->logout();
-            auth()->login($user);
-        }
-
-        // Login after updating
-        if ($request->check) {
-            if (auth()->user() != $user) {
-                auth()->logout();
-                auth()->login($user);
-            }
-
-            if ($user->is_admin)
-                return redirect()
-                    ->route('admin.index')
-                    ->with('clearCache', true);
-
-            return redirect()
-                ->route('home')
-                ->with('clearCache', true);
-        }
-
-        return redirect()
-            ->route('users.index')
-            ->with([
-                'success' => 'Пользователь успешно сохранен',
-                'clearCache' => true
-            ]);
+        $user->update($request->validated());
+        $this->service->update($user, $request->check);
     }
 
     /**
@@ -125,34 +84,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if ($id === 'all')
-            return static::deleteAll();
-
-        return static::deleteOne($id);
-    }
-
-    protected static function deleteAll()
-    {
-        DB::delete('DELETE FROM users WHERE id != ' . Auth::user()->id);
-
-        return redirect()
-            ->route('users.index')
-            ->with([
-                'success' => 'Все пользователи успешно удалены',
-                'clearCache' => true
-            ]);
-    }
-
-    protected static function deleteOne($id)
-    {
-        User::deleteById($id);
-
-        return redirect()
-            ->route('users.index')
-            ->with([
-                'success' => 'Пользователь успешно удален',
-                'clearCache' => true
-            ]);
+        $this->service->delete($id);        
     }
 
     public function refresh()

@@ -42,7 +42,7 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-        Tag::create($request->all());
+        Tag::create($request->validated());
 
         return redirect()
             ->route('tags.index')
@@ -72,7 +72,7 @@ class TagController extends Controller
      */
     public function update(TagRequest $request, Tag $tag)
     {
-        $tag->update($request->all());
+        $tag->update($request->validated());
 
         return redirect()
             ->route('tags.index')

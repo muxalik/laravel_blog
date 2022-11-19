@@ -58,16 +58,14 @@ class Post extends Model
         ];
     }
 
-    public static function uploadImage(Request $request, $image = null)
+    public static function uploadImage(object $image, $thumbnail = null)
     {
-        if ($request->hasFile('thumbnail')) {
-            if ($image)
-                Storage::delete($image);
+        if ($image) {
+            if ($thumbnail)
+                Storage::delete($thumbnail);
 
             $folder = date('Y-m-d');
-
-            return $request->file('thumbnail')
-                ->store("images/{$folder}");
+            Storage::putFile("images/{$folder}/", $image);
         }
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\DeleteCategoryAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use App\Models\Post;
 
 class CategoryController extends Controller
 {
@@ -88,50 +88,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, DeleteCategoryAction $action)
     {
-        if ($id === 'all')
-            return static::deleteAll();
-
-        return static::deleteOne($id);
-    }
-
-    protected static function deleteAll()
-    {
-        if (!count(Post::first())) {
-            Category::truncate();
-
-            return redirect()
-                ->route('categories.index')
-                ->with([
-                    'success' => 'Все теги успешно удалены',
-                    'clearCache' => true
-                ]);
-        }
-
-        return redirect()
-            ->route('categories.index')
-            ->with('error', 'У категорий есть записи');
-    }
-
-    protected static function deleteOne($id)
-    {
-        $category = Category::getById($id);
-
-        if ($category->getPostsAmount()) {
-            return redirect()
-                ->route('categories.index')
-                ->with('error', 'У категории есть записи');
-        }
-
-        $category->delete();
-
-        return redirect()
-            ->route('categories.index')
-            ->with([
-                'success' => 'Категория успешно удалена',
-                'clearCache' => true
-            ]);
+        $action->handle($id);
     }
 
     public function refresh()

@@ -28,11 +28,6 @@ class Category extends Model
         ];
     }
 
-    public static function getById($id)
-    {
-        return Category::find($id);
-    }
-
     public static function getBySlug($slug)
     {
         return Category::where('slug', $slug)

@@ -13,16 +13,17 @@ class PostService
     /**
      * store
      *
-     * @param  PostRequest $request
+     * @param  array $data
+     * @param  array $tags
+     * @param  mixed $image
      * @return void
      */
-    public function store(PostRequest $request): void
+    public function store(array $data, array $tags, $image): void
     {
-        $data = $request->all();
-        $data['thumbnail'] = Post::uploadImage($request);
+        $data['thumbnail'] = Post::uploadImage($image);
 
         $post = Post::create($data);
-        $post->tags()->sync($request->tags);
+        $post->tags()->sync($tags);
     }
 
     /**

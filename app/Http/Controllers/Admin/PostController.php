@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Services\PostService;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -53,7 +54,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $this->service->store($request);
+        $this->service->store($request->validated(), $request->tags, $request->file('thumbnail'));
 
         return redirect()
             ->route('posts.index')
