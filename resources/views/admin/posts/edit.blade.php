@@ -76,6 +76,12 @@
                                     </select>
                                 </div>
 
+                                <script async>
+                                    $(document).ready(function() {
+                                        $('.select2').select2();
+                                    });
+                                </script>
+
                                 <div class="form-group">
                                     <label for="thumbnail">Изображение</label>
                                     <div class="input-group">
