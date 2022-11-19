@@ -28,11 +28,6 @@ class Tag extends Model
         ];
     }
 
-    public static function getById($id)
-    {
-        return Tag::find($id);
-    }
-
     public static function getBySlug($slug)
     {
         return Tag::where('slug', $slug)

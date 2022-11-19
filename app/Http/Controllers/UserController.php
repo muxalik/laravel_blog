@@ -18,7 +18,7 @@ class UserController extends Controller
     public function store(RegisterRequest $request)
     {
         auth()->login(
-            User::create($request->all())
+            User::create($request->validated())
         );
 
         return redirect()
@@ -62,7 +62,7 @@ class UserController extends Controller
 
     public function contactStore(ContactRequest $request)
     {
-        Message::create($request->all());
+        Message::create($request->validated());
 
         return redirect()
             ->route('home')

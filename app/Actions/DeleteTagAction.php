@@ -55,7 +55,7 @@ class DeleteTagAction
      */
     protected static function deleteOne(int|string $id): RedirectResponse
     {
-        $tag = Tag::getById($id);
+        $tag = Tag::find($id);
 
         if ($tag->getPostsAmount())
             return redirect()

@@ -60,13 +60,11 @@ class Post extends Model
 
     public static function uploadImage(object $image, $thumbnail = null)
     {
-        if ($image) {
-            if ($thumbnail)
-                Storage::delete($thumbnail);
+        if ($thumbnail)
+            Storage::delete($thumbnail);
 
-            $folder = date('Y-m-d');
-            Storage::putFile("images/{$folder}/", $image);
-        }
+        $folder = date('Y-m-d');
+        return Storage::putFile("images/{$folder}/", $image);
     }
 
     public function getPostDate()

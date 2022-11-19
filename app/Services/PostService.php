@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -13,36 +12,33 @@ class PostService
     /**
      * store
      *
-     * @param  array $data
-     * @param  array $tags
+     * @param  object $data
      * @param  mixed $image
      * @return void
      */
-    public function store(array $data, array $tags, $image): void
+    public function store(object $data, $image): void
     {
         $data['thumbnail'] = Post::uploadImage($image);
-
         $post = Post::create($data);
-        $post->tags()->sync($tags);
+        $post->tags()->sync($data->tags);
     }
-
+    
     /**
      * update
      *
-     * @param  PostRequest $request
      * @param  Post $post
+     * @param  mixed $data
      * @return void
      */
-    public function update(PostRequest $request, Post $post): void
+    public function update(Post $post, $data): void
     {
-        $data = $request->all();
-        $file = Post::uploadImage($request, $post->thumbnail);
+        $file = Post::uploadImage($data->thumbnail, $post->thumbnail);
 
         if ($file)
             $data['thumbnail'] = $file;
 
         $post->update($data);
-        $post->tags()->sync($request->tags);
+        $post->tags()->sync($data->tags);
     }
     
     /**
