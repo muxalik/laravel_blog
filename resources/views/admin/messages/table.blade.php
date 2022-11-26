@@ -24,10 +24,23 @@
                     <td>{{ $message->phone }}</td>
                     <td>{{ $message->subject }}</td>
                     <td>{{ $message->content }}</td>
-                    <td><small class="badge badge-info"><i class="far fa-clock"></i> {{ $message->seen }}</small></td>
-                    <td><small class="badge badge-info"><i class="far fa-clock"></i> {{ $message->getDate($message->created_at) }}</small></td>
+                    @if (!is_null($message->seen))
+                        <td><small class="badge badge-success"><i class="far fa-clock"></i>
+                                {{ $message->getDate($message->seen) }}</small></td>
+                    @else
+                        <td></td>
+                    @endif
+                    <td>
+                        <small class="badge 
+                            @if (!is_null($message->seen)) badge-success 
+                            @else badge-warning 
+                            @endif"><i class="far fa-clock"></i>
+                            {{ $message->getDate($message->created_at) }}
+                        </small>
+                    </td>
                     <td class="table_actions">
-                        <a href="" class="btn btn-info btn-sm float-left mr-1 table-action" title="Редактировать">
+                        <a href="" class="btn btn-info btn-sm float-left mr-1 table-action"
+                            title="Редактировать">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <form action="{{ route('messages.destroy', ['id' => $message->id]) }}" method="POST"
