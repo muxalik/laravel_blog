@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TagController as AdminTagController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
@@ -50,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         '/posts' => AdminPostController::class,
         '/users' => AdminUserController::class,
     ]);
+
+    Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
+    Route::delete('/messages/{id}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
 });
 
 Route::group(['middleware' => 'guest'], function () {

@@ -19,12 +19,12 @@ class MessageFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'is_seen' => fake()->numberBetween(0, 1),
             'name' => fake()->name(),
             'email' => fake()->freeEmail(),
             'phone' => fake()->e164PhoneNumber(),
             'subject' => fake()->word(),
-            'message' => fake()->text(200),
+            'content' => fake()->text(200),
+            'seen' => fake()->optional()->dateTimeBetween('-1 year'),
             'created_at' => fake()->dateTimeBetween('-1 year')
         ];
     }

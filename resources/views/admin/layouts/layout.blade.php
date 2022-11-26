@@ -301,6 +301,36 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas ion-person"></i>
+                                <p>
+                                    Сообщения
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('messages.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Список сообщений</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Новый пользователь</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="nav-link" data-block="users" style="display: none">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Редактирование</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
