@@ -49,7 +49,7 @@ class UserController extends Controller
     public function store(RegisterRequest $request)
     {
         $user = User::create($request->validated());
-        $this->service->store($user, $request->check);
+        return $this->service->store($user, $request->check);
     }
 
     /**
@@ -74,6 +74,21 @@ class UserController extends Controller
     {
         $user->update($request->validated());
         $this->service->update($user, $request->check);
+
+        if ($user->is_admin)
+            return redirect()
+                ->route('admin.index')
+                ->with([
+                    'success' => 'Пользователь успешно сохранен',
+                    'clearCache' => true
+                ]);
+
+        return redirect()
+            ->route('home')
+            ->with([
+                'success' => 'Пользователь успешно сохранен',
+                'clearCache' => true
+            ]);   
     }
 
     /**
@@ -84,7 +99,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->service->delete($id);        
+        return $this->service->delete($id);        
     }
 
     public function refresh()

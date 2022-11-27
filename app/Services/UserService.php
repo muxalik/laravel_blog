@@ -61,16 +61,7 @@ class UserService
         if (auth()->user() != $user) {
             auth()->logout();
             auth()->login($user);
-        }
-
-        if ($user->is_admin)
-            return redirect()
-                ->route('admin.index')
-                ->with('clearCache', true);
-
-        return redirect()
-            ->route('home')
-            ->with('clearCache', true);        
+        }  
     }
     
     /**
