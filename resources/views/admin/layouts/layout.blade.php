@@ -490,6 +490,23 @@
                 }
             })
         });
+
+        $('form .table-action').on('click', event => {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'Yes, delete this record!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(event.target).closest('form').submit();
+                }
+            })
+        });
     </script>
 
     @yield('scripts')
