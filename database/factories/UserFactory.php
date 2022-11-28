@@ -19,7 +19,7 @@ class UserFactory extends Factory
         $registry = fake()->optional(0.3, fake()->unique()->dateTimeThisYear())->dateTimeBetween('-2 year');
         return [
             'name' => fake()->name(),
-            'email' => fake()->freeEmail(),
+            'email' => fake()->unique()->freeEmail(),
             'password' => fake()->password(),
             'is_admin' => fake()->optional(0.1, 0)->randomElement([1]),
             'created_at' => $registry,
