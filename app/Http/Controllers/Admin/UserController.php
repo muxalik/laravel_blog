@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use App\Services\UserService;
+use App\Services\AdminUserService;
 
 class UserController extends Controller
 {
 
-    public function __construct(UserService $service)
+    public function __construct(AdminUserService $service)
     {
         $this->service = $service;
     }

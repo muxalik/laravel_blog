@@ -78,11 +78,6 @@ class Post extends Model
             ->format('Y.m.d');
     }
 
-    public static function getById($id)
-    {
-        return Post::find($id);
-    }
-
     public static function getByCategory($category)
     {
         return $category->posts()
@@ -113,35 +108,6 @@ class Post extends Model
                 ->paginate(3)
                 ->fragment('main-section');
         });
-    }
-
-    public static function getWithIncrement($slug)
-    {
-        $post = Post::getBySlug($slug);
-        $post->views += 1;
-        $post->update();
-
-        return $post;
-    }
-
-    public static function getSimilar($post)
-    {
-        $tags = $post
-            ->tags
-            ->random(2);
-
-        $first = $tags[0]
-            ->posts
-            ->random(1)[0];
-
-        $key = $first->id;
-
-        $second = $tags[1]
-            ->posts
-            ->except($key)
-            ->random(1)[0];
-
-        return [$first, $second];
     }
 
     public static function getAllCached()

@@ -3,97 +3,35 @@
 namespace App\Services;
 
 use App\Models\Post;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
-class PostService
+class PostService 
 {
-    /**
-     * store
-     *
-     * @param  object $data
-     * @param  mixed $image
-     * @return void
-     */
-    public function store(object $data, $image): void
+    public function getWithIncrement($slug)
     {
-        $data['thumbnail'] = Post::uploadImage($image);
-        $post = Post::create($data);
-        $post->tags()->sync($data->tags);
+        $post = Post::getBySlug($slug);
+        $post->views += 1;
+        $post->update();
+
+        return $post;
     }
-    
-    /**
-     * update
-     *
-     * @param  Post $post
-     * @param  mixed $data
-     * @return void
-     */
-    public function update(Post $post, $data): void
+
+    public static function getSimilar($post)
     {
-        $file = Post::uploadImage($data->thumbnail, $post->thumbnail);
+        $tags = $post
+            ->tags
+            ->random(2);
 
-        if ($file)
-            $data['thumbnail'] = $file;
+        $first = $tags[0]
+            ->posts
+            ->random(1)[0];
 
-        $post->update($data);
-        $post->tags()->sync($data->tags);
-    }
-    
-    /**
-     * delete
-     *
-     * @param  int|string $id
-     * @return RedirectResponse
-     */
-    public function delete(int|string $id): RedirectResponse
-    {
-        if ($id === 'all')
-            return static::deleteAll();
+        $key = $first->id;
 
-        return static::deleteOne($id);
-    }
-    
-    /**
-     * deleteAll
-     *
-     * @return void
-     */
-    protected static function deleteAll()
-    {
-        Post::truncate();
-        DB::table('post_tag')->truncate();
+        $second = $tags[1]
+            ->posts
+            ->except($key)
+            ->random(1)[0];
 
-        return redirect()
-            ->route('posts.index')
-            ->with([
-                'success' => 'Все статьи успешно удалены',
-                'clearCache' => true
-            ]);
-    }
-    
-    /**
-     * deleteOne
-     *
-     * @param  int $id
-     * @return RedirectResponse
-     */
-    protected static function deleteOne(int $id): RedirectResponse
-    {
-        $post = Post::find($id);
-        $post->tags()->sync([]);
-
-        if ($post->thumbnail)
-            Storage::delete($post->thumbnail);
-
-        $post->delete();
-
-        return redirect()
-            ->route('posts.index')
-            ->with([
-                'success' => 'Статья успешно удалена',
-                'clearCache' => true
-            ]);
+        return [$first, $second];
     }
 }

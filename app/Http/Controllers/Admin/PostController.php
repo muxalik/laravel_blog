@@ -7,12 +7,12 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Services\PostService;
+use App\Services\AdminPostService;
 
 class PostController extends Controller
 {
 
-    public function __construct(PostService $service)
+    public function __construct(AdminPostService $service)
     {
         $this->service = $service;
     }

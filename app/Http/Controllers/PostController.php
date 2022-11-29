@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Services\PostService;
 
 class PostController extends Controller
 {
@@ -16,8 +17,9 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        $post = Post::getWithIncrement($slug);
-        $similar = Post::getSimilar($post);
+        $service = new PostService;
+        $post = $service->getWithIncrement($slug);
+        $similar = $service->getSimilar($post);
         $comments = Comment::getByPostId($post->id);
         $amount = Comment::getAmount($post->id);
 
