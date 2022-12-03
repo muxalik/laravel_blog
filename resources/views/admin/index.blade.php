@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="card-body table-responsive p-0" style="max-height: 300px;" id="table">
-                            @if (count($admins))
+                            @if ($admins->count())
                                 <table class="table table-head-fixed table-bordered table-hover text-nowrap"
                                     id="table-info">
                                     <thead>
@@ -123,20 +123,23 @@
                                                 <td>{{ $admin->email }}</td>
                                                 <td>{{ $admin->created_at }}</td>
                                                 <td>{{ $admin->updated_at }}</td>
-                                                <td class="table_actions">
-                                                    <a href="{{ route('users.edit', ['user' => $admin->id]) }}"
-                                                        class="btn btn-info btn-sm float-left mr-1 table-action"
-                                                        title="Редактировать">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                    </a>
-                                                    <form action="{{ route('users.destroy', ['user' => $admin->id]) }}"
-                                                        method="POST" class="float-left mr-1 table-action" title="Удалить">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm action-delete">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                <td class="pr-2">
+                                                    <div class="table_actions">
+                                                        <a href="{{ route('users.edit', ['user' => $admin->id]) }}"
+                                                            class="btn btn-info btn-sm float-left table-action"
+                                                            title="Редактировать">
+                                                            <img src="{{ asset('images/icons/edit_1.png') }}" class="my-icon"
+                                                                alt="Редактировать">
+                                                        </a>
+                                                        <form action="{{ route('users.destroy', ['user' => $admin->id]) }}"
+                                                            method="POST" class="float-left table-action" title="Удалить">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm table-action">
+                                                                <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete">
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
