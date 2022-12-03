@@ -1,4 +1,4 @@
-@forelse ($posts as $post)
+@foreach ($posts as $post)
     <div class="blog-box wow fadeIn" data-aos="zoom-in">
         <div class="post-media">
             <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" title="{{ $post->slug }}">
@@ -25,5 +25,4 @@
     </div>
 
     <hr class="invis">
-@empty
-@endforelse
+@endforeach

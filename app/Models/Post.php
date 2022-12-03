@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
@@ -94,97 +93,58 @@ class Post extends Model
     public static function getByTag($tag)
     {
         return $tag->posts()
-            ->with('category')
             ->latest()
             ->paginate(2);
     }
 
     public static function getSearchedPosts($s)
     {
-        return Cache::remember("searched_posts_$s", env('CACHE_TIME'), function () use ($s) {
-            return Post::where('title', 'like', "%$s%")
-                ->orWhere('description', 'like', "%$s%")
-                ->with('category')
-                ->paginate(3)
-                ->fragment('main-section');
-        });
+        return Post::where('title', 'like', "%$s%")
+            ->orWhere('description', 'like', "%$s%")
+            ->with('category')
+            ->paginate(3)
+            ->fragment('main-section');
     }
 
-    public static function getAllCached()
+    public static function getSorted()
     {
-        return Cache::remember('posts_all', env('CACHE_TIME'), function () {
-            return Post::with('category', 'tags')
-                ->get();
-        });
-    }
-
-    public static function getSortedCached()
-    {
-        return Cache::remember('sorted_posts', env('CACHE_TIME'), function () {
-            return Post::with('category')
-                ->latest()
-                ->paginate(3)
-                ->fragment('main-section');
-        });
-    }
-
-    public static function clearCache()
-    {
-        return Cache::forget('posts_all');
+        return Post::with('category')
+            ->latest()
+            ->paginate(3)
+            ->fragment('main-section');
     }
 
     public static function getRating()
     {
-        return Cache::remember('posts_rating', env('CACHE_TIME'), function () {
-            return collect(Post::pluck('likes', 'dislikes')
-                ->all());
-        });
+        return collect(Post::pluck('likes', 'dislikes')->all());
     }
 
     public static function getPopular()
     {
-        return Cache::remember('popular_posts', env('CACHE_TIME'), function () {
-            return Post::orderBy('views', 'desc')
-                ->limit(3)
-                ->get();
-        });
+        return Post::orderBy('views', 'desc')
+            ->limit(3)
+            ->get();
     }
 
     public static function getRecent()
     {
-        return Cache::remember('recent_posts', env('CACHE_TIME'), function () {
-            return Post::orderBy('id', 'desc')
-                ->limit(3)
-                ->get();
-        });
+        return Post::orderByDesc('id')
+            ->limit(3)
+            ->get();
     }
 
     public static function getPopularStats()
     {
-        return Cache::remember('recent_posts_stats', env('CACHE_TIME'), function () {
-            return Post::orderBy('views')
-                ->limit(7)
-                ->get()
-                ->sortBy('created_at');
-        });
+        return Post::orderBy('views')
+            ->limit(7)
+            ->get()
+            ->sortBy('created_at');
     }
 
     public static function getRecentStats()
     {
-        return Cache::remember('recent_posts_stats', env('CACHE_TIME'), function () {
-            return collect(Post::orderBy('created_at')
-                ->limit(7)
-                ->get());
-        });
-    }
-
-    public static function getAvgViews()
-    {
-        return ceil(Post::avg('views'));
-    }
-
-    public static function getAmount()
-    {
-        return Post::count('id');
+        return Post::orderBy('created_at')
+            ->limit(7)
+            ->get();
     }
 }

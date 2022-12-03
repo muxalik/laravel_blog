@@ -29,7 +29,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.header', function ($view) {
             $view->with([
-                'categories' => Category::getAllCached()
+                'categories' => Category::all()
             ]);
         });
 
@@ -65,16 +65,16 @@ class ViewServiceProvider extends ServiceProvider
     public function passWidgets($view)
     {
         $view->with([
-            'users_count' => User::getAmount(),
-            'avg_views' => Post::getAvgViews(),
-            'posts_count' => Post::getAmount(),
+            'users_count' => User::count(),
+            'avg_views' => ceil(Post::avg('views')),
+            'posts_count' => Post::count('id'),
             'avg_rating' => $this->getAvgRating(),
         ]);
     }
 
     public function getAvgRating()
     {
-        $posts_count = Post::getAmount();
+        $posts_count = Post::count('id');
         $rating = Post::getRating();
 
         $likes = $rating->values()->sum();
@@ -89,7 +89,9 @@ class ViewServiceProvider extends ServiceProvider
 
     public function passAdminList($view)
     {
-        $view->with('admins', User::getAdmins());
+        $view->with([
+            'admins' => User::where('is_admin', 1)->get()
+        ]);
     }
 
     public function passPopularTags($view)

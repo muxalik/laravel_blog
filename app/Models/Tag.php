@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Support\Facades\Cache;
 
 class Tag extends Model
 {
@@ -36,36 +35,14 @@ class Tag extends Model
 
     public function getPostsAmount()
     {
-        return $this->posts->count();
-    }
-
-    public static function getAllCached()
-    {
-        return Cache::remember('tags_all', env('CACHE_TIME'), function () {
-            return Tag::all();
-        });
-    }
-
-    public static function getAllTitleIdCached()
-    {
-        return Cache::remember('tags_pluck', env('CACHE_TIME'), function () {
-            return Tag::pluck('title', 'id')
-                ->all();
-        });
-    }
-
-    public static function clearCache()
-    {
-        return Cache::forget('tags_all');
+        return $this->posts()->count();
     }
 
     public static function getPopular()
     {
-        return Cache::remember('popular_tags', env('CACHE_TIME'), function () {
-            return collect(Tag::withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->limit(6)
-                ->get());
-        });
+        return collect(Tag::withCount('posts')
+            ->orderBy('posts_count', 'desc')
+            ->limit(6)
+            ->get());
     }
 }

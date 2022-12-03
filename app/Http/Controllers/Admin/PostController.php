@@ -24,11 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        if (session('clearCache'))
-            Post::clearCache();
-
         return view('admin.posts.index', [
-            'posts' => Post::getAllCached()
+            'posts' => Post::with('category', 'tags')->get()
         ]);
     }
 
@@ -40,8 +37,8 @@ class PostController extends Controller
     public function create()
     {
         return view('admin.posts.create', [
-            'categories' => Category::getAllTitleIdCached(),
-            'tags' => Tag::getAllTitleIdCached()
+            'categories' => Category::pluck('title', 'id')->all(),
+            'tags' => Tag::pluck('title', 'id')->all()
         ]);
     }
 
@@ -54,16 +51,13 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $this->service->store(
-            $request->validated(), 
+            $request->validated(),
             $request->file('thumbnail')
         );
 
         return redirect()
             ->route('posts.index')
-            ->with([
-                'success' => 'Статья успешно добавлена',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Статья успешно добавлена');
     }
 
     /**
@@ -75,8 +69,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         return view('admin.posts.edit', [
-            'categories' => Category::getAllTitleIdCached(),
-            'tags' => Tag::getAllTitleIdCached(),
+            'categories' => Category::pluck('title', 'id')->all(),
+            'tags' => Tag::pluck('title', 'id')->all(),
             'post' => $post
         ]);
     }
@@ -91,16 +85,13 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {
         $this->service->update(
-            $post, 
+            $post,
             $request->validated()
         );
 
         return redirect()
             ->route('posts.index')
-            ->with([
-                'success' => 'Изменения успешно сохранены',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Изменения успешно сохранены');
     }
 
     /**

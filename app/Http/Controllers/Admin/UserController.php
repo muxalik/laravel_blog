@@ -22,11 +22,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (session('clearCache'))
-            User::clearCache();
-
         return view('admin.users.index', [
-            'users' => User::getAllCached()
+            'users' => User::all()
         ]);
     }
 
@@ -78,17 +75,11 @@ class UserController extends Controller
         if ($user->is_admin)
             return redirect()
                 ->route('admin.index')
-                ->with([
-                    'success' => 'Пользователь успешно сохранен',
-                    'clearCache' => true
-                ]);
+                ->with('success', 'Пользователь успешно сохранен');
 
         return redirect()
             ->route('home')
-            ->with([
-                'success' => 'Пользователь успешно сохранен',
-                'clearCache' => true
-            ]);   
+            ->with('success', 'Пользователь успешно сохранен');
     }
 
     /**
@@ -99,7 +90,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return $this->service->delete($id);        
+        return $this->service->delete($id);
     }
 
     public function refresh()

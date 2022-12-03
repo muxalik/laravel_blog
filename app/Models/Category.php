@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -31,50 +30,26 @@ class Category extends Model
     public static function getBySlug($slug)
     {
         return Category::where('slug', $slug)
-            ->first();
+            ->firstOrFail();
     }
 
     public function getPostsAmount()
     {
-        return $this->posts->count();
-    }
-
-    public static function getAllCached()
-    {
-        return Cache::remember('categories_all', env('CACHE_TIME'), function () {
-            return Category::all();
-        });
-    }
-
-    public static function getAllTitleIdCached()
-    {
-        return Cache::remember('categories_pluck', env('CACHE_TIME'), function () {
-            return Category::pluck('title', 'id')
-                ->all();
-        });
-    }
-
-    public static function clearCache()
-    {
-        Cache::forget('categories_all');
+        return $this->posts()->count();
     }
 
     public static function getList()
     {
-        return Cache::remember('categories_list', env('CACHE_TIME'), function () {
-            return Category::withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->get();
-        });
+        return Category::withCount('posts')
+            ->orderByDesc('posts_count')
+            ->get();
     }
 
     public static function getPopular()
     {
-        return Cache::remember('popular_categories', env('CACHE_TIME'), function () {
-            return collect(Category::withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->limit(6)
-                ->get());
-        });
+        return Category::withCount('posts')
+            ->orderBy('posts_count', 'desc')
+            ->limit(6)
+            ->get();
     }
 }

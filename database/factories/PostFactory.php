@@ -25,7 +25,7 @@ class PostFactory extends Factory
             'title' => fake()->text(60),
             'description' => fake()->paragraph(4),
             'content' => fake()->text(3000),
-            'category_id' => Category::all()->random()->id,
+            'category_id' => fake()->randomElement(range(1, env('CATEGORIES_AMOUNT', 4))),
             'views' => $views,
             'likes' => $likes,
             'dislikes' => $dislikes,

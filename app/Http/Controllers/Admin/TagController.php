@@ -16,11 +16,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        if (session('clearCache'))
-            Tag::clearCache();
-
         return view('admin.tags.index', [
-            'tags' => Tag::getAllCached()
+            'tags' => Tag::all()
         ]);
     }
 
@@ -46,10 +43,7 @@ class TagController extends Controller
 
         return redirect()
             ->route('tags.index')
-            ->with([
-                'success' => 'Тег успешно добавлен',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Тег успешно добавлен');
     }
 
     /**
@@ -76,10 +70,7 @@ class TagController extends Controller
 
         return redirect()
             ->route('tags.index')
-            ->with([
-                'success' => 'Изменения успешно сохранены',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Изменения успешно сохранены');
     }
 
     /**

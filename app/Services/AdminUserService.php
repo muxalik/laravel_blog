@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -6,8 +6,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
-class AdminUserService 
-{    
+class AdminUserService
+{
     /**
      * store
      *
@@ -23,17 +23,14 @@ class AdminUserService
 
             return redirect()
                 ->route('home')
-                ->with('clearCache', true);
+                ->with('success', 'Пользователь успешно зарегистрирован');
         }
 
         return redirect()
             ->route('users.index')
-            ->with([
-                'success' => 'Пользователь успешно зарегистрирован',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Пользователь успешно зарегистрирован');
     }
-    
+
     /**
      * update
      *
@@ -43,27 +40,23 @@ class AdminUserService
      */
     public function update(User $user, $checked): RedirectResponse
     {
-         if (auth()->user()->email === $user->email && auth()->user() != $user) {
+        if (auth()->user()->email === $user->email && auth()->user() != $user) {
             auth()->logout();
             auth()->login($user);
         }
 
         if (!$checked) {
             return redirect()
-            ->route('users.index')
-            ->with([
-                'success' => 'Пользователь успешно сохранен',
-                'clearCache' => true
-            ]);
-            
+                ->route('users.index')
+                ->with('success', 'Пользователь успешно сохранен');
         }
 
         if (auth()->user() != $user) {
             auth()->logout();
             auth()->login($user);
-        }  
+        }
     }
-    
+
     /**
      * delete
      *
@@ -77,7 +70,7 @@ class AdminUserService
 
         return static::deleteOne($id);
     }
-    
+
     /**
      * deleteAll
      *
@@ -89,12 +82,9 @@ class AdminUserService
 
         return redirect()
             ->route('users.index')
-            ->with([
-                'success' => 'Все пользователи успешно удалены',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Все пользователи успешно удалены');
     }
-    
+
     /**
      * deleteOne
      *
@@ -103,13 +93,10 @@ class AdminUserService
      */
     protected function deleteOne(int|string $id): RedirectResponse
     {
-        User::deleteById($id);
+        User::find($id)->delete();
 
         return redirect()
             ->route('users.index')
-            ->with([
-                'success' => 'Пользователь успешно удален',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Пользователь успешно удален');
     }
 }
