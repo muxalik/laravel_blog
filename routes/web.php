@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
     Route::delete('/messages/{id}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
+    Route::put('/messages/markAllAsRead', [AdminMessageController::class, 'markAllAsRead'])->name('messages.markAllAsRead');
+    Route::put('/messages/markAllAsUnread', [AdminMessageController::class, 'markAllAsUnread'])->name('messages.markAllAsUnread');
     Route::put('message/{id}/markAsRead', [AdminMessageController::class, 'markAsRead'])->name('messages.markAsRead');
     Route::put('message/{id}/markAsUnread', [AdminMessageController::class, 'markAsUnread'])->name('messages.markAsUnread');
 });

@@ -40,14 +40,22 @@
             </div>
 
             <div class="card-footer clearfix">
-                <a href="{{ route('posts.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-                    <img src="{{ asset('images/icons/read.png') }}" class="my-icon" alt="add">
-                    Отметить прочитанными
-                </a>
-                <a href="{{ route('posts.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-                    <img src="{{ asset('images/icons/unread.png') }}" class="my-icon" alt="add">
-                    Отметить непрочитанными
-                </a>
+                <form action="{{ route('messages.markAllAsRead') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button class="btn btn-primary mb-2 mr-2 my-icon-container">
+                        <img src="{{ asset('images/icons/read.png') }}" class="my-icon" alt="add">
+                        Отметить прочитанными
+                    </button>
+                </form>
+                <form action="{{ route('messages.markAllAsUnread') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button class="btn btn-primary mb-2 mr-2 my-icon-container">
+                        <img src="{{ asset('images/icons/unread.png') }}" class="my-icon" alt="add">
+                        Отметить непрочитанными
+                    </button>
+                </form>
                 <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
                     <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
                     Обновить

@@ -17,27 +17,33 @@ class MessageController extends Controller
 
     public function destroy($id)
     {
-        $message = Message::findOrFail($id);
-        $message->delete();
-
+        Message::findOrFail($id)->delete();
         return back();
     }
 
     public function markAsRead($id)
     {
-        $message = Message::findOrFail($id);
-        $message->seen = now('Europe/Moscow')->toDateTimeString();
-        $message->save();
+        Message::where('id', $id)
+            ->update(['seen' => now('Europe/Moscow')]);
 
         return back();
     }
 
     public function markAsUnread($id)
     {
-        $message = Message::findOrFail($id);
-        $message->seen = null;
-        $message->save();
+        Message::where('id', $id)->update(['seen' => null]);
+        return back();
+    }
 
+    public function markAllAsRead()
+    {
+        Message::whereNull('seen')->update(['seen' => now()]);
+        return back();
+    }
+
+    public function markAllAsUnread()
+    {
+        Message::query()->update(['seen' => null]);
         return back();
     }
 }
