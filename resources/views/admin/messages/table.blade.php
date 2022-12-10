@@ -41,19 +41,27 @@
                     </td>
                     <td class="pr-2">
                         <div class="table_actions">
-                            <a href="" class="btn btn-info btn-sm table-action" title="Пометить прочитанным">
-                                <img src="{{ asset('images/icons/read.png') }}" class="my-icon"
-                                    alt="Пометить прочитанным">
-                            </a>
-                            <a href="" class="btn btn-info btn-sm table-action" title="Пометить непрочитанным">
-                                <img src="{{ asset('images/icons/unread.png') }}" class="my-icon"
-                                    alt="Пометить непрочитанным">
-                            </a>
+                            <form action="{{ route('messages.markAsRead', ['id' => $message->id]) }}" class="table-action" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button class="btn btn-info btn-sm table-button" title="Пометить прочитанным">
+                                    <img src="{{ asset('images/icons/read.png') }}" class="my-icon"
+                                        alt="Пометить прочитанным">
+                                </button>
+                            </form>
+                            <form action="{{ route('messages.markAsUnread', ['id' => $message->id]) }}" class="table-action" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button class="btn btn-info btn-sm table-button" title="Пометить непрочитанным">
+                                    <img src="{{ asset('images/icons/unread.png') }}" class="my-icon"
+                                        alt="Пометить непрочитанным">
+                                </button>
+                            </form>
                             <form action="{{ route('messages.destroy', ['id' => $message->id]) }}" method="POST"
                                 class="float-left table-action" title="Удалить">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm table-action">
+                                <button type="submit" class="btn btn-danger btn-sm table-button action-delete">
                                     <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete">
                                 </button>
                             </form>

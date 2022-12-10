@@ -27,7 +27,7 @@
                                 class="float-left table-action" title="Удалить">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm table-action">
+                                <button type="submit" class="btn btn-danger btn-sm table-action action-delete">
                                     <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete">
                                 </button>
                             </form>

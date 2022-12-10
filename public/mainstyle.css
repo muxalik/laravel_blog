@@ -106,7 +106,7 @@ label {
     gap: 10px;
 }
 
-.table-action {
+.table-action, .table-button {
     position: relative;
     width: 50px;
     height: 50px;

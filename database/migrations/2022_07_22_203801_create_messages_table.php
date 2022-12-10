@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('subject');
             $table->text('message');
-            $table->date('seen')->nullable();
+            $table->dateTime('seen')->nullable();
             $table->timestamps();
         });
     }
