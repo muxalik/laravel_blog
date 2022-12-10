@@ -17,15 +17,17 @@ class MessageController extends Controller
 
     public function destroy($id)
     {
-        Message::findOrFail($id)->delete();
+        if ($id === 'all')
+            Message::truncate();
+        else
+            Message::where('id', $id)->delete();
+
         return back();
     }
 
     public function markAsRead($id)
     {
-        Message::where('id', $id)
-            ->update(['seen' => now('Europe/Moscow')]);
-
+        Message::where('id', $id)->update(['seen' => now()]);
         return back();
     }
 
