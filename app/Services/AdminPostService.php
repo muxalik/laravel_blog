@@ -67,10 +67,7 @@ class AdminPostService
 
         return redirect()
             ->route('posts.index')
-            ->with([
-                'success' => 'Все статьи успешно удалены',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Все статьи успешно удалены');
     }
     
     /**
@@ -91,9 +88,6 @@ class AdminPostService
 
         return redirect()
             ->route('posts.index')
-            ->with([
-                'success' => 'Статья успешно удалена',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Статья успешно удалена');
     }
 }

@@ -45,8 +45,7 @@ class UserController extends Controller
             return redirect()->route('home');
         }
 
-        return back()
-            ->with('error', 'Неправильный логин или пароль');
+        return back()->with('error', 'Неправильный логин или пароль');
     }
 
     public function logout()

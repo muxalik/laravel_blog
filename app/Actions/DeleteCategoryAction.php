@@ -35,10 +35,7 @@ class DeleteCategoryAction
 
             return redirect()
                 ->route('categories.index')
-                ->with([
-                    'success' => 'Все теги успешно удалены',
-                    'clearCache' => true
-                ]);
+                ->with('success', 'Все теги успешно удалены');
         }
 
         return redirect()
@@ -66,9 +63,6 @@ class DeleteCategoryAction
 
         return redirect()
             ->route('categories.index')
-            ->with([
-                'success' => 'Категория успешно удалена',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Категория успешно удалена');
     }
 }

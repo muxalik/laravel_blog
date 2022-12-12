@@ -36,10 +36,7 @@ class DeleteTagAction
 
             return redirect()
                 ->route('tags.index')
-                ->with([
-                    'success' => 'Все теги успешно удалены',
-                    'clearCache' => true
-                ]);
+                ->with('success', 'Все теги успешно удалены');
         }
 
         return redirect()
@@ -66,9 +63,6 @@ class DeleteTagAction
 
         return redirect()
             ->route('tags.index')
-            ->with([
-                'success' => 'Тег успешно удален',
-                'clearCache' => true
-            ]);
+            ->with('success', 'Тег успешно удален');
     }
 }
