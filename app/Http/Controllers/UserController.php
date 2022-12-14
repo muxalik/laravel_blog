@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Jobs\SendEmail;
 use App\Models\Message;
 use App\Models\User;
 
@@ -20,6 +21,9 @@ class UserController extends Controller
         auth()->login(
             User::create($request->validated())
         );
+
+        $job = (new SendEmail())->delay(now()->addMinutes(10));
+        dispatch($job);
 
         return redirect()
             ->route('home')
@@ -67,5 +71,4 @@ class UserController extends Controller
             ->route('home')
             ->with('success', 'Сообщение было успешно отправлено');
     }
-
 }

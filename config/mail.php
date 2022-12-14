@@ -13,8 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
-
+    'default' => env('MAIL_MAILER', 'failover'),
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations
@@ -74,6 +73,7 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
+                'postmark',
                 'smtp',
                 'log',
             ],
@@ -93,7 +93,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => env('MAIL_FROM_NAME', 'Markedia'),
     ],
 
     /*
