@@ -40,15 +40,17 @@ class Category extends Model
 
     public static function getList()
     {
-        return Category::withCount('posts')
+        return Category::select('title')
+            ->withCount('posts')
             ->orderByDesc('posts_count')
             ->get();
     }
 
     public static function getPopular()
     {
-        return Category::withCount('posts')
-            ->orderBy('posts_count', 'desc')
+        return Category::select('title')
+            ->withCount('posts')
+            ->orderByDesc('posts_count')
             ->limit(6)
             ->get();
     }

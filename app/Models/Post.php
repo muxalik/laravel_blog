@@ -116,7 +116,7 @@ class Post extends Model
 
     public static function getRating()
     {
-        return collect(Post::pluck('likes', 'dislikes')->all());
+        return Post::pluck('likes', 'dislikes')->all();
     }
 
     public static function getPopular()
@@ -135,7 +135,8 @@ class Post extends Model
 
     public static function getPopularStats()
     {
-        return Post::orderBy('views')
+        return Post::select(['likes', 'dislikes', 'created_at'])
+            ->orderBy('views')
             ->limit(7)
             ->get()
             ->sortBy('created_at');
@@ -143,7 +144,8 @@ class Post extends Model
 
     public static function getRecentStats()
     {
-        return Post::orderBy('created_at')
+        return Post::select(['likes', 'dislikes', 'views', 'created_at'])
+            ->orderBy('created_at')
             ->limit(7)
             ->get();
     }

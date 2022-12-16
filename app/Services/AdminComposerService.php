@@ -35,13 +35,8 @@ class AdminComposerService
     public static function getPopularTags()
     {
         $tags = Tag::getPopular();
-        $labels = collect();
-        $posts = collect();
-
-        $tags->each(function ($tag) use ($labels, $posts) {
-            $labels[] = $tag->title;
-            $posts[] = $tag->posts_count;
-        });
+        $labels = $tags->pluck('title');
+        $posts = $tags->pluck('posts_count');
 
         return [
             'tags_labels' => $labels->toJson(),
@@ -52,14 +47,9 @@ class AdminComposerService
     public static function getPopularCategories()
     {
         $categories = Category::getPopular();
-        $labels = collect();
-        $posts = collect();
-
-        $categories->each(function ($category) use ($labels, $posts) {
-            $labels->push($category->title);
-            $posts->push($category->posts_count);
-        });
-
+        $labels = $categories->pluck('title');
+        $posts = $categories->pluck('posts_count');
+        
         return [
             'categories_labels' => $labels->toJson(),
             'categories_posts' => $posts->toJson(),
@@ -69,17 +59,10 @@ class AdminComposerService
     public static function getRecentPosts()
     {
         $posts = Post::getRecentStats();
-        $labels = collect();
-        $likes = collect();
-        $dislikes = collect();
-        $views = collect();
-
-        $posts->each(function ($post) use ($labels, $likes, $dislikes, $views) {
-            $labels->push($post->changePostDate());
-            $likes->push($post->likes);
-            $dislikes->push($post->dislikes);
-            $views->push($post->views);
-        });
+        $labels = $posts->map(fn ($post) => $post->changePostDate());
+        $likes = $posts->pluck('likes');
+        $dislikes = $posts->pluck('dislikes');
+        $views = $posts->pluck('views');
 
         return [
             'latest_labels' => $labels->toJson(),
@@ -92,15 +75,9 @@ class AdminComposerService
     public static function getPopularPosts()
     {
         $posts = Post::getPopularStats();
-        $labels = collect();
-        $likes = collect();
-        $dislikes = collect();
-
-        $posts->each(function ($post) use ($labels, $likes, $dislikes) {
-            $labels->push($post->changePostDate());
-            $likes->push($post->likes);
-            $dislikes->push($post->dislikes);
-        });
+        $labels = $posts->map(fn ($post) => $post->changePostDate());
+        $likes = $posts->pluck('likes');
+        $dislikes = $posts->pluck('dislikes');
 
         return [
             'popular_labels' => $labels->toJson(),

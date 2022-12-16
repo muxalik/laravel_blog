@@ -40,9 +40,10 @@ class Tag extends Model
 
     public static function getPopular()
     {
-        return collect(Tag::withCount('posts')
-            ->orderBy('posts_count', 'desc')
+        return Tag::select('title')
+            ->withCount('posts')
+            ->orderByDesc('posts_count')
             ->limit(6)
-            ->get());
+            ->get();
     }
 }
