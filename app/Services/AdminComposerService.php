@@ -5,10 +5,21 @@ namespace App\Services;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 
 class AdminComposerService 
 {   
-    public function getAvgRating()
+    public static function getWidgets()
+    {
+        return [
+            'users_count' => User::count('id'),
+            'avg_views' => ceil(Post::avg('views')),
+            'posts_count' => Post::count('id'),
+            'avg_rating' => AdminComposerService::getAvgRating(),
+        ];
+    }
+
+    public static function getAvgRating()
     {
         $posts_count = Post::count('id');
         $rating = Post::getRating();
@@ -21,7 +32,7 @@ class AdminComposerService
             : 1);
     }
 
-    public function getPopularTags()
+    public static function getPopularTags()
     {
         $tags = Tag::getPopular();
         $labels = collect();
@@ -38,7 +49,7 @@ class AdminComposerService
         ];
     }
 
-    public function getPopularCategories()
+    public static function getPopularCategories()
     {
         $categories = Category::getPopular();
         $labels = collect();
@@ -55,7 +66,7 @@ class AdminComposerService
         ];
     }
 
-    public function getRecentPosts()
+    public static function getRecentPosts()
     {
         $posts = Post::getRecentStats();
         $labels = collect();
@@ -78,7 +89,7 @@ class AdminComposerService
         ];
     }
 
-    public function getPopularPosts()
+    public static function getPopularPosts()
     {
         $posts = Post::getPopularStats();
         $labels = collect();
