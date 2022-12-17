@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -7,21 +7,30 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 
-class AdminComposerService 
-{   
-    public static function getWidgets()
+class AdminComposerService
+{
+    protected int $posts_count;
+
+    protected function getPostsCount(): int
+    {
+        return isset($this->posts_count)
+            ? $this->posts_count
+            : Post::count('id');
+    }
+
+    public function getWidgets(): array
     {
         return [
             'users_count' => User::count('id'),
             'avg_views' => ceil(Post::avg('views')),
-            'posts_count' => Post::count('id'),
+            'posts_count' => $this->getPostsCount(),
             'avg_rating' => AdminComposerService::getAvgRating(),
         ];
     }
 
-    public static function getAvgRating()
+    public function getAvgRating(): int
     {
-        $posts_count = Post::count('id');
+        $posts_count = $this->getPostsCount();
         $rating = Post::getRating();
 
         $likes = $rating->values()->sum();
@@ -32,7 +41,7 @@ class AdminComposerService
             : 1);
     }
 
-    public static function getPopularTags()
+    public function getPopularTags(): array
     {
         $tags = Tag::getPopular();
         $labels = $tags->pluck('title');
@@ -44,19 +53,19 @@ class AdminComposerService
         ];
     }
 
-    public static function getPopularCategories()
+    public function getPopularCategories(): array
     {
         $categories = Category::getPopular();
         $labels = $categories->pluck('title');
         $posts = $categories->pluck('posts_count');
-        
+
         return [
             'categories_labels' => $labels->toJson(),
             'categories_posts' => $posts->toJson(),
         ];
     }
 
-    public static function getRecentPosts()
+    public function getRecentPosts(): array
     {
         $posts = Post::getRecentStats();
         $labels = $posts->map(fn ($post) => $post->changePostDate());
@@ -72,7 +81,7 @@ class AdminComposerService
         ];
     }
 
-    public static function getPopularPosts()
+    public function getPopularPosts(): array
     {
         $posts = Post::getPopularStats();
         $labels = $posts->map(fn ($post) => $post->changePostDate());

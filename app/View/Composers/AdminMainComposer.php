@@ -10,14 +10,16 @@ class AdminMainComposer
 {
     public function compose(View $view)
     {
+        $service = new AdminComposerService();
+
         $view->with([
             'admins' => User::where('is_admin', 1)->get(),
         ] + array_merge(
-            AdminComposerService::getWidgets(),
-            AdminComposerService::getPopularTags(),
-            AdminComposerService::getPopularCategories(),
-            AdminComposerService::getPopularPosts(),
-            AdminComposerService::getRecentPosts(),
+            $service->getWidgets(),
+            $service->getPopularTags(),
+            $service->getPopularCategories(),
+            $service->getPopularPosts(),
+            $service->getRecentPosts(),
         ));
     }
 } 
