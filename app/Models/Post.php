@@ -84,12 +84,6 @@ class Post extends Model
             ->paginate(3);
     }
 
-    public static function getBySlug($slug)
-    {
-        return Post::where('slug', $slug)
-            ->firstOrFail();
-    }
-
     public static function getByTag($tag)
     {
         return $tag->posts()

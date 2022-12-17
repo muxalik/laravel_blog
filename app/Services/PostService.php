@@ -8,7 +8,7 @@ class PostService
 {
     public function getWithIncrement($slug)
     {
-        $post = Post::getBySlug($slug);
+        $post = Post::where('slug', $slug)->firstOrFail();
         $post->views += 1;
         $post->update();
 
@@ -18,20 +18,16 @@ class PostService
     public static function getSimilar($post)
     {
         $tags = $post
-            ->tags
-            ->random(2);
+            ->tags()
+            ->inRandomOrder()
+            ->limit(2)
+            ->get()
+            ->pluck('id');
 
-        $first = $tags[0]
-            ->posts
-            ->random(1)[0];
-
-        $key = $first->id;
-
-        $second = $tags[1]
-            ->posts
-            ->except($key)
-            ->random(1)[0];
-
-        return [$first, $second];
+        $posts = Post::whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('post_id', $tags);
+        })->get();
+        
+        return $posts;
     }
 }
