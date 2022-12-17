@@ -110,7 +110,7 @@ class Post extends Model
 
     public static function getRating()
     {
-        return collect(Post::pluck('likes', 'dislikes')->all());
+        return Post::pluck('likes', 'dislikes');
     }
 
     public static function getPopular()

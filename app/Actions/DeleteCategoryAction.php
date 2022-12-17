@@ -30,7 +30,7 @@ class DeleteCategoryAction
      */
     protected static function deleteAll(): RedirectResponse
     {
-        if (!count(Post::first())) {
+        if (Post::first()->doesntExist()) {
             Category::truncate();
 
             return redirect()
@@ -51,9 +51,9 @@ class DeleteCategoryAction
      */
     protected static function deleteOne(int|string $id): RedirectResponse
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
-        if ($category->getPostsAmount()) {
+        if ($category->posts()->first()->exists()) {
             return redirect()
                 ->route('categories.index')
                 ->with('error', 'У категории есть записи');

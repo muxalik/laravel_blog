@@ -52,9 +52,9 @@ class DeleteTagAction
      */
     protected static function deleteOne(int|string $id): RedirectResponse
     {
-        $tag = Tag::find($id);
+        $tag = Tag::findOrFail($id);
 
-        if ($tag->getPostsAmount())
+        if ($tag->posts()->first()->exists())
             return redirect()
                 ->route('tags.index')
                 ->with('error', 'У тегов есть записи');
