@@ -8,6 +8,8 @@ use App\Http\Requests\RegisterRequest;
 use App\Jobs\SendEmail;
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\WelcomeEmailNotification;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -18,12 +20,9 @@ class UserController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        auth()->login(
-            User::create($request->validated())
-        );
-
-        $job = (new SendEmail())->delay(now()->addMinutes(10));
-        dispatch($job);
+        $user = User::create($request->validated());
+        event(new Registered($user));
+        auth()->login($user);
 
         return redirect()
             ->route('home')

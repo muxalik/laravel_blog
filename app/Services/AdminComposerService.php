@@ -84,7 +84,7 @@ class AdminComposerService
     public function getPopularPosts(): array
     {
         $posts = Post::getPopularStats();
-        $labels = $posts->map(fn ($post) => $post->changePostDate());
+        $labels = $posts->map(fn ($post) => $post->changePostDate())->values();
         $likes = $posts->pluck('likes');
         $dislikes = $posts->pluck('dislikes');
 

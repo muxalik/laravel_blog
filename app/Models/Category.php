@@ -40,7 +40,7 @@ class Category extends Model
 
     public static function getList()
     {
-        return Category::select('title')
+        return Category::select('title', 'slug')
             ->withCount('posts')
             ->orderByDesc('posts_count')
             ->get();
