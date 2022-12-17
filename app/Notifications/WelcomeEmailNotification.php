@@ -2,12 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Mail\WelcomeToMarkedia;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeEmailNotification extends Notification
+class WelcomeEmailNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -40,10 +41,7 @@ class WelcomeEmailNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->line('Welcome to Markedia')
-                    ->action('Go to home page', url('/'))
-                    ->line('Thank you for using our application!');
+        return new WelcomeToMarkedia();
     }
 
     /**

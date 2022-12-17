@@ -28,6 +28,7 @@ class WelcomeToMarkedia extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mail.welcome');
+        return $this->to(auth()->user()->email, auth()->user()->name)
+            ->view('mail.welcome');
     }
 }

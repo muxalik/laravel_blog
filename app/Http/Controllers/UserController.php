@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
 {
@@ -21,8 +22,8 @@ class UserController extends Controller
     public function store(RegisterRequest $request)
     {
         $user = User::create($request->validated());
-        event(new Registered($user));
         auth()->login($user);
+        event(new Registered($user));
 
         return redirect()
             ->route('home')
