@@ -35,12 +35,6 @@ class Comment extends Model
         );
     }
 
-    public static function getAmount($id)
-    {
-        return Comment::where('post_id', $id)
-            ->count();
-    }
-
     public static function getByPostId($id)
     {
         return Comment::where('post_id', $id)

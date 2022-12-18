@@ -17,11 +17,10 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        $service = new PostService;
-        $post = $service->getWithIncrement($slug);
-        $similar = $service->getSimilar($post);
+        $post = PostService::getWithIncrement($slug);
+        $similar = PostService::getSimilar($post);
         $comments = Comment::getByPostId($post->id);
-        $amount = Comment::getAmount($post->id);
+        $amount = $post->comments()->count();
 
         return view('posts.show', compact('post', 'similar', 'comments', 'amount'));
     }

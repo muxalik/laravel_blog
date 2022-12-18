@@ -8,10 +8,12 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,13 +29,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/article/{slug}', [PostController::class, 'show'])->name('posts.single');
-Route::get('/article/{id}/loadMore', [CommentController::class, 'loadMore'])->name('comments.loadmore');
+Route::get('/article/{post_id}/loadMore', [CommentController::class, 'loadMore'])->name('comments.loadmore');
+Route::post('/article/{post_id}/comment', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.single');
 Route::get('/tag/{slug}', [TagController::class, 'show'])->name('tags.single');
-Route::get('/search', [SearchController::class, 'index'])->name('search');
-Route::get('/contact', [UserController::class, 'contactForm'])->name('contact');
-Route::post('/contact/store', [UserController::class, 'contactStore'])->name('contact.store');
-Route::post('/comment/{id}/store', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/search', SearchController::class)->name('search');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
@@ -61,12 +63,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [UserController::class, 'create'])->name('register.create');
-    Route::post('/register', [UserController::class, 'store'])->name('register.store');
-    Route::get('/login', [UserController::class, 'loginForm'])->name('login.create');
-    Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::get('/register', [RegisterController::class, 'index'])->name('register.create');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+    Route::get('/login', [LoginController::class, 'index'])->name('login.create');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });

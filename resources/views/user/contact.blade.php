@@ -89,12 +89,12 @@
                                             placeholder="Email" name="email" id="email"
                                             value="{{ old('email') }}">
                                         <input type="tel" class="form-control @error('phone')is-invalid @enderror"
-                                            placeholder="Phone" name="phone" id="phone"
-                                            value="{{ old('phone') }}" pattern="[1-9]{1}[0-9]{9}">
+                                            placeholder="Phone" name="phone" id="phone" pattern="^((\d|\+\d)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
+                                            value="{{ old('phone') }}">
                                         <input type="text" class="form-control @error('subject')is-invalid @enderror"
                                             placeholder="Subject" name="subject" id="subject"
                                             value="{{ old('subject') }}">
-                                        <textarea class="form-control @error('message')is-invalid @enderror" placeholder="Your message" name="message"
+                                        <textarea class="form-control @error('message')is-invalid @enderror" placeholder="Your message" name="content"
                                             id="message">{{ old('message') }}</textarea>
                                         <button type="submit" class="btn btn-primary">Send <i
                                                 class="fa fa-envelope-open-o"></i></button>

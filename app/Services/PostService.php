@@ -6,7 +6,7 @@ use App\Models\Post;
 
 class PostService 
 {
-    public function getWithIncrement($slug)
+    public static function getWithIncrement($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
         $post->views += 1;

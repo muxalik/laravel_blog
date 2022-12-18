@@ -26,9 +26,12 @@ class ContactRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|regex:/[0-9]{11}/',
+            'phone' => [
+                'required',
+                'regex:/^((\d|\+\d)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/',
+            ],
             'subject' => 'required|max:50',
-            'message' => 'required|max:299'
+            'content' => 'required|max:299'
         ];
     }
 }
