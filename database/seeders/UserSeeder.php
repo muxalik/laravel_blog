@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'name' => 'user',
             'email' => 'user@mail.com',
             'password' => 'user',
+            'is_admin' => 0
         ]];
 
         foreach ($users as $user) {
@@ -30,7 +31,7 @@ class UserSeeder extends Seeder
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => $user['password'],
-                'is_admin' => $user['is_admin'] ?? 0
+                'is_admin' => $user['is_admin']
             ]);
         }
 

@@ -17,13 +17,15 @@ class UserFactory extends Factory
     public function definition()
     {
         $registry = fake()->optional(0.3, fake()->unique()->dateTimeThisYear())->dateTimeBetween('-2 year');
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->freeEmail(),
             'password' => fake()->password(),
-            'is_admin' => fake()->optional(0.1, 0)->randomElement([1]),
             'created_at' => $registry,
             'updated_at' => fake()->dateTimeBetween($registry),
+            'is_admin' => fake()->optional(0.1, 0)->randomElement([1]),
+            'is_subscribed' => fake()->optional(0.3, 0)->randomElement([1])
         ];
     }
 }
