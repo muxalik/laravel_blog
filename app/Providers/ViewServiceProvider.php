@@ -32,21 +32,16 @@ class ViewServiceProvider extends ServiceProvider
             ]);
         });
 
-        view()->composer(['layouts.sidebar', 'layouts.footer'], function ($view) {
+        view()->composer(['layouts.layout', 'layouts.category_layout', 'user.contact'], function ($view) {
             $view->with([
                 'popular_posts' => Post::getPopular(),
+                'categories' => Category::getList()
             ]);
         });
 
         view()->composer('layouts.footer', function ($view) {
             $view->with([
                 'recent_posts' => Post::getRecent(),
-            ]);
-        });
-
-        view()->composer('layouts.categories', function ($view) {
-            $view->with([
-                'categories' => Category::getList()
             ]);
         });
 

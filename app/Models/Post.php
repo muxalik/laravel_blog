@@ -87,6 +87,7 @@ class Post extends Model
     public static function getByTag($tag)
     {
         return $tag->posts()
+            ->with('category')
             ->latest()
             ->paginate(2);
     }

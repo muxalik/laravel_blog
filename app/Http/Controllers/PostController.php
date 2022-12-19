@@ -19,8 +19,8 @@ class PostController extends Controller
     {
         $post = PostService::getWithIncrement($slug);
         $similar = PostService::getSimilar($post);
-        $comments = Comment::getByPostId($post->id);
-        $amount = $post->comments()->count();
+        $comments = $post->comments();
+        $amount = $comments->count();
 
         return view('posts.show', compact('post', 'similar', 'comments', 'amount'));
     }
