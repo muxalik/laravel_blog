@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -35,6 +36,13 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        User::factory(env('USERS_AMOUNT', 100))->create();
+        $users = User::factory(env('USERS_AMOUNT', 100))->create();
+
+        for ($i = 0; $i < $users->count(); $i += 4) {
+            $sub = Subscriber::factory()->make();
+
+            $users[$i]->subscriber()->save($sub);
+            $users[$i]->update(['subscriber_id' => $sub->id]);
+        }
     }
 }

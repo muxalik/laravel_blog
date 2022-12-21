@@ -25,7 +25,6 @@ class UserFactory extends Factory
             'created_at' => $registry,
             'updated_at' => fake()->dateTimeBetween($registry),
             'is_admin' => fake()->optional(0.9, 1)->randomElement([0]),
-            'subscriber_id' => fake()->optional(0.5, 0)->randomElement([1])
         ];
     }
 }
