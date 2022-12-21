@@ -24,8 +24,8 @@ class UserFactory extends Factory
             'password' => fake()->password(),
             'created_at' => $registry,
             'updated_at' => fake()->dateTimeBetween($registry),
-            'is_admin' => fake()->optional(0.1, 0)->randomElement([1]),
-            'is_subscribed' => fake()->optional(0.3, 0)->randomElement([1])
+            'is_admin' => fake()->optional(0.9, 1)->randomElement([0]),
+            'subscriber_id' => fake()->optional(0.5, 0)->randomElement([1])
         ];
     }
 }

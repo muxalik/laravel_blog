@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_subscribed')->default(0);
+        Schema::create('subscribers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('email')->unique();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_subscribed');
-        });
+        Schema::dropIfExists('subscribers');
     }
 };
