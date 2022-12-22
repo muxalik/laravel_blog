@@ -52,6 +52,7 @@ class PostController extends Controller
     {
         $this->service->store(
             $request->validated(),
+            $request->input('tags'),
             $request->file('thumbnail')
         );
 

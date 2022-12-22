@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\PostCreated;
 use App\Events\SubscriberAdded;
+use App\Listeners\PostPublishedListener;
 use App\Listeners\SubscriberAddedListener;
 use App\Listeners\WelcomeEmailListener;
+use App\Models\Post;
+use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,7 +28,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         SubscriberAdded::class => [
             SubscriberAddedListener::class,
-        ]
+        ],
+        PostCreated::class => [
+            PostPublishedListener::class,
+        ],
     ];
 
     /**
@@ -34,7 +41,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Post::observe(PostObserver::class);
     }
 
     /**

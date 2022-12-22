@@ -12,15 +12,15 @@ class AdminPostService
     /**
      * store
      *
-     * @param  object $data
+     * @param  mixed $data
      * @param  mixed $image
      * @return void
      */
-    public function store(object $data, $image): void
+    public function store($data, $tags, $image): void
     {
         $data['thumbnail'] = Post::uploadImage($image);
         $post = Post::create($data);
-        $post->tags()->sync($data->tags);
+        $post->tags()->sync($tags);
     }
     
     /**
