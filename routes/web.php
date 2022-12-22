@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
@@ -36,7 +37,7 @@ Route::get('/tag/{slug}', [TagController::class, 'show'])->name('tags.single');
 Route::get('/search', SearchController::class)->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
-
+Route::post('/newsletter', NewsletterController::class)->name('newsletter');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 

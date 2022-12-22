@@ -83,7 +83,6 @@ class AdminMainComposer
     {
         $posts = Post::getRecentStats();
         $labels = $posts->map(fn ($post) => $post->changePostDate());
-        dd($posts->all('likes', 'dislikes'));
         $likes = $posts->pluck('likes');
         $dislikes = $posts->pluck('dislikes');
         $views = $posts->pluck('views');

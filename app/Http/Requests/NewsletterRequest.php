@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IsNotSubscribed;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewsletterRequest extends FormRequest
@@ -25,7 +24,7 @@ class NewsletterRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'email', new IsNotSubscribed]
+            'email' => ['required', 'email', 'unique:subscribers'],
         ];
     }
 }

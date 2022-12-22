@@ -10,12 +10,8 @@ use Illuminate\Support\Facades\Notification;
 
 class WelcomeEmailListener implements ShouldQueue
 {
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 5;
+
+    public int $tries = 5;
 
     /**
      * Create the event listener.
@@ -30,7 +26,7 @@ class WelcomeEmailListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  Illuminate\Auth\Events\Registered  $event
+     * @param  Registered  $event
      * @return void
      */
     public function handle(Registered $event)

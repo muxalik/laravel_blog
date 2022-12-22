@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\SubscriberAdded;
+use App\Listeners\SubscriberAddedListener;
 use App\Listeners\WelcomeEmailListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             WelcomeEmailListener::class,
         ],
+        SubscriberAdded::class => [
+            SubscriberAddedListener::class,
+        ]
     ];
 
     /**

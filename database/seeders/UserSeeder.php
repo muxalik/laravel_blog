@@ -41,8 +41,9 @@ class UserSeeder extends Seeder
         for ($i = 0; $i < $users->count(); $i += 4) {
             $sub = Subscriber::factory()->make();
 
-            $users[$i]->subscriber()->save($sub);
-            $users[$i]->update(['subscriber_id' => $sub->id]);
+            $id = rand($i + 1, $i + 4);
+            $users[$id]->subscriber()->save($sub);
+            $users[$id]->update(['subscriber_id' => $sub->id]);
         }
     }
 }
