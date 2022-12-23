@@ -50,11 +50,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $this->service->store(
-            $request->validated(),
-            $request->input('tags'),
-            $request->file('thumbnail')
-        );
+        $this->service->store($request);
 
         return redirect()
             ->route('posts.index')
@@ -85,10 +81,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $this->service->update(
-            $post,
-            $request->validated()
-        );
+        $this->service->update($request, $post);
 
         return redirect()
             ->route('posts.index')

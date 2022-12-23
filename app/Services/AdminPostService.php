@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,33 +14,38 @@ class AdminPostService
     /**
      * store
      *
-     * @param  mixed $data
-     * @param  mixed $image
+     * @param  PostRequest $request
      * @return void
      */
-    public function store($data, $tags, $image): void
+    public function store(PostRequest $request): void
     {
-        $data['thumbnail'] = Post::uploadImage($image);
-        $post = Post::create($data);
-        $post->tags()->sync($tags);
+        $thumbnail = Post::uploadImage($request->file('thumbnail'));
+        $post = Post::create(array_merge(
+            $request->all(),
+            ['thumbnail' => $thumbnail]
+        ));
+        $post->tags()->sync($request->tags);
     }
     
     /**
      * update
      *
+     * @param  PostRequest $request
      * @param  Post $post
-     * @param  mixed $data
      * @return void
      */
-    public function update(Post $post, $data): void
+    public function update(PostRequest $request, Post $post): void
     {
-        $file = Post::uploadImage($data->thumbnail, $post->thumbnail);
+        $thumbnail = $request->file('thumbnail') 
+            ? Post::uploadImage($request->file('thumbnail'), $post->thumbnail)
+            : $post->thumbnail;
 
-        if ($file)
-            $data['thumbnail'] = $file;
+        $post->update(array_merge(
+            $request->validated(),
+            ['thumbnail' => $thumbnail],
+        ));
 
-        $post->update($data);
-        $post->tags()->sync($data->tags);
+        $post->tags()->sync($request->tags);
     }
     
     /**

@@ -62,6 +62,7 @@ class Post extends Model
             Storage::delete($thumbnail);
 
         $folder = date('Y-m-d');
+
         return Storage::putFile("images/{$folder}/", $image);
     }
 
