@@ -37,13 +37,5 @@ class UserSeeder extends Seeder
         }
 
         $users = User::factory(env('USERS_AMOUNT', 100))->create();
-
-        for ($i = 0; $i < $users->count(); $i += 4) {
-            $sub = Subscriber::factory()->make();
-
-            $id = rand($i + 1, $i + 4);
-            $users[$id]->subscriber()->save($sub);
-            $users[$id]->update(['subscriber_id' => $sub->id]);
-        }
     }
 }
