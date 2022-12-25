@@ -39,7 +39,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter', NewsletterController::class)->name('newsletter');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
 
     Route::get('/categories/refresh', [AdminCategoryController::class, 'refresh']);
     Route::get('/posts/refresh', [AdminPostController::class, 'refresh']);

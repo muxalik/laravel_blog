@@ -19,7 +19,6 @@ class PostSeeder extends Seeder
         $min = 3;
         $max = 10 <= env('TAGS_AMOUNT', 17) ? 10 : env('TAGS_AMOUNT');
 
-        // post_tag table
         Tag::all()->each(function ($tag) use ($posts, $min, $max) {
             $tag->posts()->attach(
                 $posts->random(fake()->numberBetween($min, $max))

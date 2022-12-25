@@ -15,27 +15,23 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $users = [[
+        $admin = [
             'name' => 'admin',
             'email' => 'admin@mail.com',
             'password' => 'admin',
             'is_admin' => 1,
-        ], [
+        ];
+
+        $user = [
             'name' => 'user',
             'email' => 'user@mail.com',
             'password' => 'user',
             'is_admin' => 0
-        ]];
+        ];
 
-        foreach ($users as $user) {
-            User::create([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'password' => $user['password'],
-                'is_admin' => $user['is_admin']
-            ]);
-        }
+        User::create($admin);
+        User::create($user);
 
-        $users = User::factory(env('USERS_AMOUNT', 100))->create();
+        User::factory(env('USERS_AMOUNT', 100))->create();
     }
 }

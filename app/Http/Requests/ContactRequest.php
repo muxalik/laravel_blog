@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IsPhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -26,10 +27,7 @@ class ContactRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => [
-                'required',
-                'regex:/^((\d|\+\d)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/',
-            ],
+            'phone' => ['required', new IsPhoneNumber()],
             'subject' => 'required|max:50',
             'content' => 'required|max:299'
         ];
