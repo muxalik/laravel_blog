@@ -10,29 +10,67 @@ use Tests\TestCase;
 class CategoryTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */ 
+    public function it_belongs_to_many_posts()
+    {
+        $category = $this->createOne();
+        Post::factory(3)->create(['category_id' => $category->id]);
+
+        $this->assertEquals(3, $category->posts()->count());
+    }
     
-    public function test_category_is_retrieved_using_slug()
+    /** @test */
+    public function it_is_retrieved_by_slug()
     {
-        $category = Category::factory()->create();
-        $this->assertTrue($category->is(Category::getBySlug($category->slug)));
+        $category = $this->createOne();
+        $actual = Category::getBySlug($category->slug);
+
+        $this->assertTrue($actual->is($category));
     }
 
-    public function test_category_gets_amount_of_related_posts()
+    /** @test */
+    public function can_get_list()
     {
-        $category = Category::factory(4)->create()->first();
-        $posts = Post::factory(5)->create(['category_id' => $category->id]);
-        $this->assertSame($category->getPostsAmount(), $posts->count());
+        $this->createMany();
+        $list = Category::getList();
+
+        $list->each(function ($category) {
+            $this->assertNotNull([$category->title, $category->slug, $category->posts_count]);
+            $this->assertEquals(3, $category->posts_count);
+        });
+
+        $this->assertEquals(4, $list->count());
+        $this->assertEquals($list->sortByDesc('posts_count'), $list);
     }
 
-    // public function test_category_gets_list()
-    // {
-    //     Category::factory(4)->create();
-    //     Post::factory(10)->create();
-        
-    //     $collection = Category::withCount('posts')
-    //         ->orderByDesc('posts_count')
-    //         ->get();
+    /** @test */
+    public function can_get_popular()
+    {
+        $this->createMany();
+        $list = Category::getPopular();
 
-    //     $this->assertTrue($collection->contains('posts_count', ))
-    // }
+        $list->each(function ($category) {
+            $this->assertNotNull($category->title);
+            $this->assertEquals(3, $category->posts_count);
+        });
+
+        $this->assertEquals(4, $list->count());
+        $this->assertEquals($list->sortByDesc('posts_count'), $list);
+    }
+
+
+    private function createOne(): Category
+    {
+        return Category::factory()->create();
+    }
+
+    private function createMany(): void
+    {
+        Category::factory(4)->create()->each(function ($category) {
+            Post::factory(3)->create([
+                'category_id' => $category->id
+            ]);
+        });
+    }
 }

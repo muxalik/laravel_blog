@@ -33,11 +33,6 @@ class Category extends Model
             ->firstOrFail();
     }
 
-    public function getPostsAmount()
-    {
-        return $this->posts()->count();
-    }
-
     public static function getList()
     {
         return Category::select('title', 'slug')
