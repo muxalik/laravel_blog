@@ -36,7 +36,7 @@ class CommentTest extends TestCase
     }
 
     /** @test */
-    public function field_created_at_is_formatted_while_retrieving()
+    public function its_field_created_at_is_formatted()
     {
         $date = fake()->dateTimeBetween('-1 year');
         $comment = Comment::factory()->create([
@@ -46,21 +46,6 @@ class CommentTest extends TestCase
         $formatted = Carbon::parse($date)->diffForHumans();
 
         $this->assertEquals($formatted, $comment->created_at);
-    }
-
-    /** @test */
-    public function it_can_be_retrieved_by_post_id()
-    {
-        $post = Post::factory()->create();
-        Comment::factory(6)->create([
-            'post_id' => $post->id
-        ]);
-
-        $actual = Comment::where('post_id', $post->id)
-            ->oldest()
-            ->paginate(4);
-
-        $this->assertEquals(Comment::getByPostId($post->id), $actual);
     }
 }
 

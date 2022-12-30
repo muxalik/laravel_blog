@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 

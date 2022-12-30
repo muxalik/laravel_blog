@@ -56,7 +56,7 @@ class Post extends Model
         ];
     }
 
-    public static function uploadImage(object $image, $thumbnail = null)
+    public static function uploadImage($image, $thumbnail = null)
     {
         if ($thumbnail)
             Storage::delete($thumbnail);
