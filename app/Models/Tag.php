@@ -33,11 +33,6 @@ class Tag extends Model
             ->firstOrFail();
     }
 
-    public function getPostsAmount()
-    {
-        return $this->posts()->count();
-    }
-
     public static function getPopular()
     {
         return Tag::select('title')
