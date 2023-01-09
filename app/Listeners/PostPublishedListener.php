@@ -29,14 +29,13 @@ class PostPublishedListener
     public function handle($event)
     {
         Subscriber::chunk(100, function ($subscribers) use ($event) {
-            foreach ($subscribers as $subscriber) {
+            $subscribers->each(function ($subscriber) use ($event) {
                 Notification::route('mail', $subscriber->email)
                     ->notify(new PostPublishedNotification(
-                        post: $event->post, 
+                        post: $event->post,
                         email: $subscriber->email
                     ));
-                break;
-            }
+            });
         });
     }
 }
