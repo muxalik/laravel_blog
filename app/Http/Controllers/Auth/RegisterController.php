@@ -18,7 +18,7 @@ class RegisterController extends Controller
      */
     public function index(): View
     {
-        return view('user.create');
+        return view('auth.register');
     }
     
     /**
