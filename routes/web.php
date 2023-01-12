@@ -15,6 +15,9 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,16 +34,39 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/article/{slug}', [PostController::class, 'show'])->name('posts.single');
 Route::get('/article/{post_id}/loadMore', [CommentController::class, 'loadMore'])->name('comments.loadmore');
-Route::post('/article/{post_id}/comment', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/article/{post_id}/comment', [CommentController::class, 'store'])->middleware('verified')->name('comments.store');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.single');
 Route::get('/tag/{slug}', [TagController::class, 'show'])->name('tags.single');
 Route::get('/search', SearchController::class)->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact/store', [ContactController::class, 'store'])->middleware('verified')->name('contact.store');
 Route::post('/newsletter', NewsletterController::class)->name('newsletter');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
+Route::get('/email/verify', function (Request $request) {
+    return $request->user()->hasVerifiedEmail()
+        ? redirect()->intended(RouteServiceProvider::HOME)
+        : view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    if ($request->user()->hasVerifiedEmail()) {
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
 
+    $request->fulfill();
+    
+    return redirect()->intended(RouteServiceProvider::HOME);
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', function (Request $request) {
+    if ($request->user()->hasVerifiedEmail()) {
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
+    
+    $request->user()->SendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification email sent!');
+})->middleware('auth')->name('verification.send');
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/categories/refresh', [AdminCategoryController::class, 'refresh']);
     Route::get('/posts/refresh', [AdminPostController::class, 'refresh']);
     Route::get('/tags/refresh', [AdminTagController::class, 'refresh']);
