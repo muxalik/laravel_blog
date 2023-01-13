@@ -270,10 +270,6 @@
             $("#comments-list").append(data);
             if (amount == $('.media').length)
                 $('#loadMore').remove()
-        })
-        .fail(function(jqXHR, ajaxOptions, thrownError)
-        {
-          alert('No response from server');
         });
     }
 

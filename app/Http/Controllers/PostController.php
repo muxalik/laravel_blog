@@ -18,8 +18,8 @@ class PostController extends Controller
     {
         $post = PostService::getWithIncrement($slug);
         $similar = PostService::getSimilar($post);
-        $comments = $post->comments();
-        $amount = $comments->count();
+        $comments = $post->comments()->oldest()->limit(4)->get();
+        $amount = $post->comments->count();
 
         return view('posts.show', compact('post', 'similar', 'comments', 'amount'));
     }
