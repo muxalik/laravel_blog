@@ -177,7 +177,10 @@
     let dislike = document.getElementById('dislike');
     let likeCount = document.getElementById('likes_count');
     let dislikeCount = document.getElementById('dislikes_count');
-    let liked, disliked;
+
+    let liked = false;
+    let disliked = false;
+    let rating = false;
 
     like.addEventListener('click', () => {
         if (liked) {
@@ -190,6 +193,7 @@
         if (disliked) {
             dislikeCount.textContent = +dislikeCount.textContent - 1; 
             disliked = false;
+            send_rating(1)
         }
 
         if (dislike.classList.contains('rateOut')) {
@@ -212,7 +216,10 @@
         likeCount.textContent = +likeCount.textContent + 1; 
         liked = true
 
-        console.log('Likes ' + {{ $post->likes }} + ' ' + likeCount.textContent)
+        if (!rating) {
+            send_rating(1)
+            rating = true
+        }
     });
 
     dislike.addEventListener('click', () => {
@@ -226,6 +233,7 @@
         if (liked) { 
             likeCount.textContent = +likeCount.textContent - 1; 
             liked = false;
+            send_rating(-1)
         }
 
         if (like.classList.contains('rateOut')) {
@@ -247,9 +255,27 @@
 
         dislikeCount.textContent = +dislikeCount.textContent + 1; 
         disliked = true
-        console.log('Dislikes' + {{ $post->dislikes }})
+        
+        if (!rating) {
+            send_rating(-1)
+            rating = true
+        }
     });
 
+    function send_rating(rating) {
+        $.ajax({
+            url: "{{ route('rating.change') }}",
+            type: "post",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            dataType: "json",
+            data: {
+                post: {{ $post->id }},
+                rating
+            }
+        });
+    }
 
     let page = 2;
     let amount = {{ $amount }};

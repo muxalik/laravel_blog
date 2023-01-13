@@ -16,6 +16,7 @@ use App\Http\Controllers\EmailVerificationPromptController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
@@ -44,6 +45,7 @@ Route::get('/search', [SearchController::class, '__invoke'])->name('search');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/store', [ContactController::class, 'store'])->middleware('verified')->name('contact.store');
 Route::post('/newsletter', [NewsletterController::class, '__invoke'])->name('newsletter');
+Route::post('/rating/change', [RatingController::class, '__invoke'])->name('rating.change');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/categories/refresh', [AdminCategoryController::class, 'refresh']);
