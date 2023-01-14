@@ -11,8 +11,7 @@ use App\Services\AdminPostService;
 
 class PostController extends Controller
 {
-
-    public function __construct(AdminPostService $service)
+    public function __construct(protected AdminPostService $service)
     {
         $this->service = $service;
     }

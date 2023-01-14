@@ -21,6 +21,7 @@
                                     </div>
                                 </a>
                             @empty
+                                <p>Nothing here...</p>
                             @endforelse
                         </div>
                     </div>

@@ -11,7 +11,7 @@ use App\Services\AdminUserService;
 class UserController extends Controller
 {
 
-    public function __construct(AdminUserService $service)
+    public function __construct(protected AdminUserService $service)
     {
         $this->service = $service;
     }
