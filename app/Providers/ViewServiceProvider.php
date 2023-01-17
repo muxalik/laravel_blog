@@ -32,7 +32,11 @@ class ViewServiceProvider extends ServiceProvider
             ]);
         });
 
-        view()->composer(['layouts.layout', 'layouts.category_layout', 'user.contact'], function ($view) {
+        view()->composer([
+            'layouts.layout',
+            'layouts.category_layout',
+            'user.contact'
+        ], function ($view) {
             $view->with([
                 'popular_posts' => Post::getPopular(),
                 'categories' => Category::getList()
