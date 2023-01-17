@@ -42,7 +42,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr class="expandable-body d-done">
+                <tr class="expandable-body d-done d-none">
                     <td colspan="9">
                         <p>
                             {{ $post->description }}
