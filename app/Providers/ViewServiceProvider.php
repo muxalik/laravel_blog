@@ -35,7 +35,7 @@ class ViewServiceProvider extends ServiceProvider
         view()->composer([
             'layouts.layout',
             'layouts.category_layout',
-            'user.contact'
+            'contact'
         ], function ($view) {
             $view->with([
                 'popular_posts' => Post::getPopular(),
