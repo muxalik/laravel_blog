@@ -15,7 +15,7 @@ class AdminMainComposer
     public function compose(View $view)
     {
         $view->with([
-            'admins' => User::where('is_admin', 1)->get(),
+            'admins' => User::isAdmin()->get(),
         ] + array_merge(
             $this->getWidgets(),
             $this->getPopularTags(),

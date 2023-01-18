@@ -44,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeIsAdmin($query)
+    {
+        $query->where('is_admin', 1);
+    }
+
     public function subscriber()
     {
         return $this->hasOne(Subscriber::class);
