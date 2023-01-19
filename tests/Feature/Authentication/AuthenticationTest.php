@@ -70,4 +70,21 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect('/');
     }
 
+    /** @test */
+    public function login_redirects_to_home_page_if_default_user()
+    {
+        User::create([
+            'name' => 'TestName',
+            'email' => 'test@mail.com',
+            'password' => 'password123'
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => 'test@mail.com',
+            'password' => 'password123'
+        ], ['']);
+        
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+    }
 }
