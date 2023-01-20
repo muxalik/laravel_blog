@@ -28,8 +28,7 @@ class SubscriberAddedListener
      */
     public function handle(SubscriberAdded $event)
     {
-        Notification::route('mail', $event->email)
-            ->notify(new NewSubscriberNotification(
+        Notification::route('mail', $event->email)->notify(new NewSubscriberNotification(
                 email: $event->email, 
                 name: $event->name
             ));
