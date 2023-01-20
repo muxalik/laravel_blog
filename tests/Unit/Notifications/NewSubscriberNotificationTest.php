@@ -1,22 +1,21 @@
 <?php
 
-namespace Tests\Feature\Notifications;
+namespace Tests\Unit\Notifications;
 
 use App\Models\User;
 use App\Notifications\NewSubscriberNotification;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class NewSubscriberNotificationTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function sent_to_specific_user()
     {
-        Session::start();
         Notification::fake();
         $user = User::factory()->create();
 
@@ -29,7 +28,6 @@ class NewSubscriberNotificationTest extends TestCase
     /** @test */
     public function sent_to_group_of_users()
     {
-        Session::start();
         Notification::fake();
         $users = User::factory(12)->create();
         $user = User::factory()->create();
