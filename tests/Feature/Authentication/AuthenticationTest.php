@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -73,17 +74,22 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function login_redirects_to_home_page_if_default_user()
     {
-        User::create([
+        Session::start();
+        $user = User::create([
             'name' => 'TestName',
             'email' => 'test@mail.com',
             'password' => 'password123'
         ]);
 
-        $response = $this->post('/login', [
-            'email' => 'test@mail.com',
-            'password' => 'password123'
-        ], ['']);
-        
+        $response = $this->actingAs($user)->post(
+            uri: '/login',
+            data: [
+                'email' => 'test@mail.com',
+                'password' => 'password123'
+            ],
+            headers: ['X-CSRF-TOKEN' => session()->token()]
+        );
+
         $response->assertStatus(302);
         $response->assertRedirect('/');
     }
