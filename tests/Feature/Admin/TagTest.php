@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Actions;
+namespace Tests\Feature\Admin;
 
 use App\Models\Post;
 use App\Models\Tag;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
-class DeleteTagActionTest extends TestCase
+class TagTest extends TestCase
 {
     public function setUp(): void
     {

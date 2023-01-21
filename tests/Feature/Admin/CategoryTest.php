@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Actions;
+namespace Tests\Feature\Admin;
 
 use App\Models\Category;
 use App\Models\Post;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
-class DeleteCategoryActionTest extends TestCase
+class CategoryTest extends TestCase
 {
     public function tearDown(): void
     {
