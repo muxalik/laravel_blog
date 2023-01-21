@@ -11,7 +11,12 @@ use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
+    public function setUp(): void 
+    {
+        parent::setUp();
+        User::truncate();
+        Category::truncate();
+    }
 
     /** @test */
     public function guest_can_access_to_home_page()

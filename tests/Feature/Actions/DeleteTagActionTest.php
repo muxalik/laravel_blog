@@ -2,21 +2,23 @@
 
 namespace Tests\Feature\Actions;
 
-use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
-class DeleteCategoryActionTest extends TestCase
+class DeleteTagActionTest extends TestCase
 {
-    public function tearDown(): void
+    public function setUp(): void
     {
+        parent::setUp();
         Post::truncate();
-        Category::truncate();
-        parent::tearDown();
+        Tag::truncate();
+        DB::table('post_tag')->truncate();
     }
 
     /** @test */
@@ -24,27 +26,27 @@ class DeleteCategoryActionTest extends TestCase
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
-        $category = Category::factory()->create();
+        $tag = Tag::factory()->create();
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/' . $category->id,
+            uri: '/admin/tags/' . $tag->id,
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('/admin/tags');
         $response->assertSessionHas('success');
-        $this->assertModelMissing($category);
+        $this->assertModelMissing($tag);
     }
 
     /** @test */
-    public function delete_one_when_doesnt_exists()
+    public function delete_one_when_doesnt_exist()
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/4',
+            uri: '/admin/tags/4',
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
@@ -56,18 +58,19 @@ class DeleteCategoryActionTest extends TestCase
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
-        $category = Category::factory()->create();
-        Post::factory(4)->create(['category_id' => $category->id]);
+        $tag = Tag::factory()->create();
+        $posts = Post::factory(7)->create();
+        $tag->posts()->sync($posts);
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/' . $category->id,
+            uri: '/admin/tags/' . $tag->id,
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('admin/tags');
         $response->assertSessionHas('error');
-        $this->assertModelExists($category);
+        $this->assertModelExists($tag);
     }
 
     /** @test */
@@ -75,17 +78,17 @@ class DeleteCategoryActionTest extends TestCase
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
-        $category = Category::factory()->create();
+        $tag = Tag::factory()->create();
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/' . $category->id,
+            uri: '/admin/tags/' . $tag->id,
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('admin/tags');
         $response->assertSessionHas('success');
-        $this->assertModelMissing($category);
+        $this->assertModelMissing($tag);
     }
 
     /** @test */
@@ -95,12 +98,12 @@ class DeleteCategoryActionTest extends TestCase
         $user = User::factory()->create(['is_admin' => 1]);
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/all',
+            uri: '/admin/tags/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('admin/tags');
         $response->assertSessionHas('error');
     }
 
@@ -109,17 +112,17 @@ class DeleteCategoryActionTest extends TestCase
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
-        Category::factory(4)->create();
+        Tag::factory(4)->create();
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/all',
+            uri: '/admin/tags/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('admin/tags');
         $response->assertSessionHas('success');
-        $this->assertDatabaseCount('categories', 0);
+        $this->assertDatabaseCount('tags', 0);
     }
 
     /** @test */
@@ -127,18 +130,21 @@ class DeleteCategoryActionTest extends TestCase
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
-        $categories = Category::factory(4)->create();
-        Post::factory(6)->create(['category_id' => $categories->random()->id]);
+        $tags = Tag::factory(4)->create();
+        $posts = Post::factory(6)->create();
+        $posts->each(function ($post) use ($tags) {
+            $post->tags()->sync($tags->random(3));
+        });
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/all',
+            uri: '/admin/tags/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('admin/tags');
         $response->assertSessionHas('error');
-        $this->assertDatabaseCount('categories', 4);
+        $this->assertDatabaseCount('tags', 4);
     }
 
     /** @test */
@@ -146,16 +152,16 @@ class DeleteCategoryActionTest extends TestCase
     {
         Session::start();
         $user = User::factory()->create(['is_admin' => 1]);
-        Category::factory(4)->create();
+        Tag::factory(4)->create();
 
         $response = $this->actingAs($user)->delete(
-            uri: '/admin/categories/all',
+            uri: '/admin/tags/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
-        $response->assertRedirect('admin/categories');
+        $response->assertRedirect('admin/tags');
         $response->assertSessionHas('success');
-        $this->assertDatabaseCount('categories', 0);
+        $this->assertDatabaseCount('tags', 0);
     }
 }

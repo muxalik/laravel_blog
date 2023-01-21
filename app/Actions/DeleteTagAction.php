@@ -31,7 +31,7 @@ class DeleteTagAction
     {
         $data = DB::select('SELECT * FROM post_tag LIMIT 1');
 
-        if (!count($data)) {
+        if (Tag::count() && !count($data)) {
             Tag::truncate();
 
             return redirect()
@@ -54,7 +54,7 @@ class DeleteTagAction
     {
         $tag = Tag::findOrFail($id);
 
-        if ($tag->posts()->first()->exists())
+        if ($tag->posts()->exists())
             return redirect()
                 ->route('tags.index')
                 ->with('error', 'У тегов есть записи');
