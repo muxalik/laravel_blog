@@ -19,6 +19,7 @@ class DeleteTagActionTest extends TestCase
         Post::truncate();
         Tag::truncate();
         DB::table('post_tag')->truncate();
+        User::truncate();
     }
 
     /** @test */
