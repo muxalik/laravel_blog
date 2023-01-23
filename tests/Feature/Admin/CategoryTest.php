@@ -12,13 +12,8 @@ use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        Post::truncate();
-        Category::truncate();
-        parent::tearDown();
-    }
-
+    use RefreshDatabase;
+    
     /** @test */
     public function delete_one_when_exists()
     {

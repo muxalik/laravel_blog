@@ -72,7 +72,7 @@ class IsPhoneNumberTest extends TestCase
      * @test
      * @dataProvider validData 
      */
-    public function valid_data_validation_fails(string $phoneNumber)
+    public function valid_data_validation_passes(string $phoneNumber)
     {
         $this->assertTrue(boolval($this->rule->passes('test', $phoneNumber)));
     }

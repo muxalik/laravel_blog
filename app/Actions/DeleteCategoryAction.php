@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class DeleteCategoryAction
 {
@@ -32,7 +33,7 @@ class DeleteCategoryAction
     protected static function deleteAll(): RedirectResponse
     {
         if (Category::count() && Post::has('category')->doesntExist()) {
-            Category::truncate();
+            Category::query()->delete();
 
             return redirect()
                 ->route('categories.index')

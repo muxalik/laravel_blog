@@ -29,10 +29,8 @@ class DeleteTagAction
      */
     protected static function deleteAll(): RedirectResponse
     {
-        $data = DB::select('SELECT * FROM post_tag LIMIT 1');
-
-        if (Tag::count() && !count($data)) {
-            Tag::truncate();
+        if (Tag::count() && Tag::has('posts')->doesntExist()) {
+            Tag::query()->delete();
 
             return redirect()
                 ->route('tags.index')
