@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 
-class PostService 
+class PostService
 {
     public static function getWithIncrement($slug)
     {
@@ -17,17 +17,17 @@ class PostService
 
     public static function getSimilar($post)
     {
-        $tags = $post
+        $tagIds = $post
             ->tags()
             ->inRandomOrder()
-            ->limit(2)
             ->get()
             ->pluck('id');
 
-        $posts = Post::whereHas('tags', function ($query) use ($tags) {
-            $query->whereIn('post_id', $tags);
-        })->get();
-        
+        $posts = Post::whereHas('tags', function ($query) use ($tagIds, $post) {
+            $query->whereIn('post_tag.tag_id', $tagIds)
+                ->where('post_id', '!=', $post->id);
+        })->limit(2)->get();
+
         return $posts;
     }
 }
