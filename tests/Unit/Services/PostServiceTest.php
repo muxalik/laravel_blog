@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class PostServiceTest extends TestCase
 {
+    use RefreshDatabase;
+    
     protected PostService $service;
 
     public function setUp(): void 
