@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use DivisionByZeroError;
+use Exception;
 use Illuminate\View\View;
 
 class AdminMainComposer
@@ -44,15 +46,19 @@ class AdminMainComposer
 
     protected function getAvgRating(): int
     {
-        $posts_count = $this->getPostsCount();
-        $rating = Post::getRating();
+        try {
+            $posts_count = $this->getPostsCount();
+            $rating = Post::getRating();
 
-        $likes = $rating->values()->sum();
-        $dislikes = $rating->keys()->sum();
+            $likes = $rating->values()->sum();
+            $dislikes = $rating->keys()->sum();
 
-        return ceil(($likes - $dislikes) / $posts_count
-            ? ($likes - $dislikes) / $posts_count
-            : 1);
+            return ceil(($likes - $dislikes) / $posts_count
+                ? ($likes - $dislikes) / $posts_count
+                : 1);
+        } catch(DivisionByZeroError) {
+            return 0;
+        }        
     }
 
     protected function getPopularTags(): array

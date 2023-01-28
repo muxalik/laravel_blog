@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
-{    
+{
     /**
      * index
      *
@@ -18,7 +18,7 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-    
+
     /**
      * login
      *
@@ -39,9 +39,10 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
 
-        return back()->with('error', 'Неправильный логин или пароль');
+        return redirect()->route('login')
+            ->with('error', 'Неправильный логин или пароль');
     }
-    
+
     /**
      * logout
      *

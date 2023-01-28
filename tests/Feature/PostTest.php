@@ -51,7 +51,7 @@ class PostsTest extends TestCase
         $lastPost = $posts->last();
 
         $response = $this->get('/?page=2');
-        
+
         $response->assertStatus(200);
         $response->assertViewIs('posts.index');
         $response->assertViewHas('posts', function ($collection) use ($lastPost) {
@@ -96,7 +96,7 @@ class PostsTest extends TestCase
     }
 
     /** @test */
-    public function show_page_contains_popular_posts() 
+    public function show_page_contains_popular_posts()
     {
         $category = $this->makeCategory();
         $posts = $this->makePost($category->id, 7)
