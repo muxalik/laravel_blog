@@ -11,8 +11,6 @@ use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected User $user;
     protected User $admin;
 
@@ -230,7 +228,10 @@ class AuthenticationTest extends TestCase
     {
         Session::start();
         $password = 'password123';
-        $user = User::factory()->create(['password' => 'password123']);
+        $user = User::factory()->create([
+            'password' => 'password123',
+            'is_admin' => 0
+        ]);
 
         $response = $this->post(
             uri: '/login',
@@ -262,6 +263,11 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect('/login');
         $response->assertSessionHas('error');
+
+        $this->assertDatabaseMissing('users', [
+            'name' => $this->user->name,
+            'email' => $this->user->email
+        ]);
     }
 
     /** @test */
@@ -285,26 +291,44 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect('/admin');
+
+        $this->assertDatabaseHas('users', [
+            'name' => $admin->name,
+            'email' => $admin->email
+        ]);
+
+        $lastUser = User::latest('id')->first();
+
+        $this->assertEquals($lastUser->name, $admin->name);
+        $this->assertEquals($lastUser->email, $admin->email);
     }
 
     /** @test */
     public function user_is_redirected_after_registration()
     {
         Session::start();
-        $password = 'adminpass123';
-
+        $user = [
+            'name' => fake()->userName(),
+            'email' => fake()->email(),
+            'password' => 'adminpass123',
+        ];
         $response = $this->post(
             uri: '/register',
-            data: [
-                'name' => fake()->userName(),
-                'email' => fake()->email(),
-                'password' => $password,
-                'password_confirmation' => $password
-            ],
+            data: $user + ['password_confirmation' => $user['password']],
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
         $response->assertRedirect('/');
+
+        $this->assertDatabaseHas('users', [
+            'name' => $user['name'],
+            'email' => $user['email']
+        ]);
+
+        $lastUser = User::latest('id')->first();
+
+        $this->assertEquals($user['name'], $lastUser->name);
+        $this->assertEquals($user['email'], $lastUser->email);
     }
 }
