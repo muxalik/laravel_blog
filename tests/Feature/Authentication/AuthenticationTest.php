@@ -6,11 +6,14 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected User $user;
     protected User $admin;
 
@@ -250,12 +253,13 @@ class AuthenticationTest extends TestCase
     public function user_cant_pass_authentication()
     {
         Session::start();
+        $password = 'password123';
 
         $response = $this->post(
             uri: '/login',
             data: [
                 'email' => $this->user->email,
-                'password' => 'password123'
+                'password' => $password
             ],
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
@@ -264,10 +268,11 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect('/login');
         $response->assertSessionHas('error');
 
-        $this->assertDatabaseMissing('users', [
+        $this->assertDatabaseHas('users', [
             'name' => $this->user->name,
             'email' => $this->user->email
         ]);
+        $this->assertFalse(Hash::check($password, $this->user->password));
     }
 
     /** @test */

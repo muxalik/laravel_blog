@@ -27,7 +27,7 @@ class PostRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'content' => 'required',
-            'category_id' => 'required|integer',
+            'category_id' => 'required|integer|min:1',
             'thumbnail' => 'nullable|image'
         ];
     }

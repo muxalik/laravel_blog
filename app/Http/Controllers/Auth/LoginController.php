@@ -51,6 +51,7 @@ class LoginController extends Controller
     public function logout(): RedirectResponse
     {
         auth()->logout();
+
         return redirect()->route('login.create');
     }
 }
