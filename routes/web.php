@@ -57,10 +57,10 @@ Route::middleware('throttle:basic')->group(function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'throttle:admin']], function () {
-    Route::get('/categories/refresh', [AdminCategoryController::class, 'refresh']);
-    Route::get('/posts/refresh', [AdminPostController::class, 'refresh']);
-    Route::get('/tags/refresh', [AdminTagController::class, 'refresh']);
-    Route::get('/users/refresh', [AdminUserController::class, 'refresh']);
+    Route::get('/categories/refresh', [AdminCategoryController::class, 'refresh'])->name('categories.refresh');
+    Route::get('/posts/refresh', [AdminPostController::class, 'refresh'])->name('posts.refresh');
+    Route::get('/tags/refresh', [AdminTagController::class, 'refresh'])->name('tags.refresh');
+    Route::get('/users/refresh', [AdminUserController::class, 'refresh'])->name('users.refresh');
 
     Route::get('/', [MainController::class, 'index'])->name('admin.index');
 
