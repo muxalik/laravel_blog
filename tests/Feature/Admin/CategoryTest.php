@@ -5,6 +5,7 @@ namespace Tests\Feature\Admin;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
@@ -15,20 +16,23 @@ class CategoryTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+    protected Collection $categories;
+    protected Category $category;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->admin = User::factory()->create(['is_admin' => 1]);
+        $this->categories = Category::factory(4)->create();
+        $this->category = $this->categories->random();
+
         Session::start();
     }
 
     /** @test */
     public function admin_can_access_categories_index_page()
     {
-        Category::factory(4)->create();
-
         $response = $this->actingAs($this->admin)
             ->get('/admin/categories');
 
@@ -38,15 +42,13 @@ class CategoryTest extends TestCase
     /** @test */
     public function admin_can_see_categories_index_page()
     {
-        $categories = Category::factory(4)->create();
-
         $response = $this->actingAs($this->admin)
             ->get(uri: '/admin/categories');
 
         $response->assertStatus(200);
         $response->assertSee('Список категорий');
-        $response->assertViewHas('categories', $categories);
-        $categories->each(function ($category) use ($response) {
+        $response->assertViewHas('categories', $this->categories);
+        $this->categories->each(function ($category) use ($response) {
             $response->assertSee($category->title);
             $response->assertSee($category->slug);
         });
@@ -67,7 +69,6 @@ class CategoryTest extends TestCase
     /** @test */
     public function admin_can_see_action_links()
     {
-        $categories = Category::factory(4)->create();
         $response = $this->actingAs($this->admin)->get(route('categories.index'));
 
         $response->assertStatus(200);
@@ -78,7 +79,7 @@ class CategoryTest extends TestCase
         $response->assertSee('Удалить все категории');
         $response->assertSee(route('categories.destroy', ['category' => 'all']));
         
-        $categories->each(function ($category) use ($response) {
+        $this->categories->each(function ($category) use ($response) {
             $response->assertSee(route('categories.edit', ['category' => $category->id]));
             $response->assertSee(route('categories.destroy', ['category' => $category->id]));
         });
@@ -87,22 +88,22 @@ class CategoryTest extends TestCase
     /** @test */
     public function delete_one_when_exists()
     {
-        $category = Category::factory()->create();
-
         $response = $this->actingAs($this->admin)->delete(
-            uri: '/admin/categories/' . $category->id,
+            uri: '/admin/categories/' . $this->category->id,
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
         $response->assertRedirect('admin/categories');
         $response->assertSessionHas('success');
-        $this->assertModelMissing($category);
+        $this->assertModelMissing($this->category);
     }
 
     /** @test */
     public function delete_one_when_doesnt_exists()
     {
+        Category::query()->delete();
+
         $response = $this->actingAs($this->admin)->delete(
             uri: '/admin/categories/4',
             headers: ['X-CSRF-TOKEN' => session()->token()]
@@ -114,39 +115,38 @@ class CategoryTest extends TestCase
     /** @test */
     public function delete_one_when_related_posts_exist()
     {
-        $category = Category::factory()->create();
-        Post::factory(4)->create(['category_id' => $category->id]);
+        Post::factory(4)->create(['category_id' => $this->category->id]);
 
         $response = $this->actingAs($this->admin)->delete(
-            uri: '/admin/categories/' . $category->id,
+            uri: '/admin/categories/' . $this->category->id,
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
         $response->assertRedirect('admin/categories');
         $response->assertSessionHas('error');
-        $this->assertModelExists($category);
+        $this->assertModelExists($this->category);
     }
 
     /** @test */
     public function delete_one_when_related_posts_dont_exist()
     {
-        $category = Category::factory()->create();
-
         $response = $this->actingAs($this->admin)->delete(
-            uri: '/admin/categories/' . $category->id,
+            uri: '/admin/categories/' . $this->category->id,
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
 
         $response->assertStatus(302);
         $response->assertRedirect('admin/categories');
         $response->assertSessionHas('success');
-        $this->assertModelMissing($category);
+        $this->assertModelMissing($this->category);
     }
 
     /** @test */
     public function delete_all_when_dont_exist()
     {
+        Category::query()->delete();
+
         $response = $this->actingAs($this->admin)->delete(
             uri: '/admin/categories/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
@@ -160,8 +160,6 @@ class CategoryTest extends TestCase
     /** @test */
     public function delete_all_when_exist()
     {
-        Category::factory(4)->create();
-
         $response = $this->actingAs($this->admin)->delete(
             uri: '/admin/categories/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
@@ -176,8 +174,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function delete_all_when_related_posts_exist()
     {
-        $categories = Category::factory(4)->create();
-        Post::factory(6)->create(['category_id' => $categories->random()->id]);
+        Post::factory(6)->create(['category_id' => $this->categories->random()->id]);
 
         $response = $this->actingAs($this->admin)->delete(
             uri: '/admin/categories/all',
@@ -193,8 +190,6 @@ class CategoryTest extends TestCase
     /** @test */
     public function delete_all_when_related_posts_doesnt_exist()
     {
-        Category::factory(4)->create();
-
         $response = $this->actingAs($this->admin)->delete(
             uri: '/admin/categories/all',
             headers: ['X-CSRF-TOKEN' => session()->token()]
@@ -209,24 +204,21 @@ class CategoryTest extends TestCase
     /** @test */
     public function category_edit_contains_correct_values()
     {
-        $category = Category::factory()->create();
-
         $response = $this->actingAs($this->admin)
-            ->get('/admin/categories/' . $category->id . '/edit');
+            ->get('/admin/categories/' . $this->category->id . '/edit');
 
         $response->assertStatus(200);
-        $response->assertSee('value="' . $category->title . '"', false);
+        $response->assertSee('value="' . $this->category->title . '"', false);
         $response->assertViewHas('category');
     }
 
     /** @test */
     public function category_update_validation_error_redirects_back_to_form()
     {
-        $category = Category::factory()->create();
-        $url = route('categories.edit', ['category' => $category->id]);
+        $url = route('categories.edit', ['category' => $this->category->id]);
 
         $response = $this->actingAs($this->admin)->from($url)->put(
-            uri: route('categories.update', ['category' => $category->id]),
+            uri: route('categories.update', ['category' => $this->category->id]),
             data: ['title' => ''],
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
@@ -239,12 +231,11 @@ class CategoryTest extends TestCase
     /** @test */
     public function category_update_and_redirects_to_categories_index_page()
     {
-        $category = Category::factory()->create();
         $title = 'New Name 123';
 
         $response = $this->actingAs($this->admin)
-            ->from(route('categories.edit', ['category' => $category->id]))->put(
-            uri: route('categories.update', ['category' => $category->id]),
+            ->from(route('categories.edit', ['category' => $this->category->id]))->put(
+            uri: route('categories.update', ['category' => $this->category->id]),
             data: ['title' => $title],
             headers: ['X-CSRF-TOKEN' => session()->token()]
         );
