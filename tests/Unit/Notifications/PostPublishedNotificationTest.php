@@ -21,7 +21,7 @@ class PostPublishedNotificationTest extends TestCase
         Notification::fake();
         $subscriber = Subscriber::factory()->create();
         $post = Post::withoutEvents(function () {
-            return Post::factory()->create();
+            return Post::factory()->create(['slug' => '2rklkjg34yrbc']);
         });
 
         $subscriber->notify(new PostPublishedNotification($post, $subscriber->email));
@@ -37,7 +37,7 @@ class PostPublishedNotificationTest extends TestCase
         $subscribers = Subscriber::factory(12)->create();
         $subscriber = Subscriber::factory()->create();
         $post = Post::withoutEvents(function () {
-            return Post::factory()->create();
+            return Post::factory()->create(['slug' => '2rklkjg34yrbc']);
         });
 
         $subscribers->each(function ($subscriber) use ($post) {

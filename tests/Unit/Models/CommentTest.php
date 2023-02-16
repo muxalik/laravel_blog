@@ -16,9 +16,11 @@ class CommentTest extends TestCase
     /** @test */
     public function it_belongs_to_user()
     {
+        $post = Post::factory()->create();
         $user = User::factory()->create();
         $comment = Comment::factory()->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'post_id' => $post->id
         ]);
         
         $this->assertTrue($user->is($comment->user));
@@ -38,9 +40,11 @@ class CommentTest extends TestCase
     /** @test */
     public function its_field_created_at_is_formatted()
     {
+        $post = Post::factory()->create();
         $date = fake()->dateTimeBetween('-1 year');
         $comment = Comment::factory()->create([
-            'created_at' => $date
+            'created_at' => $date,
+            'post_id' => $post->id
         ]);
 
         $formatted = Carbon::parse($date)->diffForHumans();

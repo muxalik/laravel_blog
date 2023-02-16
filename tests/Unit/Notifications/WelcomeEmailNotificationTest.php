@@ -4,11 +4,14 @@ namespace Tests\Unit\Notifications;
 
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class WelcomeEmailNotificationTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function sent_to_specific_user()
     {
