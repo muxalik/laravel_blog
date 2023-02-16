@@ -1,24 +1,21 @@
 <div align="center">
 <a href="https://github.com/muxailk/laravel_blog">
 
-![home page](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/logo.png)
+![home page](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/logo.png)
 
 </a>
 </div>
 
-# Laravel Blog &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE) [![Npm package version](https://badgen.net/npm/v/express)](v34)
-> Additional information or tag line
-
-<a href="https://github.com/muxailk/laravel_blog"> <h1 align="center">Laravel Blog</h1></a>
+<h1 align="center">Laravel Blog</h1>
 <p align="center"><a href="https://github.com/josuapsianturi/velflix/blob/main/LICENSE"><img src="https://poser.pugx.org/cpriego/valet-linux/license.svg" alt="License"></a>
 </p>
 
 ## About
 
-Laravel Blog is a Laravel testing project using TALL stack ([Tailwindcss](https://tailwindcss.com/), [Alpinejs](https://github.com/alpinejs/alpine/), [Laravel](https://laravel.com/), [Livewire](https://laravel-livewire.com/) ).
+Laravel Blog is a Laravel testing project using stack (Laravel, Pest,).
 
 > **Note**
-> Work still in Progress
+>   Work is still in Progress
 
 ## Table of Contents
 
@@ -31,17 +28,17 @@ Laravel Blog is a Laravel testing project using TALL stack ([Tailwindcss](https:
 <a name="screenshots"></a>
 ## Screenshots
 
-![home page](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/Screenshot_1.jpg)
+![home page](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_1.jpg)
 
-[main](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/Screenshot_2.jpg)
+[main](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_2.jpg)
 
-![footer](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/Screenshot_3.jpg)
+![footer](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_3.jpg)
 
-![admin home 1](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/Screenshot_4.jpg)
+![admin home 1](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_4.jpg)
 
-[admin home 2](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/Screenshot_5.jpg)
+[admin home 2](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_5.jpg)
 
-![admin posts](https://raw.githubusercontent.com/muxailk/laravel_blog/main/public/images/readme/Screenshot_6.jpg)
+![admin posts](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_6.jpg)
 
 <a name="requirements"></a>
 ## Requirements
@@ -58,7 +55,7 @@ Package | Version
 ## Installation
 
 > **Warning**
-> Make sure to follow the requirements first.
+>   Make sure to follow the requirements first.
 
 Here is how you can run the project locally:
 1. Clone this repo
@@ -127,9 +124,9 @@ Here is how you can run the project locally:
 <a name="testing"></a>
 ## Testing
 
-> **Warning**
+> **Warning** <br>
 > Testing database is not set up!
-> Every time running tests you work with primary database. Be careful with your data integrity
+> Every time running tests you work with primary database.<br> Be careful with your data safety!
 
 ```sh
 ./vendor/bin/pest
