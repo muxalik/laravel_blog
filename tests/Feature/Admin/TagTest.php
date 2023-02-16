@@ -36,7 +36,7 @@ class TagTest extends TestCase
         });
 
         $response = $this->actingAs($this->admin)->get('/admin/tags');
-        
+
         $response->assertOk();
         $response->assertSee('Список тегов');
         $response->assertViewHas('tags');
@@ -87,7 +87,7 @@ class TagTest extends TestCase
 
         $response->assertStatus(404);
     }
-    
+
     /** @test */
     public function non_admin_cant_access_edit_page_gets_404()
     {
@@ -107,7 +107,8 @@ class TagTest extends TestCase
         $response = $this->actingAs($this->admin)->from($url)->put(
             uri: '/admin/tags/' . $tag->id,
             data: ['title' => ''],
-            headers: ['X-CSRF-TOKEN' => session()->token()]);
+            headers: ['X-CSRF-TOKEN' => session()->token()]
+        );
 
         $response->assertStatus(302);
         $response->assertRedirect($url);
