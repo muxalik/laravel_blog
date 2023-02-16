@@ -30,13 +30,13 @@ Laravel Blog is a Laravel testing project using stack (Laravel, Pest,).
 
 ![home page](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_1.jpg)
 
-[main](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_2.jpg)
+![main](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_2.jpg)
 
 ![footer](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_3.jpg)
 
 ![admin home 1](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_4.jpg)
 
-[admin home 2](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_5.jpg)
+![admin home 2](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_5.jpg)
 
 ![admin posts](https://github.com/muxailk/laravel_blog/blob/master/public/images/readme/Screenshot_6.jpg)
 
@@ -60,26 +60,23 @@ Package | Version
 Here is how you can run the project locally:
 1. Clone this repo
     ```sh
-    git clone https://github.com/josuapsianturi/velflix.git
+    git clone https://github.com/muxailk/laravel_blog.git
     ```
 
 1. Go into the project root directory
     ```sh
-    cd velflix
+    cd laravel_blog
     ```
 
 1. Copy .env.example file to .env file
     ```sh
     cp .env.example .env
     ```
-1. Create database `velflix` (you can change database name)
-
-1. Create account and get an API key themoviedb [ here](https://www.themoviedb.org/settings/api). Make sure to copy `API Read Access Token (v4 auth)`.
+1. Create database `laravel_blog` (you can change database name)
 
 1. Go to `.env` file 
-    - set database credentials (`DB_DATABASE=velflix`, `DB_USERNAME=root`, `DB_PASSWORD=`)
-    - paste `TMDB_TOKEN=(your API key)` 
-    > Make sure to follow your database username and password
+    - set database credentials (`DB_DATABASE=laravel_blog`, `DB_USERNAME=root`, `DB_PASSWORD=`)
+    - Make sure to follow your database username and password
 
 1. Install PHP dependencies 
     ```sh
@@ -93,33 +90,25 @@ Here is how you can run the project locally:
 
 1. install front-end dependencies
     ```sh
-    npm install && npx mix
+    npm install && npm run dev
     ```
 
-1. Run migration
+1. Run migrations and seeders
     ```
-    php artisan migrate
+    php artisan migrate --seed
     ```
-    
-1. Run seeder
-    ```
-    php artisan db:seed
-    ```
-    this command will create 2 users (admin and normal user):
-     > email: admin@gmail.com , password: password
+    this command will create 2 users (admin and defult user):
+     > email: admin@mail.com , password: password
 
      > email: user@gmail.com , password: password 
 
 1. Run server 
-    > for valet users visit `velflix.test` in your favorite browser
-   
     ```sh
     php artisan serve
     ```  
 
 1. Visit `localhost:8000` in your favorite browser.     
 
-    > Make sure to follow your Laravel local Development Environment.
 
 <a name="testing"></a>
 ## Testing
