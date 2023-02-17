@@ -48,22 +48,13 @@
             </div>
 
             <div class="card-footer clearfix" style="">
-                <a href="{{ route('users.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-                    <img src="{{ asset('images/icons/add_1.png') }}" class="my-icon" alt="add">
-                    Добавить пользователя
-                </a>
-                <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
-                    <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
-                    Обновить
-                </button>
+                <x-add-button text="Добавить пользователя" url="{{ route('users.create') }}" />
+                <x-button text="Обновить" action="refresh" />
                 @if ($users->count())
                     <form action="{{ route('users.destroy', ['user' => 'all']) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger mb-2 mr-2 my-icon-container" id="deleteAll">
-                            <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="deleteAll">
-                            Удалить всех пользователей
-                        </button>
+                        <x-delete-all-button text="Удалить всех пользователей" />
                     </form>
                 @endif
             </div>

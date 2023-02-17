@@ -29,14 +29,14 @@
                         <div class="table_actions">
                             <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
                                 class="btn btn-info btn-sm table-action" title="Редактировать">
-                                <img src="{{ asset('images/icons/edit_1.png') }}" class="my-icon" alt="Редактировать">
+                                <img src="{{ asset('images/icons/edit.png') }}" class="my-icon" alt="Редактировать">
                             </a>
                             <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST"
                                 class="float-left table-action" title="Удалить">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm table-action action-delete">
-                                    <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="delete">
+                                    <img src="{{ asset('images/icons/delete.png') }}" class="my-icon" alt="delete">
                                 </button>
                             </form>
                         </div>

@@ -48,24 +48,15 @@
                 @include('admin.categories.table')
             </div>
 
-            <div class="card-footer clearfix" style="">
-                <a href="{{ route('categories.create') }}" class="btn btn-primary mb-2 mr-2 my-icon-container">
-                    <img src="{{ asset('images/icons/add_1.png') }}" class="my-icon">
-                    Добавить категорию
-                </a>
-                <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
-                    <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
-                    Обновить
-                </button>
+            <div class="card-footer clearfix">
+                <x-add-button text="Добавить категорию" url="{{ route('categories.create') }}" />
+                <x-button text="Обновить" action="refresh" />
                 @if ($categories->count())
                     <form action="{{ route('categories.destroy', ['category' => 'all']) }}" method="POST"
                         class="d-inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger mb-2 mr-2 my-icon-container" id="deleteAll">
-                            <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="deleteAll">
-                            Удалить все категории
-                        </button>
+                        <x-delete-all-button text="Удалить все категории" />
                     </form>
                 @endif
             </div>

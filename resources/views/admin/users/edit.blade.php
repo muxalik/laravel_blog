@@ -39,7 +39,7 @@
                                     <label for="name">Имя</label>
                                     <input type="text" name="name"
                                         class="form-control @error('name') is-invalid @enderror" id="name"
-                                        placeholder="Имя" value="{{ old('name') ?? $user->name }}">
+                                        placeholder="Имя" value="{{ old('name', $user->name) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>

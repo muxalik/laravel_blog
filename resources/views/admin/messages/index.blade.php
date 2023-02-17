@@ -43,31 +43,19 @@
                 <form action="{{ route('messages.markAllAsRead') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <button class="btn btn-primary mb-2 mr-2 my-icon-container">
-                        <img src="{{ asset('images/icons/read.png') }}" class="my-icon" alt="add">
-                        Отметить прочитанными
-                    </button>
+                    <x-button text="Отметить прочитанными" action="read" />
                 </form>
                 <form action="{{ route('messages.markAllAsUnread') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <button class="btn btn-primary mb-2 mr-2 my-icon-container">
-                        <img src="{{ asset('images/icons/unread.png') }}" class="my-icon" alt="add">
-                        Отметить непрочитанными
-                    </button>
+                    <x-button text="Отметить непрочитанными" action="unread" />
                 </form>
-                <button class="btn btn-primary mb-2 mr-2 my-icon-container" id="refresh">
-                    <img src="{{ asset('images/icons/refresh_1.png') }}" class="my-icon" alt="refresh">
-                    Обновить
-                </button>
+                <x-button text="Обновить" action="refresh" />
                 @if ($messages->count())
                     <form action="{{ route('messages.destroy', ['id' => 'all']) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger mb-2 mr-2 my-icon-container" id="deleteAll">
-                            <img src="{{ asset('images/icons/delete_1.png') }}" class="my-icon" alt="deleteAll">
-                            Удалить все сообщения
-                        </button>
+                        <x-delete-all-button text="Удалить все сообщения" />
                     </form>
                 @endif
             </div>
