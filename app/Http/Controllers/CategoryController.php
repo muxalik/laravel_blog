@@ -7,11 +7,11 @@ use App\Models\Post;
 
 class CategoryController extends Controller
 {
-    public function show($slug)
+    public function show(Category $category)
     {
-        $category = Category::getBySlug($slug);
-        $posts = Post::getByCategory($category);
-
-        return view('categories.show', compact('category', 'posts'));
+        return view('categories.show', [
+            'category' => $category,
+            'posts' => Post::getByCategory($category)
+        ]);
     }
 }

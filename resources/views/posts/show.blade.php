@@ -14,11 +14,11 @@
             <ol class="breadcrumb hidden-xs-down">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('categories.single', ['slug' => $post->category->slug]) }}">{{ $post->category->title }}</a>
+                        href="{{ route('categories.single', ['category' => $post->category->slug]) }}">{{ $post->category->title }}</a>
                 </li>
                 <li class="breadcrumb-item active">{{ $post->title }}</li>
             </ol>
-            <span class="color-yellow"><a href="{{ route('categories.single', ['slug' => $post->category->slug]) }}"
+            <span class="color-yellow"><a href="{{ route('categories.single', ['category' => $post->category->slug]) }}"
                     title="">{{ $post->category->title }}</a></span>
             <h3>{{ $post->title }}</h3>
             <div class="blog-meta big-meta">
@@ -65,7 +65,7 @@
                 <div class="tag-cloud-single">
                     <span>Tags</span>
                     @foreach ($post->tags as $tag)
-                        <small><a href="{{ route('tags.single', ['slug' => $tag->slug]) }}"
+                        <small><a href="{{ route('tags.single', ['tag' => $tag->slug]) }}"
                                 title="">{{ $tag->title }}</a></small>
                     @endforeach
                 </div>
@@ -98,7 +98,7 @@
                     <div class="col-lg-6">
                         <div class="blog-box">
                             <div class="post-media">
-                                <a href="{{ route('posts.single', ['slug' => $sim_post->slug]) }}" title="">
+                                <a href="{{ route('posts.single', ['post' => $sim_post->slug]) }}" title="">
                                     <img src="{{ $sim_post->thumbnail }}" alt="post_image" class="img-fluid">
                                     <div class="hovereffect">
                                         <span class=""></span>
@@ -106,7 +106,7 @@
                                 </a>
                             </div><!-- end media -->
                             <div class="blog-meta">
-                                <h4><a href="{{ route('posts.single', ['slug' => $sim_post->slug]) }}"
+                                <h4><a href="{{ route('posts.single', ['post' => $sim_post->slug]) }}"
                                         title="{{ $sim_post->title }}">{{ $sim_post->title }}</a></h4>
                                 <small><a href="blog-category-01.html"
                                         title="{{ $sim_post->category->title }}">{{ $sim_post->category->title }}</a></small>

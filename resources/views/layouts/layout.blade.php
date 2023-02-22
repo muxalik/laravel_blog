@@ -38,7 +38,7 @@
         @include('layouts.header')
         @yield('header')
 
-        <section class="section lb @if (!Request::is('/')) m3rem @endif" id="main-section">
+        <section class="section lb @if (!request()->is('/')) m3rem @endif" id="main-section">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">

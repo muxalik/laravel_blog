@@ -7,11 +7,11 @@ use App\Models\Tag;
 
 class TagController extends Controller
 {
-    public function show($slug)
+    public function show(Tag $tag)
     {
-        $tag = Tag::getBySlug($slug);
-        $posts = Post::getByTag($tag);
-
-        return view('tags.show', compact('tag', 'posts'));
+        return view('tags.show', [
+            'tag' => $tag,
+            'posts' => Post::getByTag($tag)
+        ]);
     }
 }

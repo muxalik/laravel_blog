@@ -13,7 +13,7 @@
                     @forelse ($categories as $category)
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="{{ route('categories.single', ['slug' => $category->slug]) }}">{{ $category->title }}</a>
+                                href="{{ route('categories.single', ['category' => $category->slug]) }}">{{ $category->title }}</a>
                         </li>
                     @empty
                     @endforelse
@@ -32,7 +32,7 @@
                             <a class="nav-link" href="{{ route('register.create') }}">Register</a>
                         </li>
                     @endauth
-                    @if (auth()->check() && auth()->user()->is_admin)
+                    @if (auth()->user()?->is_admin)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
                         </li>

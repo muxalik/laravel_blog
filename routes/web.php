@@ -26,11 +26,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('throttle:basic')->group(function () {
 
     Route::get('/', [PostController::class, 'index'])->name('home');
-    Route::get('/article/{slug}', [PostController::class, 'show'])->name('posts.single');
+    Route::get('/article/{post:slug}', [PostController::class, 'show'])->name('posts.single');
     Route::get('/article/{post_id}/loadMore', [CommentController::class, 'loadMore'])->name('comments.loadmore');
     Route::post('/article/{post_id}/comment', [CommentController::class, 'store'])->middleware('verified')->name('comments.store');
-    Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.single');
-    Route::get('/tag/{slug}', [TagController::class, 'show'])->name('tags.single');
+    Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('categories.single');
+    Route::get('/tag/{tag:slug}', [TagController::class, 'show'])->name('tags.single');
     Route::get('/search', [SearchController::class, '__invoke'])->name('search');
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::post('/contact/store', [ContactController::class, 'store'])->middleware('verified')->name('contact.store');

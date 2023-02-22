@@ -4,7 +4,7 @@
     <form action="{{ route('newsletter') }}" class="form-inline" method="POST">
         @csrf
         <input type="text" name="email" placeholder="Add your email here.." required class="form-control"
-            value="{{ auth()->check() ? auth()->user()->email : '' }}" />
+            value="{{ auth()->user()?->email ?? '' }}" />
         <input type="submit" value="Subscribe" class="btn btn-default btn-block" />
     </form>
 </div><!-- end newsletter -->

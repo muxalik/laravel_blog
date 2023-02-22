@@ -14,9 +14,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function show($slug)
+    public function show(Post $post)
     {
-        $post = PostService::getWithIncrement($slug);
         $similar = PostService::getSimilar($post);
         $comments = $post->comments()->oldest()->limit(4)->get();
         $amount = $post->comments->count();

@@ -7,7 +7,7 @@
                     <div class="blog-list-widget">
                         <div class="list-group">
                             @forelse ($recent_posts as $post)
-                                <a href="{{ route('posts.single', ['slug' => $post->slug]) }}"
+                                <a href="{{ route('posts.single', ['post' => $post->slug]) }}"
                                     class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="w-100">
                                         <img src="{{ $post->thumbnail }}" alt="recent_post"
