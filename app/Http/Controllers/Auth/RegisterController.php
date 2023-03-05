@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class RegisterController extends Controller
 {    
@@ -29,12 +30,19 @@ class RegisterController extends Controller
      */
     public function store(RegisterRequest $request): RedirectResponse
     {
-        $user = User::create($request->validated());
-        auth()->login($user);
-        event(new Registered($user));
+        try {
 
-        return redirect()
-            ->route('home')
-            ->with('success', 'Вы успешно зарегистрировались');
+            $user = User::create($request->validated());
+            auth()->login($user);
+            event(new Registered($user));
+            
+            return redirect()
+                ->route('home')
+                ->with('success', 'Вы успешно зарегистрировались');
+        } catch (Throwable $e) {
+            return back()   
+                ->withErrors($e->getMessage())
+                ->withInput();
+        }
     }
 }

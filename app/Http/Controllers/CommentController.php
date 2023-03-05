@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Throwable;
 
 class CommentController extends Controller
 {
@@ -15,22 +17,30 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request, $id)
     {
-        if (auth()->guest())
-            return redirect()->route('login.create');
+        try {
+            if (auth()->guest())
+                return redirect()->route('login.create');
 
-        Comment::create([
-            'user_id' => auth()->user()->id,
-            'post_id' => $id,
-            'content' => $request->content
-        ]);
+            Comment::create([
+                'user_id' => auth()->user()->id,
+                'post_id' => $id,
+                'content' => $request->content
+            ]);
 
-        return back();
+            return back();
+        } catch (Throwable) {
+            return redirect()->route('home');
+        }
     }
-    
+
     public function loadMore($id)
     {
-        return view('posts.comments', [
-            'comments' => Comment::getByPostId($id)
-        ]);
+        try {
+            return view('posts.comments', [
+                'comments' => Comment::getByPostId($id)
+            ]);
+        } catch (ModelNotFoundException) {
+            return false;
+        }
     }
 }
