@@ -13,7 +13,7 @@ use Throwable;
 class RegisterController extends Controller
 {    
     /**
-     * create
+     * index
      *
      * @return View
      */
@@ -31,7 +31,6 @@ class RegisterController extends Controller
     public function store(RegisterRequest $request): RedirectResponse
     {
         try {
-
             $user = User::create($request->validated());
             auth()->login($user);
             event(new Registered($user));
@@ -41,8 +40,8 @@ class RegisterController extends Controller
                 ->with('success', 'Вы успешно зарегистрировались');
         } catch (Throwable $e) {
             return back()   
-                ->withErrors($e->getMessage())
-                ->withInput();
+                ->withInput()
+                ->withErrors($e->getMessage());
         }
     }
 }

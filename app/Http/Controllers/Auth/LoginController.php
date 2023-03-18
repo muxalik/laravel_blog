@@ -28,10 +28,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request): RedirectResponse
     {
-        if (auth()->attempt([
-            'email' => $request->email,
-            'password' => $request->password
-        ])) {
+        if (auth()->attempt($request->validated())) {
             session()->flash('success', 'Вы успешно вошли в систему');
 
             if (auth()->user()->is_admin)
@@ -52,6 +49,7 @@ class LoginController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         auth()->logout();
+        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

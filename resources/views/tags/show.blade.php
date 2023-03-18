@@ -29,7 +29,7 @@
     <div class="page-wrapper">
         <div class="blog-custom-build">
             @foreach ($posts as $post)
-                @include('layouts.post_index')
+                @include('layouts.posts_index')
             @endforeach
         </div>
     </div>

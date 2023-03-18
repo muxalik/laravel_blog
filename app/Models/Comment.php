@@ -34,11 +34,4 @@ class Comment extends Model
                 ->diffForHumans()
         );
     }
-
-    public static function getByPostId($id)
-    {
-        return Comment::where('post_id', $id)
-            ->oldest()
-            ->paginate(4);
-    }
 }

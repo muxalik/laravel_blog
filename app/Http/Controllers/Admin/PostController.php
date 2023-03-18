@@ -36,8 +36,8 @@ class PostController extends Controller
     public function create()
     {
         return view('admin.posts.create', [
-            'categories' => Category::pluck('title', 'id')->all(),
-            'tags' => Tag::pluck('title', 'id')->all()
+            'categories' => Category::pluck('title', 'id'),
+            'tags' => Tag::pluck('title', 'id')
         ]);
     }
 
@@ -65,8 +65,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         return view('admin.posts.edit', [
-            'categories' => Category::pluck('title', 'id')->all(),
-            'tags' => Tag::pluck('title', 'id')->all(),
+            'categories' => Category::pluck('title', 'id'),
+            'tags' => Tag::pluck('title', 'id'),
             'post' => $post
         ]);
     }

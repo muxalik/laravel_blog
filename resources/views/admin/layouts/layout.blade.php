@@ -48,18 +48,18 @@
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow"
                         style="left: 0px; right: inherit;">
                         <li>
-                            <a href="{{ route('categories.single', ['slug' => 'marketing']) }}"
+                            <a href="{{ route('categories.single', ['category' => 'marketing']) }}"
                                 class="nav-link">Marketing</a>
                         </li>
                         <li>
-                            <a href="{{ route('categories.single', ['slug' => 'make-money']) }}" class="nav-link">Make
+                            <a href="{{ route('categories.single', ['category' => 'make-money']) }}" class="nav-link">Make
                                 Money</a>
                         </li>
                         <li>
-                            <a href="{{ route('categories.single', ['slug' => 'blog']) }}" class="nav-link">Blog</a>
+                            <a href="{{ route('categories.single', ['category' => 'blog']) }}" class="nav-link">Blog</a>
                         </li>
                         <li>
-                            <a href="{{ route('categories.single', ['slug' => 'programming']) }}"
+                            <a href="{{ route('categories.single', ['category' => 'programming']) }}"
                                 class="nav-link">Programming</a>
                         </li>
                         <li>

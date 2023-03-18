@@ -27,8 +27,8 @@ Route::middleware('throttle:basic')->group(function () {
 
     Route::get('/', [PostController::class, 'index'])->name('home');
     Route::get('/article/{post:slug}', [PostController::class, 'show'])->name('posts.single');
-    Route::get('/article/{post_id}/loadMore', [CommentController::class, 'loadMore'])->name('comments.loadmore');
-    Route::post('/article/{post_id}/comment', [CommentController::class, 'store'])->middleware('verified')->name('comments.store');
+    Route::get('/article/{post}/loadMore', [CommentController::class, 'loadMore'])->name('comments.loadmore');
+    Route::post('/article/{post_id}/comment', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('categories.single');
     Route::get('/tag/{tag:slug}', [TagController::class, 'show'])->name('tags.single');
     Route::get('/search', [SearchController::class, '__invoke'])->name('search');
