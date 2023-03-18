@@ -19,9 +19,9 @@ class CommentSeeder extends Seeder
     {
         Post::inRandomOrder()->chunk(50, function ($posts) {
             $posts->each(function ($post) {
-                Comment::factory($this->getAmount())->create([
-                    'post_id' => $post->id
-                ]);
+                Comment::factory($this->getAmount())->state(new Sequence(
+                    ['post_id' => $post->id]
+                ))->create();
             });
         });
     }

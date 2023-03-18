@@ -29,9 +29,25 @@ class UserSeeder extends Seeder
             'is_admin' => 0
         ];
 
-        User::create($admin);
-        User::create($user);
+        User::insert([$admin, $user]);
 
-        User::factory(env('USERS_AMOUNT', 100))->create();
+        $data = [];
+
+        for ($i = 0; $i < env('USERS_AMOUNT', 100); $i++) {
+            $registry = fake()->optional(0.3, fake()->unique()->dateTimeThisYear())->dateTimeBetween('-2 year');
+            
+            $data[] = [
+                'name' => fake()->name(),
+                'email' => fake()->unique()->freeEmail(),
+                'password' => fake()->password(),
+                'is_admin' => fake()->optional(0.9, 1)->randomElement([0]),
+                'created_at' => $registry,
+                'updated_at' => fake()->dateTimeBetween($registry),
+            ];
+        }
+
+        foreach (array_chunk($data, 100) as $chunk) {
+            User::insert($chunk);
+        }
     }
 }
