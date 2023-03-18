@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\PrunableScope;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Prunable;
 
     /**
      * The attributes that are mass assignable.
@@ -65,5 +67,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return Attribute::make(
             set: fn ($value) => bcrypt($value)
         );
+    }
+
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subMonth());
     }
 }
