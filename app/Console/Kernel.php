@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('model:prune')->daily();
+        $schedule->command('logs:clear')->monthly()->environments(['staging', 'production']);
+        $schedule->command('logs:clear')->weekly()->environments(['local', 'development']);
     }
 
     /**
