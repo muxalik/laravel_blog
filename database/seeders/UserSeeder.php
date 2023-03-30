@@ -18,14 +18,14 @@ class UserSeeder extends Seeder
         $admin = [
             'name' => 'admin',
             'email' => 'admin@mail.com',
-            'password' => 'password',
+            'password' => bcrypt('password'),
             'is_admin' => 1,
         ];
 
         $user = [
             'name' => 'user',
             'email' => 'user@mail.com',
-            'password' => 'password',
+            'password' => bcrypt('password'),
             'is_admin' => 0
         ];
 
